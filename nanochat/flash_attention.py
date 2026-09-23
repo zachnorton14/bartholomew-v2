@@ -13,6 +13,7 @@ Usage (drop-in replacement for FA3):
     # Inference (with KV cache)
     y = flash_attn.flash_attn_with_kvcache(q, k_cache, v_cache, k=k, v=v, ...)
 """
+import os
 import torch
 import torch.nn.functional as F
 
@@ -64,6 +65,59 @@ USE_FA3 = _resolve_use_fa3()
 
 
 # =============================================================================
+# FlexAttention: sliding-window training on Blackwell (no FA3 kernels)
+# =============================================================================
+# Without FA3, a sliding window has to be expressed as an explicit boolean
+# attn_mask, and SDPA then cannot use its flash kernel (it falls back to the
+# memory-efficient/math kernels). At ctx 4096 that makes the SSSL pattern
+# ~2.5x slower than L-only on an RTX 5090. FlexAttention builds a block-sparse
+# mask instead and keeps a fused kernel, so sliding-window layers are actually
+# cheaper than full-context ones, as they are with FA3.
+#
+# Only used on Blackwell (sm100/sm120), and only by flash_attn_func (training,
+# no KV cache) with a window shorter than the sequence; inference keeps the SDPA
+# path since prefill lengths vary. Set NANOCHAT_FLEX_ATTENTION=0 to disable.
+def _is_blackwell():
+    if not torch.cuda.is_available():
+        return False
+    major, _ = torch.cuda.get_device_capability()
+    return major >= 10
+
+
+USE_FLEX = _is_blackwell() and os.environ.get("NANOCHAT_FLEX_ATTENTION", "1") == "1"
+_flex_attention_compiled = None
+_block_mask_cache = {}
+
+
+def _get_flex_attention():
+    global _flex_attention_compiled
+    if _flex_attention_compiled is None:
+        from torch.nn.attention.flex_attention import flex_attention
+        _flex_attention_compiled = torch.compile(flex_attention, dynamic=False)
+    return _flex_attention_compiled
+
+
+def _get_block_mask(T, window, device):
+    """Causal + sliding-window block mask, cached per (T, window, device)."""
+    key = (T, window, str(device))
+    bm = _block_mask_cache.get(key)
+    if bm is None:
+        from torch.nn.attention.flex_attention import create_block_mask
+        def sliding_causal(b, h, q_idx, kv_idx):
+            return (kv_idx <= q_idx) & (q_idx - kv_idx <= window)
+        bm = create_block_mask(sliding_causal, B=None, H=None, Q_LEN=T, KV_LEN=T, device=device)
+        _block_mask_cache[key] = bm
+    return bm
+
+
+def _flex_sliding_window(q, k, v, window, enable_gqa):
+    """q, k, v are (B, H, T, D). Same semantics as the masked-SDPA path below."""
+    T = q.size(2)
+    block_mask = _get_block_mask(T, window, q.device)
+    return _get_flex_attention()(q, k, v, block_mask=block_mask, enable_gqa=enable_gqa)
+
+
+# =============================================================================
 # SDPA helpers
 # =============================================================================
 def _sdpa_attention(q, k, v, window_size, enable_gqa):
@@ -78,6 +132,7 @@ def _sdpa_attention(q, k, v, window_size, enable_gqa):
     # Full context, same length
     if (window < 0 or window >= Tq) and Tq == Tk:
         return F.scaled_dot_product_attention(q, k, v, is_causal=True, enable_gqa=enable_gqa)
+
 
     # Single token generation
     if Tq == 1:
@@ -124,7 +179,13 @@ def flash_attn_func(q, k, v, causal=False, window_size=(-1, -1)):
     k = k.transpose(1, 2)
     v = v.transpose(1, 2)
     enable_gqa = q.size(1) != k.size(1)
-    y = _sdpa_attention(q, k, v, window_size, enable_gqa)
+    T = q.size(2)
+    window = window_size[0]
+    if USE_FLEX and q.is_cuda and 0 <= window < T:
+        # Sliding window without FA3: block-sparse FlexAttention instead of a dense attn_mask
+        y = _flex_sliding_window(q, k, v, window, enable_gqa)
+    else:
+        y = _sdpa_attention(q, k, v, window_size, enable_gqa)
     return y.transpose(1, 2)  # back to (B, T, H, D)
 
 
