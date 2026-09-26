@@ -2199,6 +2199,19 @@ class Experiment:
             cmd = _torchrun_command(
                 cmd, "scripts.chat_sft", self.nproc_per_node
             )
+        elif training.get("method") == "distill":
+            # Off-policy distillation (LoRA SFT on teacher conversations); the
+            # data section (dataset, route_weights, ...) is read from config.json.
+            cmd = [
+                sys.executable, "-u", "-m", "scripts.chat_distill",
+                f"--sft-checkpoint-dir={self.parent_checkpoint_dir()}",
+                f"--sft-step={self.parent['checkpoint_step']}",
+                *common,
+            ]
+            for key in ("num_iterations", "device_batch_size", "rows_per_step", "lr", "warmup_steps",
+                        "lora_rank", "lora_alpha", "activation_checkpointing", "eval_every", "save_every", "seed"):
+                if training.get(key) is not None:
+                    cmd.append(f"--{key.replace('_', '-')}={training[key]}")
         else:
             cmd = [
                 sys.executable, "-u", "-m", "scripts.chat_rl",

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "suite_id": "dumbass-bench-v1",
+  "prompts": {
+    "repo": "greenpolo/dumbass-bench",
+    "path": "data/prompts.jsonl"
+  },
+  "generation": {
+    "samples": 2,
+    "max_tokens": 256,
+    "seed": 0
+  },
+  "output_dir": "dumbass-bench-v1",
+  "models": [
+    {
+      "id": "released-sft",
+      "backend": "nanochat-checkpoint",
+      "checkpoint_dir": "experiments/Think.Unbounded-d32-v2mix-cont/sft/Think.Unbounded-d32-v2mix-cont-pre1930-curriculum-c3-robust-v2/checkpoints",
+      "step": 42
+    },
+    {
+      "id": "talkie-distill-v1",
+      "backend": "nanochat-checkpoint",
+      "checkpoint_dir": "experiments/Think.Unbounded-d32-v2mix-cont/sft/Think.Unbounded-d32-v2mix-cont-pre1930-curriculum-c3-robust-v2/posttrain/Think.Unbounded-d32-v2mix-cont-pre1930-curriculum-c3-robust-v2-talkie-distill-v1/checkpoints",
+      "step": 800
+    },
+    {
+      "id": "talkie-1930-13b-it",
+      "backend": "talkie",
+      "persona": "configs/system_prompts/talkie-1930-teacher.txt"
+    }
+  ],
+  "compare": [["talkie-distill-v1", "released-sft"], ["talkie-1930-13b-it", "talkie-distill-v1"]]
+}

@@ -118,6 +118,12 @@ Post-training configs identify the base, SFT recipe, and exact SFT checkpoint:
 }
 ```
 
+Post-training runs `scripts/chat_rl.py` (GSM8K GRPO) unless `training.method` is
+`"distill"`, which runs `scripts/chat_distill.py`: LoRA SFT on teacher-written
+conversations plus replay (see
+`configs/posttrain/pre1930-curriculum-c3-robust-v2-talkie-distill-v1.json` and
+`dev/talkie_distill/`).
+
 Experiment IDs are immutable. The harness fingerprints the complete config and
 refuses to reuse an existing local or remote ID with changed settings.
 
@@ -311,6 +317,7 @@ checkpoint directory.
 | `scripts/chat_eval.py` | Evaluate exact SFT/post-training checkpoint directories and emit structured ChatCORE results. |
 | `scripts/chat_sft.py` | Load an exact base parent, save periodic optimizer-complete SFT checkpoints, resume, and record cumulative FLOPs. |
 | `scripts/chat_rl.py` | Load an exact SFT parent, save optimizer-complete post-training checkpoints, resume, and account for optimization plus rollout FLOPs. |
+| `scripts/chat_distill.py` | Load an exact SFT parent, train an opt-in LoRA adapter, and save the merged model as a plain checkpoint. |
 
 These changes preserve the legacy CLI paths when explicit experiment
 directories are not supplied.

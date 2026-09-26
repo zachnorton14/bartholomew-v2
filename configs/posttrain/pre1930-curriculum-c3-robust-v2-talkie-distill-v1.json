@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "stage": "posttrain",
+  "experiment_id": "Think.Unbounded-d32-v2mix-cont-pre1930-curriculum-c3-robust-v2-talkie-distill-v1",
+  "parent": {
+    "base_experiment_id": "Think.Unbounded-d32-v2mix-cont",
+    "sft_experiment_id": "Think.Unbounded-d32-v2mix-cont-pre1930-curriculum-c3-robust-v2",
+    "checkpoint_step": 42
+  },
+  "data": {
+    "dataset": "greenpolo/talkie-distill-pre1930",
+    "route_weights": "questions=1,messy=1,casual=1,multiturn=1,sft_questions=1,fragments=3",
+    "teacher_fraction": 0.6,
+    "replay_substantive": 1
+  },
+  "training": {
+    "method": "distill",
+    "num_iterations": 800,
+    "device_batch_size": 8,
+    "rows_per_step": 32,
+    "lr": 1e-05,
+    "warmup_steps": 10,
+    "lora_rank": 64,
+    "lora_alpha": 128,
+    "activation_checkpointing": 1,
+    "eval_every": 100,
+    "save_every": 100
+  },
+  "artifacts": {
+    "repo": "jbduran/bart-experiments"
+  },
+  "wandb": {
+    "enabled": true,
+    "entity": "jbduran-thinkingmachinesncsu",
+    "project": "think.nano",
+    "group": "think-d32",
+    "tags": [
+      "posttrain",
+      "distill",
+      "talkie",
+      "lora",
+      "d32"
+    ]
+  }
+}
