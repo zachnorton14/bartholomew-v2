@@ -134,12 +134,15 @@ def pretokenized_data_loader_with_state(
         cursor.skip((ddp_world_size - 1 + ddp_rank) * tokens_per_rank_batch)
 
     use_cuda = device == "cuda"
-    cpu_buffer = torch.empty(read_tokens, dtype=torch.long, pin_memory=use_cuda)
     gpu_buffer = torch.empty(read_tokens, dtype=torch.long, device=device)
 
     while True:
         batch_np = cursor.read(read_tokens).astype(np.int64, copy=False)
-        cpu_buffer.copy_(torch.from_numpy(batch_np))
+        # A fresh pinned tensor per batch: the caching host allocator records the async
+        # copy's stream and will not hand the block out again until that copy has run.
+        # Reusing one pinned buffer here raced with the in-flight H2D copy, since the
+        # training loop enqueues several micro-steps ahead of the GPU without syncing.
+        cpu_buffer = torch.from_numpy(batch_np).pin_memory() if use_cuda else torch.from_numpy(batch_np)
         state_dict = cursor.state_dict()
         gpu_buffer.copy_(cpu_buffer, non_blocking=use_cuda)
         flat_x = gpu_buffer[:-1]

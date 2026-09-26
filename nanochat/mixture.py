@@ -424,7 +424,6 @@ class MixtureLoader:
 
         read_tokens = self.tokens_per_microbatch + 1
         use_cuda = device == "cuda"
-        self._cpu_buffer = torch.empty(read_tokens, dtype=torch.long, pin_memory=use_cuda)
         self._gpu_buffer = torch.empty(read_tokens, dtype=torch.long, device=device)
         self._read_tokens = read_tokens
         self._use_cuda = use_cuda
@@ -449,8 +448,12 @@ class MixtureLoader:
         # lands on the start of rank 0's next window plus our own offset. No-op at
         # world_size 1.
         cursor.skip((self.world_size - 1) * self.tokens_per_microbatch)
-        self._cpu_buffer.copy_(self._torch.from_numpy(batch_np))
-        self._gpu_buffer.copy_(self._cpu_buffer, non_blocking=self._use_cuda)
+        # Fresh pinned tensor per batch (see pretok_dataloader.py): a reused pinned buffer
+        # races with the still-queued async H2D copy of the previous micro-batch.
+        cpu_buffer = self._torch.from_numpy(batch_np)
+        if self._use_cuda:
+            cpu_buffer = cpu_buffer.pin_memory()
+        self._gpu_buffer.copy_(cpu_buffer, non_blocking=self._use_cuda)
         flat_x = self._gpu_buffer[:-1]
         flat_y = self._gpu_buffer[1:]
         return flat_x.view(self.B, self.T), flat_y.view(self.B, self.T)
