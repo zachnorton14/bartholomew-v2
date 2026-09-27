@@ -3,10 +3,11 @@ Filter Talkie's conversations and expand them into one SFT row per kept turn.
 
 A row's messages are the conversation up to and including that assistant turn;
 training targets only the last one. A turn is dropped if it was cut off at the
-token cap, leaks the persona, echoes the user, is too short, copies an earlier
-answer, uses modern vocabulary, is mostly non-letters, or greets/assents when
-asked a question. Once a turn is dropped the rest of that conversation goes too,
-since its context contains the bad turn. For topic fragments ("pepper") the first
+token cap, leaks the persona, deflects ("I don't understand, tell me plainly"),
+echoes the user, is too short, copies an earlier answer, uses modern vocabulary,
+is mostly non-letters, or greets/assents when asked a question. Once a turn is
+dropped the rest of that conversation goes too, since its context contains the
+bad turn. For topic fragments ("pepper") the first
 answer must also name the topic and run at least 12 words.
 
 The held-out split is disjoint by prompt family (all samples and turns of a prompt).
@@ -36,6 +37,9 @@ GREETING = re.compile(r"^(I am (very |most |right )?(glad|pleased|happy|delighte
 MODERN = re.compile(r"\b(television|televisions|computer|computers|internet|nazi|nazis|hitler|world war (ii|two|2)|"
                     r"second world war|atomic bomb|nuclear|radar|penicillin|jet plane|rocket ship|nylon|"
                     r"19[3-9]\d|20\d\d)\b", re.I)
+DEFLECT = re.compile(r"(don'?t|do not|cannot|can't|can not)( quite)? (understand|follow|comprehend|make (it|you) out)|"
+                     r"tell me plainly|what do you mean|how do you mean|say (it|that) again|put it another way|"
+                     r"speak (more )?plainly|beg your pardon|i am at a loss|know what you mean", re.I)
 CASUAL_ROUTES = {"casual"}  # greetings are the right answer here
 
 
@@ -59,6 +63,7 @@ def reject(answer, user, turn, conv, previous):
     if conv.get("topic") and turn == 1 and not names_topic(answer, conv["topic"]): return "off_topic"
     if conv.get("topic") and turn == 1 and len(answer.split()) < 12: return "short_topic"
     if LEAK.search(answer): return "leak"
+    if DEFLECT.search(answer): return "deflect"
     if normalize(answer) in normalize(user): return "echo"
     if len(answer.split()) < args.min_words: return "short"
     if MODERN.search(answer): return "modern"

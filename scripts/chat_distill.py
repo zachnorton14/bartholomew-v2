@@ -198,7 +198,11 @@ def substantive(conversation):
 weights = {route: int(w) for route, w in (kv.split("=") for kv in args.route_weights.split(","))}
 teacher_rows = []
 for route, weight in weights.items():
-    rows, dropped = encode_task(TalkieDistill(route, dataset=args.dataset))
+    try:
+        rows, dropped = encode_task(TalkieDistill(route, dataset=args.dataset))
+    except FileNotFoundError:
+        print0(f"route {route}: no rows, skipped")
+        continue
     teacher_rows += rows * weight
     print0(f"route {route}: {len(rows):,} rows x{weight} ({dropped} over length)")
 replay_rows, dropped = encode_task(AuthenticPre1930(split="train"), keep=substantive if args.replay_substantive else (lambda c: True))

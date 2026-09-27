@@ -21,7 +21,6 @@ import time
 
 import torch
 
-from dev.talkie_distill.teacher import Teacher
 
 FOLLOWUPS = ["tell me more", "Tell me more.", "go on", "Go on.", "and then?", "why?", "Why is that?",
              "what else", "How so?", "can you explain that", "more please", "Say more about that.",
@@ -29,9 +28,11 @@ FOLLOWUPS = ["tell me more", "Tell me more.", "go on", "Go on.", "and then?", "w
              "what happened next", "why do you think that", "I don't follow.", "and?"]
 
 parser = argparse.ArgumentParser(description="Generate Talkie conversations")
+parser.add_argument("--teacher", default="talkie", choices=["talkie", "bart-sft"],
+                    help="bart-sft = the released SFT answers itself (self-distillation control)")
 parser.add_argument("--pools", nargs="+", required=True, help="prompt jsonl files: {id, route, messages} per line")
 parser.add_argument("--out", required=True)
-parser.add_argument("--persona", default="configs/system_prompts/talkie-1930-teacher.txt")
+parser.add_argument("--persona", default="configs/system_prompts/talkie-1930-teacher.txt", help="'' = none")
 parser.add_argument("--exclude", default="", help="jsonl of held-out eval prompts never to generate for")
 parser.add_argument("--samples", type=int, default=2, help="independent samples per prompt")
 parser.add_argument("--p-follow2", type=float, default=0.5, help="fraction of conversations that get a second turn")
@@ -48,7 +49,7 @@ def log(*msg):
     print(time.strftime("%H:%M:%S"), *msg, flush=True)
 
 
-persona = open(args.persona).read().strip()
+persona = open(args.persona).read().strip() if args.persona else ""
 excluded = set()
 if args.exclude:
     excluded = {json.loads(line)["prompt"].strip().lower() for line in open(args.exclude) if line.strip()}
@@ -74,12 +75,18 @@ if os.path.exists(args.out):
         if row["id"] in by_id:
             by_id[row["id"]].update(messages=row["messages"], turns=row["turns"])
 
-teacher = Teacher()
+if args.teacher == "talkie":
+    from dev.talkie_distill.teacher import Teacher
+    teacher = Teacher()
+else:
+    from dev.talkie_distill.bart_teacher import BartTeacher
+    teacher = BartTeacher()
 
 
 def teacher_messages(messages):
     messages = [dict(m) for m in messages]
-    messages[0]["content"] = persona + "\n\n" + messages[0]["content"]
+    if persona:
+        messages[0]["content"] = persona + "\n\n" + messages[0]["content"]
     return messages
 
 
@@ -87,7 +94,7 @@ def run_stage(stage, items):
     """Append one assistant turn to every conversation that ends in a user turn."""
     items = [c for c in items if len(c["turns"]) < stage]
     encoded = [(c, teacher.encode_chat(teacher_messages(c["messages"]))) for c in items]
-    encoded = [(c, ids) for c, ids in encoded if len(ids) + args.max_new_tokens <= teacher.model.max_seq_len]
+    encoded = [(c, ids) for c, ids in encoded if len(ids) + args.max_new_tokens <= teacher.max_seq_len]
     encoded.sort(key=lambda x: len(x[1]))  # similar lengths per batch -> less padding
     log(f"stage {stage}: {len(encoded)} generations")
     t0, new_tokens = time.time(), 0

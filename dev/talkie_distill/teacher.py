@@ -108,6 +108,7 @@ class Teacher:
         self.tok = build_tokenizer(hf_hub_download(REPO_ID, "vocab.txt"))
         self.pad_id = SPECIAL_TOKENS["<|endoftext|>"]
         self.stop_ids = sorted(SPECIAL_TOKENS.values())
+        self.max_seq_len = self.model.max_seq_len
         print(f"Talkie loaded in {time.time() - t0:.0f}s, {torch.cuda.memory_allocated() / 1e9:.1f} GB")
 
     def encode_chat(self, messages):

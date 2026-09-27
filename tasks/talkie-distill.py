@@ -16,7 +16,6 @@ from huggingface_hub import HfApi, hf_hub_download
 from tasks.common import Task
 
 DATASET = "greenpolo/talkie-distill-pre1930"
-ROUTES = ("questions", "messy", "casual", "multiturn", "sft_questions", "fragments")
 
 
 @lru_cache(maxsize=None)
@@ -43,7 +42,6 @@ class TalkieDistill(Task):
     def __init__(self, route=None, split="train", dataset=DATASET, **kwargs):
         super().__init__(**kwargs)
         if split == "train":
-            assert route in ROUTES, f"unknown route {route!r}; choose from {ROUTES}"
             self.rows = _load_rows(dataset, f"rows/{route}")
         else:
             self.rows = _load_rows(dataset, "heldout")
