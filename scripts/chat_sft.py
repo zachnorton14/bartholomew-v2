@@ -363,6 +363,13 @@ elif args.recipe == "curriculum":
     print0(f"Curriculum {spec.get('name','?')} ({curriculum_bundle.summary['mode']}): "
            f"{len(train_dataset):,} train rows, {len(val_dataset):,} val rows")
     print0(f"Curriculum summary: {json.dumps(curriculum_bundle.summary)}")
+    # Optional: open a share of training rows with a system prompt (tasks/system_prompts.py).
+    # Val stays as it was, so val bpb remains comparable with runs trained without one.
+    system_prompt_spec = resolved.get("data", {}).get("system_prompts") if isinstance(resolved, dict) else None
+    if system_prompt_spec:
+        from tasks.system_prompts import SystemPromptMixture
+        train_dataset = SystemPromptMixture(train_dataset, system_prompt_spec)
+        print0(f"System prompts on train rows: {json.dumps(train_dataset.summary())}")
 else:
     identity_conversations_filepath = os.path.join(base_dir, "identity_conversations.jsonl")
     smoltalk_task = SmolTalk(split="train")
