@@ -1,0 +1,76 @@
+# =============================================================================
+# Anneal-ablation config -- one file per ablation.
+#
+# An ablation resumes a parent base-train checkpoint and continues training on
+# the midtrain mixture for `num_steps` more optimizer steps, under its own tag.
+# By default only the final result is saved (see `checkpoint_every`).
+#
+# Parameters that MUST match the parent (architecture, tokenizer, vocab size,
+# batch sizes, etc.) are intentionally ABSENT here -- they are auto-derived from
+# the seed checkpoint's metadata at runtime. Only put a value here if it is what
+# *defines* this ablation.
+# =============================================================================
+
+# --- Identity -----------------------------------------------------------------
+# Unique tag for THIS ablation. Names its HF folder + W&B run. Must be unique
+# per ablation so each gets its own horizon and logs.
+tag: think-d12-r20-anneal-ratio30-v1
+
+# --- Parent (what we resume from) --------------------------------------------
+parent:
+  tag: think-d12-r20   # base-train experiment tag on HF to resume from
+  step: 2362           # exact checkpoint step to resume from
+
+# --- Ablation horizon ---------------------------------------------------------
+# Additional optimizer steps to run on top of the parent's resume step.
+# Absolute horizon handed to the trainer = parent.step + num_steps.
+num_steps: 500
+
+# --- Midtrain mixture ---------------------------------------------------------
+# Selects DATASET_HF_REPO/mixed/ratio_<pct>/data as the training mix.
+ratio_pct: 30
+
+# --- Checkpointing ------------------------------------------------------------
+# How often (in steps) to save + upload an intermediate checkpoint.
+#   -1  (default) -> no intermediate checkpoints; only the final horizon step is
+#                    saved and uploaded. A disconnect restarts the anneal fresh.
+#   N > 0         -> save + upload a checkpoint every N steps (and the final
+#                    step), so a disconnect resumes from the latest saved step.
+# The final checkpoint is always saved regardless of this value.
+checkpoint_every: -1
+
+# --- Learning rate ------------------------------------------------------------
+# DEFAULT (this block omitted or commented out): each of the parent's four
+# per-group LRs (embedding / unembedding / matrix / scalar) is used as its own
+# peak and decays LINEARLY to 0 across all `num_steps` of this ablation.
+#
+# To override, uncomment `learning_rate` below. Any field left out falls back
+# to its default, so you can override only the schedule shape, only the peak,
+# etc.
+#
+# learning_rate:
+#   # Schedule shape applied to every group. One of: linear | constant.
+#   # (The training engine does linear warmup->flat->linear-warmdown; cosine is
+#   # not implemented, so only these two are accepted.)
+#   #   linear   -> decay each peak to `final_lr_frac` across this ablation.
+#   #   constant -> hold each peak flat for the whole ablation (no warmdown).
+#   schedule: linear
+#
+#   # Fraction of the peak LR to end at. 0.0 = decay fully to zero. Ignored by
+#   # `constant`.
+#   final_lr_frac: 0.0
+#
+#   # Peak LR to start the decay from. Choose EITHER `multiplier` OR `per_group`;
+#   # omit both to start from the parent's original per-group LRs unchanged.
+#   #
+#   # multiplier: scales all four parent LRs by one factor (e.g. 0.5 = start at
+#   #             half the parent's LRs).
+#   multiplier: 1.0
+#   #
+#   # per_group: explicit peak LR for each group, overriding the parent's values.
+#   #            Any group omitted here keeps the parent's original LR.
+#   # per_group:
+#   #   embedding: 0.3
+#   #   unembedding: 0.008
+#   #   matrix: 0.02
+#   #   scalar: 0.5

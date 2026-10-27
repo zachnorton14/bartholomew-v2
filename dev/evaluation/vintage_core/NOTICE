@@ -1,0 +1,18 @@
+Vintage CORE
+Copyright (c) 2026 Jonathan Duran-Ortiz
+Developed at Unbounded Labs.
+
+Portions of the evaluator reproduce or adapt behavior from nanochat:
+Copyright (c) 2025 Andrej Karpathy. nanochat is distributed under the MIT
+License: https://github.com/karpathy/nanochat
+
+Vintage CORE is based on the CORE evaluation suite from DataComp-LM:
+https://github.com/mlfoundations/dclm
+DataComp-LM's project code is distributed under the MIT License. Its authors
+request that users of the evaluation suite cite the original evaluation papers.
+
+The benchmark data files in data/ are derived from the third-party evaluation
+datasets named in data/*/core.yaml. Those source datasets may have their own
+licenses, terms, and citation requirements. The repository's MIT License covers
+the project code and original documentation; it does not supersede applicable
+terms for third-party dataset content.

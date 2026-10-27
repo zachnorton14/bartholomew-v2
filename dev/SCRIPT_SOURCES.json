@@ -1,0 +1,1340 @@
+{
+  "retrieved_on": "2026-10-27",
+  "sources": {
+    "github:OwenVoorhees/bart-dataset-scripts": {
+      "repository": "OwenVoorhees/bart-dataset-scripts",
+      "revision": "b17f0126cced0f8128deff7213216741970cd41e",
+      "url": "https://github.com/OwenVoorhees/bart-dataset-scripts"
+    },
+    "github:OwenVoorhees/bart-midtrain-scripts": {
+      "repository": "OwenVoorhees/bart-midtrain-scripts",
+      "revision": "0b3639b928a4ec941213979ba5c65e78aafa2955",
+      "url": "https://github.com/OwenVoorhees/bart-midtrain-scripts"
+    },
+    "github:zachnorton14/sft-extractor": {
+      "repository": "zachnorton14/sft-extractor",
+      "revision": "6d362213c9bd496b18bf490453613c616e2d4c1c",
+      "url": "https://github.com/zachnorton14/sft-extractor"
+    },
+    "github:johnny0595/vintage-core": {
+      "repository": "johnny0595/vintage-core",
+      "revision": "18df22df54156a75ec27e6f73047595fbe81d32c",
+      "url": "https://github.com/johnny0595/vintage-core"
+    },
+    "huggingface:jbduran/bartholomew-dataset-v3": {
+      "repository": "jbduran/bartholomew-dataset-v3",
+      "revision": "c0751cc5480848d3dd861b0b9d9a5b31fa488e21",
+      "url": "https://huggingface.co/datasets/jbduran/bartholomew-dataset-v3"
+    }
+  },
+  "hugging_face_repositories_checked": [
+    {
+      "repository": "jbduran/bartholomew-dataset-v1",
+      "revision": "63697155769e76c10248a85acc240aa99b222283",
+      "scripts": []
+    },
+    {
+      "repository": "jbduran/bartholomew-dataset-v2",
+      "revision": "0a678b1c7dd4640f674b56bf8be221d84ad52919",
+      "scripts": []
+    },
+    {
+      "repository": "jbduran/bartholomew-dataset-v3",
+      "revision": "c0751cc5480848d3dd861b0b9d9a5b31fa488e21",
+      "scripts": [
+        "scripts/build_list.py",
+        "scripts/common.py",
+        "scripts/config.py",
+        "scripts/filter_lib.py",
+        "scripts/footer_lib.py",
+        "scripts/report.py",
+        "scripts/run_filter.py",
+        "scripts/strip_footers.py",
+        "scripts/wipe.py"
+      ]
+    },
+    {
+      "repository": "jbduran/history-event-reconstruction",
+      "revision": "7e9dd6eb3d00c7fc028344e578f9bc70fb1d4b02",
+      "scripts": []
+    },
+    {
+      "repository": "jbduran/vintage-core",
+      "revision": "87aecd5a1952d39807989097c06fdc09706c1801",
+      "scripts": []
+    },
+    {
+      "repository": "jbduran/vintage-gsm8k-filtered",
+      "revision": "c6301d8074548e405a2446f03c0c914ac8ab2988",
+      "scripts": []
+    },
+    {
+      "repository": "jbduran/vintage-gsm8k",
+      "revision": "2564228a669b090f4cdc59bfab2cccf45e596235",
+      "scripts": []
+    },
+    {
+      "repository": "osvoorhe/gutenberg-english-text",
+      "revision": "1d7e0cb63da0695ceb0090afc501c2145b4655eb",
+      "scripts": []
+    },
+    {
+      "repository": "zachnorton03/authentic-pre1930-sft-conversational",
+      "revision": "43f1f6bb79881f91529c4d998f376933637f567f",
+      "scripts": []
+    },
+    {
+      "repository": "zachnorton03/bart-midtrain",
+      "revision": "c932201e1dc039c2ec72f6ce2504f4d0fb3b3060",
+      "scripts": []
+    },
+    {
+      "repository": "zachnorton03/synthetic-pre1930-sft",
+      "revision": "e2e527ee7c8308910a26a2479a97e0155fa019fc",
+      "scripts": []
+    },
+    {
+      "repository": "zachnorton03/vintage-sft-robustness",
+      "revision": "e3431f4e723568caf26c96c4197825b713de9464",
+      "scripts": []
+    }
+  ],
+  "notes": [
+    "Source-only snapshots; dataset shards, checkpoints, logs, caches and credentials are excluded.",
+    "Notebook code and configuration are preserved; saved outputs and execution counts are cleared.",
+    "Missing HF-hosted pipelines are recovered from the sources linked by this project or dataset cards.",
+    "Standard scripts/build_list.py and scripts/filter_lib.py differ between the checked GitHub and HF revisions; the versions published with dataset v3 are retained here.",
+    "The midtraining repository's cleaning info/ Python and notebook sources exactly match the standard GitHub pipeline and are not duplicated."
+  ],
+  "files": [
+    {
+      "path": "dev/evaluation/colab/Vintage_CORE_Eval.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "Vintage_CORE_Eval.ipynb",
+      "source_sha256": "5da9d223eca824333f24ef44125671c8a8e9265248a11f8ecfaa0dce2dd6fad1",
+      "local_sha256": "dd0e4f968cde6781188f06b293616ef4b24bd1b0eba53fac70f4ef0d17fc62a6",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/evaluation/colab/Vintage_CORE_Eval_1.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "Vintage_CORE_Eval_1.ipynb",
+      "source_sha256": "bbc0b5e6bdb34b551a406bd831b1fd4beb38082a66bfcc8bca9e53d8dd933549",
+      "local_sha256": "9d942c65a013c9804865b934f1c34175d834e356ee9ee51e9ea2ac4b4e25242b",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/evaluation/colab/Vintage_CORE_Eval_r30.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "Vintage_CORE_Eval_r30.ipynb",
+      "source_sha256": "62770c73f1e2f61aae84bebba27595d61309065ab700a59b0818ee22a15b50ba",
+      "local_sha256": "03ebb04dc8a8f08fca136a653623b1b281075ffc55abbcb8490e83938a6595ee",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/evaluation/vintage_core/DATA_PROVENANCE.md",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "DATA_PROVENANCE.md",
+      "source_sha256": "afcca45f4ea076173760b63a0da732e58c17ce96389a9a696d2ccfc20a648f7b",
+      "local_sha256": "afcca45f4ea076173760b63a0da732e58c17ce96389a9a696d2ccfc20a648f7b"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/LICENSE",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "LICENSE",
+      "source_sha256": "89f1a37bfc7ae93712ae8e156984979637b27a5d0b64e255ba576f4d26ce3eaf",
+      "local_sha256": "89f1a37bfc7ae93712ae8e156984979637b27a5d0b64e255ba576f4d26ce3eaf"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/NOTICE",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "NOTICE",
+      "source_sha256": "43f39c5aaea31cd64b3b5ab9c61e6acca622aca830c2f8f4b5f7b193b1bc7b55",
+      "local_sha256": "43f39c5aaea31cd64b3b5ab9c61e6acca622aca830c2f8f4b5f7b193b1bc7b55"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/UPSTREAM_README.md",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "README.md",
+      "source_sha256": "cb4d3ac1a1463117880fa324bddde3d8a9cea0a2d08fc5ab443b2a75ed1631d2",
+      "local_sha256": "cb4d3ac1a1463117880fa324bddde3d8a9cea0a2d08fc5ab443b2a75ed1631d2"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/docs/BUILDING.md",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "docs/BUILDING.md",
+      "source_sha256": "6fa8ca30b81be9f56383ba6852a9a7ef857e52605a228410bff7d8c35f2a1d69",
+      "local_sha256": "6fa8ca30b81be9f56383ba6852a9a7ef857e52605a228410bff7d8c35f2a1d69"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/notebooks/Vintage_CORE_Eval.ipynb",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "notebooks/Vintage_CORE_Eval.ipynb",
+      "source_sha256": "2358d29919f11415018d799a29e6ddfe42a3f3bb1bacfe19cb9f27d0b5d37e2f",
+      "local_sha256": "9317973be29f38108f89ea403e6da3a9bd18fceb0213ae24c3809d3e2bd96058",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/evaluation/vintage_core/pyproject.toml",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "pyproject.toml",
+      "source_sha256": "a5f594e158c85487f0cad83c4e02e31995cdb68f318d70fa051022dd8cb934b2",
+      "local_sha256": "a5f594e158c85487f0cad83c4e02e31995cdb68f318d70fa051022dd8cb934b2"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/__init__.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/__init__.py",
+      "source_sha256": "f63746605d638bcea2d51340d6d92a8bb6753676a6f4c673306caf5239ad50c4",
+      "local_sha256": "f63746605d638bcea2d51340d6d92a8bb6753676a6f4c673306caf5239ad50c4"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/backfill.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/backfill.py",
+      "source_sha256": "5d73eec709e458da27910678e7c47d3d0ca4d5151f42eee39b17b8a8743287a8",
+      "local_sha256": "5d73eec709e458da27910678e7c47d3d0ca4d5151f42eee39b17b8a8743287a8"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/bundle_validation.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/bundle_validation.py",
+      "source_sha256": "794978463b1c536060ed07d80ec5952a50c7319c80546b16db57d151524c71f1",
+      "local_sha256": "794978463b1c536060ed07d80ec5952a50c7319c80546b16db57d151524c71f1"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/bundles.json",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/bundles.json",
+      "source_sha256": "11594bfbf8fe24af400ed9265d8451efb4f505024b77de05754ec400acafb7c2",
+      "local_sha256": "11594bfbf8fe24af400ed9265d8451efb4f505024b77de05754ec400acafb7c2"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/client.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/client.py",
+      "source_sha256": "c832cb8ffc1782486f4b0987e0a67dcd9b6f1316e3ff0460cb77f9d2ac3c429d",
+      "local_sha256": "c832cb8ffc1782486f4b0987e0a67dcd9b6f1316e3ff0460cb77f9d2ac3c429d"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/config.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/config.py",
+      "source_sha256": "d4ebe17fb517b7109dc4bf1aa70c36944374852c8a3f27f7b307d1b878923729",
+      "local_sha256": "d4ebe17fb517b7109dc4bf1aa70c36944374852c8a3f27f7b307d1b878923729"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/evaluate.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/evaluate.py",
+      "source_sha256": "362eb02d802b0aa573c7f4957a46d9d346d3ea12b8eb3b4c4aab5b4323006bfb",
+      "local_sha256": "362eb02d802b0aa573c7f4957a46d9d346d3ea12b8eb3b4c4aab5b4323006bfb"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/filter.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/filter.py",
+      "source_sha256": "f647e6ea31eeab0936792f127ef026d6b5e4bbf5bef51e9674784ae9bdf7cb09",
+      "local_sha256": "f647e6ea31eeab0936792f127ef026d6b5e4bbf5bef51e9674784ae9bdf7cb09"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/gauntlet.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/gauntlet.py",
+      "source_sha256": "e26f77719c8590828984bc90d700f3dd34f40e0ef35bdd8ac72164ff73c5d624",
+      "local_sha256": "e26f77719c8590828984bc90d700f3dd34f40e0ef35bdd8ac72164ff73c5d624"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/interactive_example_pool.json",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/interactive_example_pool.json",
+      "source_sha256": "59cbb8e392d7032677149bff821a3a303f0c356214a32afd55d3f95315dadfd2",
+      "local_sha256": "59cbb8e392d7032677149bff821a3a303f0c356214a32afd55d3f95315dadfd2"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/load.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/load.py",
+      "source_sha256": "04e93708905c2669f9c0abc0f17e2869cd11a105d3d332449cad74cb2ec4ace6",
+      "local_sha256": "04e93708905c2669f9c0abc0f17e2869cd11a105d3d332449cad74cb2ec4ace6"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/log.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/log.py",
+      "source_sha256": "dc699f752aa815682498c9622b2efb885b1165f10fe745da66428b27b43897bb",
+      "local_sha256": "dc699f752aa815682498c9622b2efb885b1165f10fe745da66428b27b43897bb"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/models.json",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/models.json",
+      "source_sha256": "e2cc9e9077a260288b9b3f8ae9349df7acf9f4e5b6416c11f153f19703897253",
+      "local_sha256": "e2cc9e9077a260288b9b3f8ae9349df7acf9f4e5b6416c11f153f19703897253"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/prompts.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/prompts.py",
+      "source_sha256": "03219e39d4509207a3eda211786440e85f998c9ff42838845f87cd474d018be2",
+      "local_sha256": "03219e39d4509207a3eda211786440e85f998c9ff42838845f87cd474d018be2"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/reconcile.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/reconcile.py",
+      "source_sha256": "aeb0822d60e2ae0ca7f64ed6f878c9c1e8915419b09cc8f26bc5805340f67d3c",
+      "local_sha256": "aeb0822d60e2ae0ca7f64ed6f878c9c1e8915419b09cc8f26bc5805340f67d3c"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/regenerate.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/regenerate.py",
+      "source_sha256": "eaad2565a38a3f66a61c0f0aa87d2fd9ef8ff3dd76ace4182c199d1b770a8dae",
+      "local_sha256": "eaad2565a38a3f66a61c0f0aa87d2fd9ef8ff3dd76ace4182c199d1b770a8dae"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/regex_report.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/regex_report.py",
+      "source_sha256": "ec9c9fad9c9e62cfa7d701b2d317bba6b687f47b9071e3bf1f6b0cac125d3d02",
+      "local_sha256": "ec9c9fad9c9e62cfa7d701b2d317bba6b687f47b9071e3bf1f6b0cac125d3d02"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repackage.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repackage.py",
+      "source_sha256": "e18c756aaa2bd8b6370f4585fcb017909daebaa1d66863fef5055c47b7b91e98",
+      "local_sha256": "e18c756aaa2bd8b6370f4585fcb017909daebaa1d66863fef5055c47b7b91e98"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/__init__.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/__init__.py",
+      "source_sha256": "53778ef73c3bb3e9b4bcea5c4df481c03c982b3d06570b9b3499248437fb8381",
+      "local_sha256": "53778ef73c3bb3e9b4bcea5c4df481c03c982b3d06570b9b3499248437fb8381"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/decompose_boolq.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/decompose_boolq.py",
+      "source_sha256": "ac5fd0a531f6f7d1b3ce3ec6c65cbfa88debbbb54ddf22609b43d3f91b02ddff",
+      "local_sha256": "ac5fd0a531f6f7d1b3ce3ec6c65cbfa88debbbb54ddf22609b43d3f91b02ddff"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/decompose_coqa.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/decompose_coqa.py",
+      "source_sha256": "8cbd26c57fab9b43d048c261fc2ca06942a336f66bf7a398a3aaf670dc139ede",
+      "local_sha256": "8cbd26c57fab9b43d048c261fc2ca06942a336f66bf7a398a3aaf670dc139ede"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/decompose_jeopardy.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/decompose_jeopardy.py",
+      "source_sha256": "e525d96114343c24aaac80ab941173d963f67ef7a5bbc0148e0d2b0f99a93cb2",
+      "local_sha256": "e525d96114343c24aaac80ab941173d963f67ef7a5bbc0148e0d2b0f99a93cb2"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/decompose_lambada.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/decompose_lambada.py",
+      "source_sha256": "d9fb112dfcf94cf20ee42a07b87fb574d7ca5ed61dfb1ab5768ee5c7da2eb8ff",
+      "local_sha256": "d9fb112dfcf94cf20ee42a07b87fb574d7ca5ed61dfb1ab5768ee5c7da2eb8ff"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/decompose_squad.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/decompose_squad.py",
+      "source_sha256": "0df9b9acd9caf96f242fb7ed1ca52dc878b0eac8e2a57b8fdd60d728b556c495",
+      "local_sha256": "0df9b9acd9caf96f242fb7ed1ca52dc878b0eac8e2a57b8fdd60d728b556c495"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/regen_boolq.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/regen_boolq.py",
+      "source_sha256": "7297f586694762c99b36c66f10cc8f1f5a9236b54559cd49b6eb784dcbe275d8",
+      "local_sha256": "7297f586694762c99b36c66f10cc8f1f5a9236b54559cd49b6eb784dcbe275d8"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/regen_coqa.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/regen_coqa.py",
+      "source_sha256": "2fc477e3809d7f5ea80551a51fa741c970533c6b35d4927494bb093593479ee0",
+      "local_sha256": "2fc477e3809d7f5ea80551a51fa741c970533c6b35d4927494bb093593479ee0"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/regen_jeopardy.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/regen_jeopardy.py",
+      "source_sha256": "abf4032765123f3d45543705099c35ae95f01d30797b40f81c1e75f35bc81d01",
+      "local_sha256": "abf4032765123f3d45543705099c35ae95f01d30797b40f81c1e75f35bc81d01"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/regen_lambada.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/regen_lambada.py",
+      "source_sha256": "94afc396222fcbc6a7999bc579d2b82a89feafabebc87d3d7e0641b64d207453",
+      "local_sha256": "94afc396222fcbc6a7999bc579d2b82a89feafabebc87d3d7e0641b64d207453"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/regen_small_tasks.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/regen_small_tasks.py",
+      "source_sha256": "01259c1f72fb2dea6b8dfadbd2c3d6bf5d20e7cb1aedf7062ddc73b0b879cc13",
+      "local_sha256": "01259c1f72fb2dea6b8dfadbd2c3d6bf5d20e7cb1aedf7062ddc73b0b879cc13"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/regen_squad.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/regen_squad.py",
+      "source_sha256": "cce5d50b8feadb2c21a180ac829f4e56308069c136306d36726ce883f51f8234",
+      "local_sha256": "cce5d50b8feadb2c21a180ac829f4e56308069c136306d36726ce883f51f8234"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/repair_commonsense.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/repair_commonsense.py",
+      "source_sha256": "f66f9be0946b274b6b757dcb970be2bea41b60172c649e375ba31fea5e2d3725",
+      "local_sha256": "f66f9be0946b274b6b757dcb970be2bea41b60172c649e375ba31fea5e2d3725"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/repair_longform.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/repair_longform.py",
+      "source_sha256": "1210cc106852661914bd1c11d1d261b8ccec26b2b5bb9c3ebf1140305ba43945",
+      "local_sha256": "1210cc106852661914bd1c11d1d261b8ccec26b2b5bb9c3ebf1140305ba43945"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/repairs/repair_science_qa.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/repairs/repair_science_qa.py",
+      "source_sha256": "afa226c0a9ebf49dc1cbcfb490aa5e3c98b351a0899f81a5371422fdabcb1354",
+      "local_sha256": "afa226c0a9ebf49dc1cbcfb490aa5e3c98b351a0899f81a5371422fdabcb1354"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/restyle.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/restyle.py",
+      "source_sha256": "be5ba88e958fd075b7bc1fc6d10e65511493a116e0d17ad18562cb335515bd8f",
+      "local_sha256": "be5ba88e958fd075b7bc1fc6d10e65511493a116e0d17ad18562cb335515bd8f"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/stats.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/stats.py",
+      "source_sha256": "c0fb4357de35a5c6653a21904891e80bf7f39eb2270475c4444accd7ad242e72",
+      "local_sha256": "c0fb4357de35a5c6653a21904891e80bf7f39eb2270475c4444accd7ad242e72"
+    },
+    {
+      "path": "dev/evaluation/vintage_core/src/vintage_core/temporal.py",
+      "source": "github:johnny0595/vintage-core",
+      "source_path": "src/vintage_core/temporal.py",
+      "source_sha256": "2ab65bc9aed8dbbd09414339736592bb598bc75fe8e272abb80974568f16adc3",
+      "local_sha256": "2ab65bc9aed8dbbd09414339736592bb598bc75fe8e272abb80974568f16adc3"
+    },
+    {
+      "path": "dev/pretraining/midtraining/LICENSE",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "LICENSE",
+      "source_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9",
+      "local_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9"
+    },
+    {
+      "path": "dev/pretraining/midtraining/UPSTREAM_README.md",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "README.md",
+      "source_sha256": "73b6ee6f136157d554ecae863aef59c2287538666c50933efc8b9e1a64064943",
+      "local_sha256": "73b6ee6f136157d554ecae863aef59c2287538666c50933efc8b9e1a64064943"
+    },
+    {
+      "path": "dev/pretraining/midtraining/configs/anneal_ablation_sample.yaml",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "configs/anneal_ablation_sample.yaml",
+      "source_sha256": "d15fb34abd6a22af5371115afb91988e6548aeec87d41224b64cd0b4ed766194",
+      "local_sha256": "d15fb34abd6a22af5371115afb91988e6548aeec87d41224b64cd0b4ed766194"
+    },
+    {
+      "path": "dev/pretraining/midtraining/configs/anneal_d24_ratio0.yaml",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "configs/anneal_d24_ratio0.yaml",
+      "source_sha256": "4719136136bba67ce9b6c44b7ec08721be68d6ca280a843824040704724edccf",
+      "local_sha256": "4719136136bba67ce9b6c44b7ec08721be68d6ca280a843824040704724edccf"
+    },
+    {
+      "path": "dev/pretraining/midtraining/configs/anneal_d24_ratio60.yaml",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "configs/anneal_d24_ratio60.yaml",
+      "source_sha256": "9d083ece668451a55bc67534af85911175106d40aa974e10041092a700c4c9d2",
+      "local_sha256": "9d083ece668451a55bc67534af85911175106d40aa974e10041092a700c4c9d2"
+    },
+    {
+      "path": "dev/pretraining/midtraining/d32-branch-sample-config.json",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "d32-branch-sample-config.json",
+      "source_sha256": "1d5fc1a6b164c3ce48ff1a8b255a03e1c1f730df11cca038bf385c795df3a73b",
+      "local_sha256": "1d5fc1a6b164c3ce48ff1a8b255a03e1c1f730df11cca038bf385c795df3a73b"
+    },
+    {
+      "path": "dev/pretraining/midtraining/midtraining_anneal_ablation.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "midtraining_anneal_ablation.ipynb",
+      "source_sha256": "11d782ddb72499b4d9b18b383deebad5cbe649ea15192009b2d201249e5b75fd",
+      "local_sha256": "9708a184b955de264f15e98533c3b061085bb5bad4d0dfa234d7989b05bc1fdb",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/pretraining/midtraining/midtraining_extraction.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "midtraining_extraction.ipynb",
+      "source_sha256": "857cf74508a5cb1b26ed5a1ff0db0744eb545bec8448aa1c9584ee89fb01472c",
+      "local_sha256": "bf85c5cb9d995d0c9b511d79ccf2b463cd9b7ad4ac089062481bc63e22c6b9e2",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/pretraining/midtraining/midtraining_mix_ratios.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "midtraining_mix_ratios.ipynb",
+      "source_sha256": "ee2a131c2d72dd812038108f1e0440431c75bee0cddc1a6babc681b93d11214a",
+      "local_sha256": "842b0af7d08496a98d9af18019e436f729ecd3f80e235e82eff83769e4ff1e73",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/pretraining/midtraining/midtraining_mix_repair.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "midtraining_mix_repair.ipynb",
+      "source_sha256": "eded394635853497c4dc8620a76b642528f10a6ed26134fe458b59e76ef595eb",
+      "local_sha256": "eded394635853497c4dc8620a76b642528f10a6ed26134fe458b59e76ef595eb",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/pretraining/midtraining/midtraining_ocroscope_filtering.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "midtraining_ocroscope_filtering.ipynb",
+      "source_sha256": "a2190cac58b3d8139914c78ce83d900ccccb04f139a380873fe9fbf49a61c6ba",
+      "local_sha256": "92e31858106380ddebc070353c0db6ed185c4c3977a0d15064972f793397619f",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/pretraining/midtraining/midtraining_stage4_cleaning.ipynb",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "midtraining_stage4_cleaning.ipynb",
+      "source_sha256": "ffc2b5d0c0dbead7f5fb5349d9531a014ba53fe60bb06bdf904e18701c07f8e4",
+      "local_sha256": "8f7ea499d2456235a488dde2671f61365619bf7bfb6635b9fd25d68304d7dc4c",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/pretraining/midtraining/scripts/build_list.py",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "scripts/build_list.py",
+      "source_sha256": "33d5dc096e24bad7ea989da5dcf8e7b15d7f7464ced04a68eaa946880a0c580b",
+      "local_sha256": "33d5dc096e24bad7ea989da5dcf8e7b15d7f7464ced04a68eaa946880a0c580b"
+    },
+    {
+      "path": "dev/pretraining/midtraining/scripts/filter_lib.py",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "scripts/filter_lib.py",
+      "source_sha256": "461ae69defbbe2c8b65ff3d14b5337e258e18d68e8889edcdcf1c6ede00bf4be",
+      "local_sha256": "461ae69defbbe2c8b65ff3d14b5337e258e18d68e8889edcdcf1c6ede00bf4be"
+    },
+    {
+      "path": "dev/pretraining/midtraining/scripts/footer_lib.py",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "scripts/footer_lib.py",
+      "source_sha256": "dceacf3ca4123176af6852a0b91af9554a0e45f2ee2d217c4891f97add766877",
+      "local_sha256": "dceacf3ca4123176af6852a0b91af9554a0e45f2ee2d217c4891f97add766877"
+    },
+    {
+      "path": "dev/pretraining/midtraining/scripts/structural_clean.py",
+      "source": "github:OwenVoorhees/bart-midtrain-scripts",
+      "source_path": "scripts/structural_clean.py",
+      "source_sha256": "1aa52275c5245c72162f73094c51d44254e4d3d6f9783bac755c85f6c9783ce6",
+      "local_sha256": "1aa52275c5245c72162f73094c51d44254e4d3d6f9783bac755c85f6c9783ce6"
+    },
+    {
+      "path": "dev/pretraining/standard/LICENSE",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "LICENSE",
+      "source_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9",
+      "local_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9"
+    },
+    {
+      "path": "dev/pretraining/standard/UPSTREAM_README.md",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "README.md",
+      "source_sha256": "d079f7d96eb872b455dbf4cff7a7b605b6d79a35f5ee9a815d1d2b5a2705ee9a",
+      "local_sha256": "d079f7d96eb872b455dbf4cff7a7b605b6d79a35f5ee9a815d1d2b5a2705ee9a"
+    },
+    {
+      "path": "dev/pretraining/standard/build_nb.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "build_nb.py",
+      "source_sha256": "51aa930b1f9bd8f77f44cc84b0a2eb5a3aaf003fb130f5f859cfda56c5a83e22",
+      "local_sha256": "51aa930b1f9bd8f77f44cc84b0a2eb5a3aaf003fb130f5f859cfda56c5a83e22"
+    },
+    {
+      "path": "dev/pretraining/standard/build_nb_1930s.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "build_nb_1930s.py",
+      "source_sha256": "c870d9211c479daeadc60af13437a2e7d71ad8d62f4910c22930d2d223583a18",
+      "local_sha256": "c870d9211c479daeadc60af13437a2e7d71ad8d62f4910c22930d2d223583a18"
+    },
+    {
+      "path": "dev/pretraining/standard/build_nb_runner.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "build_nb_runner.py",
+      "source_sha256": "fcd578383ac12fc19cf6148a78f4b43e2a5a6b2ab53e7c5ac25a2ff805b4d556",
+      "local_sha256": "fcd578383ac12fc19cf6148a78f4b43e2a5a6b2ab53e7c5ac25a2ff805b4d556"
+    },
+    {
+      "path": "dev/pretraining/standard/cells/cell1_install.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells/cell1_install.py",
+      "source_sha256": "7c2bbc9ff487aa1a98c06bcc4c59777f271bec343dad714ba743cb34f2e6b55f",
+      "local_sha256": "7c2bbc9ff487aa1a98c06bcc4c59777f271bec343dad714ba743cb34f2e6b55f"
+    },
+    {
+      "path": "dev/pretraining/standard/cells/cell2_config.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells/cell2_config.py",
+      "source_sha256": "fd4d4884b8c6a1ee7c3c6b84c114acc366bfcf777b098a3d968b04d0c0284331",
+      "local_sha256": "fd4d4884b8c6a1ee7c3c6b84c114acc366bfcf777b098a3d968b04d0c0284331"
+    },
+    {
+      "path": "dev/pretraining/standard/cells/cell3_wipe.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells/cell3_wipe.py",
+      "source_sha256": "33ca2956e2cc6448c5fa76fa2c27efa177c61a84092a2880f3f78bad8454b874",
+      "local_sha256": "33ca2956e2cc6448c5fa76fa2c27efa177c61a84092a2880f3f78bad8454b874"
+    },
+    {
+      "path": "dev/pretraining/standard/cells/cell4_cleanlib.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells/cell4_cleanlib.py",
+      "source_sha256": "5ca52beef6acdc4ba7b2bac5453ca94da2842686b0d20d0bda385bf62b77b0f1",
+      "local_sha256": "5ca52beef6acdc4ba7b2bac5453ca94da2842686b0d20d0bda385bf62b77b0f1"
+    },
+    {
+      "path": "dev/pretraining/standard/cells/cell5_prior.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells/cell5_prior.py",
+      "source_sha256": "ecebacd8552f2d3bfa2334af614b646b6a5754523ba733216a59946eb4a7269a",
+      "local_sha256": "ecebacd8552f2d3bfa2334af614b646b6a5754523ba733216a59946eb4a7269a"
+    },
+    {
+      "path": "dev/pretraining/standard/cells/cell6_main.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells/cell6_main.py",
+      "source_sha256": "c37c7c9bc2c60869c0178a35fc9caeef2970b326a27f9b005114e54ffa2c1b60",
+      "local_sha256": "c37c7c9bc2c60869c0178a35fc9caeef2970b326a27f9b005114e54ffa2c1b60"
+    },
+    {
+      "path": "dev/pretraining/standard/cells/cell7_report.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells/cell7_report.py",
+      "source_sha256": "82496d5496fc55264b730a28df98c2a1f7c56b1b152df18bbf7a9ec8c9157c32",
+      "local_sha256": "82496d5496fc55264b730a28df98c2a1f7c56b1b152df18bbf7a9ec8c9157c32"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_1930s/cell1_install.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_1930s/cell1_install.py",
+      "source_sha256": "bc38bfd1d7a1f9974ca039611f04808905846b221ceed4b02cd0fb8f44290f88",
+      "local_sha256": "bc38bfd1d7a1f9974ca039611f04808905846b221ceed4b02cd0fb8f44290f88"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_1930s/cell2_config.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_1930s/cell2_config.py",
+      "source_sha256": "3c452dd11f02711f48e7ac624619c74763dd32f3580dcf1770a73b950bc32da5",
+      "local_sha256": "3c452dd11f02711f48e7ac624619c74763dd32f3580dcf1770a73b950bc32da5"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_1930s/cell3_wipe.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_1930s/cell3_wipe.py",
+      "source_sha256": "c60133617ac84bb2ae105b418b9dca761bd68f31b7135cfd505de23dffaa4a91",
+      "local_sha256": "c60133617ac84bb2ae105b418b9dca761bd68f31b7135cfd505de23dffaa4a91"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_1930s/cell_build_list.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_1930s/cell_build_list.py",
+      "source_sha256": "1a39c5fc84270e4e054d037767284878d869269d584fbacae54d36b4deeb33a5",
+      "local_sha256": "1a39c5fc84270e4e054d037767284878d869269d584fbacae54d36b4deeb33a5"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_1930s/cell_filter.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_1930s/cell_filter.py",
+      "source_sha256": "78c01434b4e4932c8afd45bbecf1b7c749ec210b91ea21f982d2e28d316dbbbf",
+      "local_sha256": "78c01434b4e4932c8afd45bbecf1b7c749ec210b91ea21f982d2e28d316dbbbf"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_1930s/cell_main.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_1930s/cell_main.py",
+      "source_sha256": "cfb06fd030b3539cb45f41365b84f9c0ad0857d1abd5bd881ac026b01634e05d",
+      "local_sha256": "cfb06fd030b3539cb45f41365b84f9c0ad0857d1abd5bd881ac026b01634e05d"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_1930s/cell_report.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_1930s/cell_report.py",
+      "source_sha256": "b576d054160ffa17ff315743ad3fec3f8fa90666fd7a65cbbfbcd94c909c0f3e",
+      "local_sha256": "b576d054160ffa17ff315743ad3fec3f8fa90666fd7a65cbbfbcd94c909c0f3e"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell1_bootstrap.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell1_bootstrap.py",
+      "source_sha256": "76d56213975784663afdd75342d10da5b917645f79847bdaabeafdb572d61e44",
+      "local_sha256": "76d56213975784663afdd75342d10da5b917645f79847bdaabeafdb572d61e44"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell2_push_scripts.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell2_push_scripts.py",
+      "source_sha256": "41f0b9e9f6f9f521264fd7aba94b92d2c3d84854b1bbf533ff84c7d9d7836cf4",
+      "local_sha256": "41f0b9e9f6f9f521264fd7aba94b92d2c3d84854b1bbf533ff84c7d9d7836cf4"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell3_wipe.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell3_wipe.py",
+      "source_sha256": "203b30457bda57d3f9458df51460800a507fd11111ec63dd5c7ce43c54f34e21",
+      "local_sha256": "203b30457bda57d3f9458df51460800a507fd11111ec63dd5c7ce43c54f34e21"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell4_build_list.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell4_build_list.py",
+      "source_sha256": "baff8a6dde24d07ea5538ac582612387db51988495316161a559a2637b442195",
+      "local_sha256": "baff8a6dde24d07ea5538ac582612387db51988495316161a559a2637b442195"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell4b_strip_footers.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell4b_strip_footers.py",
+      "source_sha256": "a0c149438efd824f0a79981dd5b4e2b7012e613113d0483b22584df8ffd13248",
+      "local_sha256": "a0c149438efd824f0a79981dd5b4e2b7012e613113d0483b22584df8ffd13248"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell4c_strip_all.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell4c_strip_all.py",
+      "source_sha256": "1b723cfc11c2cac78ef4e17dc3ad8841de883c34068a7aabf4b5f3b2892b196c",
+      "local_sha256": "1b723cfc11c2cac78ef4e17dc3ad8841de883c34068a7aabf4b5f3b2892b196c"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell5_run_filter.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell5_run_filter.py",
+      "source_sha256": "2031167598e9c43c331790bfa78f2408ffdc7e523fe0cffd79d30dc187b144e8",
+      "local_sha256": "2031167598e9c43c331790bfa78f2408ffdc7e523fe0cffd79d30dc187b144e8"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell6_run_all.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell6_run_all.py",
+      "source_sha256": "0e8a65d0c166bd6db0df57021f4b00395ce3d7ec9a49fd130a211d4fcbd2ed4c",
+      "local_sha256": "0e8a65d0c166bd6db0df57021f4b00395ce3d7ec9a49fd130a211d4fcbd2ed4c"
+    },
+    {
+      "path": "dev/pretraining/standard/cells_runner/cell7_report.py",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "cells_runner/cell7_report.py",
+      "source_sha256": "031e54d45697c5508a3261f51613cca6e145720b0bea6de9d8c4494fe1b0ade5",
+      "local_sha256": "031e54d45697c5508a3261f51613cca6e145720b0bea6de9d8c4494fe1b0ade5"
+    },
+    {
+      "path": "dev/pretraining/standard/clean_dataset_prompt.txt",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "clean_dataset_prompt.txt",
+      "source_sha256": "32d0393f25859fd518ff2175691b166229c588bc852d7cfc5c63afa10283f8a4",
+      "local_sha256": "32d0393f25859fd518ff2175691b166229c588bc852d7cfc5c63afa10283f8a4"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/build_list.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/build_list.py",
+      "source_sha256": "8afc4c5a8059adede9093711fd7a9ee1e92ddba8b4da0e5d345f7c4da062765a",
+      "local_sha256": "8afc4c5a8059adede9093711fd7a9ee1e92ddba8b4da0e5d345f7c4da062765a"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/common.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/common.py",
+      "source_sha256": "fe331ffc92649d7b4ff216033b917c3be8f5605446dc054de4d6d8302e4e8f5c",
+      "local_sha256": "fe331ffc92649d7b4ff216033b917c3be8f5605446dc054de4d6d8302e4e8f5c"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/config.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/config.py",
+      "source_sha256": "8f3ccb06557b41ff66c68aa015cc5da9d60eac1a2c2ca2a040c2387146dd658a",
+      "local_sha256": "8f3ccb06557b41ff66c68aa015cc5da9d60eac1a2c2ca2a040c2387146dd658a"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/filter_lib.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/filter_lib.py",
+      "source_sha256": "f6d2ad51dd753c735b4820d4d7e219cfd76fcf76b9dd1467d3ce5fb958a7d1fd",
+      "local_sha256": "f6d2ad51dd753c735b4820d4d7e219cfd76fcf76b9dd1467d3ce5fb958a7d1fd"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/footer_lib.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/footer_lib.py",
+      "source_sha256": "94ce21154fd8cd1df76fa25d5d3aa7d989dba13dcf1772b28d08bb08cd7b8ca2",
+      "local_sha256": "94ce21154fd8cd1df76fa25d5d3aa7d989dba13dcf1772b28d08bb08cd7b8ca2"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/report.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/report.py",
+      "source_sha256": "42a0b376af83f25d949677cd27ac46d6cba0452b32d03f504925fac0b96550ff",
+      "local_sha256": "42a0b376af83f25d949677cd27ac46d6cba0452b32d03f504925fac0b96550ff"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/run_filter.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/run_filter.py",
+      "source_sha256": "818906a3908e09d106dd59aa8080ec1ff9050e441fca5cfe07ea9b3040f70a98",
+      "local_sha256": "818906a3908e09d106dd59aa8080ec1ff9050e441fca5cfe07ea9b3040f70a98"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/strip_footers.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/strip_footers.py",
+      "source_sha256": "abab37cf450f886b0d162d4c1fbe9ca6ca997fe469b699ff403840ddc28334e9",
+      "local_sha256": "abab37cf450f886b0d162d4c1fbe9ca6ca997fe469b699ff403840ddc28334e9"
+    },
+    {
+      "path": "dev/pretraining/standard/scripts/wipe.py",
+      "source": "huggingface:jbduran/bartholomew-dataset-v3",
+      "source_path": "scripts/wipe.py",
+      "source_sha256": "8560bab28a9272d9e733bcc0be50b7e89d5fe9008d67194ca8a13c65b5bfbd39",
+      "local_sha256": "8560bab28a9272d9e733bcc0be50b7e89d5fe9008d67194ca8a13c65b5bfbd39"
+    },
+    {
+      "path": "dev/pretraining/standard/think_dataset_clean.ipynb",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "think_dataset_clean.ipynb",
+      "source_sha256": "69fb142b65db01a0611f6f96feead17c419136a9123e07f0052bc28a0d3fffa2",
+      "local_sha256": "dad576024f98fa4b077fb5bc14f5d3f95f71de067d9a05bd1f7c08babe90badb",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/pretraining/standard/think_dataset_clean_1930s.ipynb",
+      "source": "github:OwenVoorhees/bart-dataset-scripts",
+      "source_path": "think_dataset_clean_1930s.ipynb",
+      "source_sha256": "76775ecc5057f16e4cf813486646c52b6032a87db6de48ecc4a82e834af85ba9",
+      "local_sha256": "adaaf1e4ecac9c330e8b6d04029eab88cb5c6d38468a7b6665e0f9700a8de4b2",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/sft/sft_extractor/UPSTREAM_README.md",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "README.md",
+      "source_sha256": "33af4fb5b31baa413add02e6b0a90d2cbc58461a1ef467f19ba7f66939123a49",
+      "local_sha256": "33af4fb5b31baa413add02e6b0a90d2cbc58461a1ef467f19ba7f66939123a49"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/__init__.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/clean/__init__.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/clean/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/clean/bleed.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/clean/bleed.py",
+      "source_sha256": "ffbfbbd0a327c9c054be8dccd307347fbaf4f26060d04667e97e95d9e9bf4b14",
+      "local_sha256": "ffbfbbd0a327c9c054be8dccd307347fbaf4f26060d04667e97e95d9e9bf4b14"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/clean/enrich.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/clean/enrich.py",
+      "source_sha256": "067658359862fb740aded6b9ebf3a35430d879a05070e63275c8bc7ec68a7f9f",
+      "local_sha256": "067658359862fb740aded6b9ebf3a35430d879a05070e63275c8bc7ec68a7f9f"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/clean/filter.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/clean/filter.py",
+      "source_sha256": "f0dd7b3fb855540e4a705c04e47dacd58590a9b586d5489e4eac7baa1ac29433",
+      "local_sha256": "f0dd7b3fb855540e4a705c04e47dacd58590a9b586d5489e4eac7baa1ac29433"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/clean/ocr.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/clean/ocr.py",
+      "source_sha256": "5103f4cbde2a096bc4555fc786f2efc1fea3eb1728a53be591dd4bed6440d487",
+      "local_sha256": "5103f4cbde2a096bc4555fc786f2efc1fea3eb1728a53be591dd4bed6440d487"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/clean/pair.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/clean/pair.py",
+      "source_sha256": "09f4f2db01c790911b550997c85afca4884cdfb4ccf97367cd357ace1039d066",
+      "local_sha256": "09f4f2db01c790911b550997c85afca4884cdfb4ccf97367cd357ace1039d066"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/clean/score.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/clean/score.py",
+      "source_sha256": "d90d47a19f305a9f7b202ae5d540119ee8614ab8870667abac23d5b5a459493b",
+      "local_sha256": "d90d47a19f305a9f7b202ae5d540119ee8614ab8870667abac23d5b5a459493b"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/extractors/__init__.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/extractors/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dev/sft/sft_extractor/authentic/extractors/base.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "authentic/extractors/base.py",
+      "source_sha256": "a653c9e492a4ee7a566decc1a07db850ff1939faa605141fabf95a13d4027158",
+      "local_sha256": "a653c9e492a4ee7a566decc1a07db850ff1939faa605141fabf95a13d4027158"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/Dockerfile",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/Dockerfile",
+      "source_sha256": "714bafeb736fb025eea31ca97198caac6805e54141b3071a160cd921ecf7ae5b",
+      "local_sha256": "714bafeb736fb025eea31ca97198caac6805e54141b3071a160cd921ecf7ae5b"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/__init__.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/analyze_register.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/analyze_register.py",
+      "source_sha256": "23a53125ccbfabc13323e838f32fa2457b33768fbb4093ed08b505f0fee2d79a",
+      "local_sha256": "23a53125ccbfabc13323e838f32fa2457b33768fbb4093ed08b505f0fee2d79a"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/model.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/model.py",
+      "source_sha256": "6c0f2865d6e6501f7c029273d266a4de7439c87bfc833cf2cd78061e1c025bea",
+      "local_sha256": "6c0f2865d6e6501f7c029273d266a4de7439c87bfc833cf2cd78061e1c025bea"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/prepare_embed.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/prepare_embed.py",
+      "source_sha256": "dfec5463a323dc07e0fbd6c22b5288e1e3c264cc57195b04be51bd4fd1ba57ba",
+      "local_sha256": "dfec5463a323dc07e0fbd6c22b5288e1e3c264cc57195b04be51bd4fd1ba57ba"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/run_embed.sh",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/run_embed.sh",
+      "source_sha256": "05efed24577f82ce9629ff8992743347efe08e2bbe0cdf198fd5ad20cd7f394e",
+      "local_sha256": "05efed24577f82ce9629ff8992743347efe08e2bbe0cdf198fd5ad20cd7f394e"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/style_oneclass.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/style_oneclass.py",
+      "source_sha256": "322e95d92fd26ccdfec526ec321246b9e82166df5db097af9376a3b0e90a85d9",
+      "local_sha256": "322e95d92fd26ccdfec526ec321246b9e82166df5db097af9376a3b0e90a85d9"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/stylometry.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/stylometry.py",
+      "source_sha256": "78e0dba1ee94fb93ec338e25bc6a620ecc1f1b86cf325c7de4366be141746370",
+      "local_sha256": "78e0dba1ee94fb93ec338e25bc6a620ecc1f1b86cf325c7de4366be141746370"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/talkie_encoder.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/talkie_encoder.py",
+      "source_sha256": "c880f17bc17f9e41716bd7f2813ddd8979f12bfbd2c737589cc761d13b4d16cf",
+      "local_sha256": "c880f17bc17f9e41716bd7f2813ddd8979f12bfbd2c737589cc761d13b4d16cf"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/talkie_smoke.ipynb",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/talkie_smoke.ipynb",
+      "source_sha256": "4a37eff92126093bcbdd45a81cc52bc208705baddb03c6f891019af8e1696758",
+      "local_sha256": "9984728fbc0352855a354276b53d5b3eb3a782d72b2e945480b43fa2fd687aa6",
+      "transformations": [
+        "clear_notebook_outputs"
+      ]
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/tokenizer.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/tokenizer.py",
+      "source_sha256": "6c30eb22cb5bb4c8997ecf8597fda542136b4c099c80d42244f5229ee6edf8e1",
+      "local_sha256": "6c30eb22cb5bb4c8997ecf8597fda542136b4c099c80d42244f5229ee6edf8e1"
+    },
+    {
+      "path": "dev/sft/sft_extractor/encoder/train.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "encoder/train.py",
+      "source_sha256": "67dfd4b0211bcb99e362f4872dd365f2800324529b5acfdf8b1b4da7764e5159",
+      "local_sha256": "67dfd4b0211bcb99e362f4872dd365f2800324529b5acfdf8b1b4da7764e5159"
+    },
+    {
+      "path": "dev/sft/sft_extractor/run.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "run.py",
+      "source_sha256": "a78814a8f1ff43505c0c0e47ef3f43b64340a555a2a3c25d1db701020a2b638d",
+      "local_sha256": "a78814a8f1ff43505c0c0e47ef3f43b64340a555a2a3c25d1db701020a2b638d"
+    },
+    {
+      "path": "dev/sft/sft_extractor/run_curricula.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "run_curricula.py",
+      "source_sha256": "568d7697ee1bd48237eac85222e0686dbd941c9ad2c266d73f51c4491b0bd0e0",
+      "local_sha256": "568d7697ee1bd48237eac85222e0686dbd941c9ad2c266d73f51c4491b0bd0e0"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/__init__.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/anachronism_filter.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/anachronism_filter.py",
+      "source_sha256": "37d50f76133c67003411b01a935cbff5d206576b5b39606cad4965c00a865b6e",
+      "local_sha256": "37d50f76133c67003411b01a935cbff5d206576b5b39606cad4965c00a865b6e"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/build_clean_dataset.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/build_clean_dataset.py",
+      "source_sha256": "29c0293444cd5bf104ac02e440bb04d06540cc542da7bc7d41eb776e955cb953",
+      "local_sha256": "29c0293444cd5bf104ac02e440bb04d06540cc542da7bc7d41eb776e955cb953"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/build_register_test.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/build_register_test.py",
+      "source_sha256": "f7ac390481de31275326159b1a375aa0c01ff7a53c75b13ed0ea048ba5155c09",
+      "local_sha256": "f7ac390481de31275326159b1a375aa0c01ff7a53c75b13ed0ea048ba5155c09"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/classify.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/classify.py",
+      "source_sha256": "0f3536d41cdf7ccdb05a1a568a468f640305fcb4376a64436cac7fed303982f1",
+      "local_sha256": "0f3536d41cdf7ccdb05a1a568a468f640305fcb4376a64436cac7fed303982f1"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/corpus.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/corpus.py",
+      "source_sha256": "63179b8f93a465b09538bf916b5ff754a7c76a43d55d1da583ec00f3dd78fa27",
+      "local_sha256": "63179b8f93a465b09538bf916b5ff754a7c76a43d55d1da583ec00f3dd78fa27"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/engine.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/engine.py",
+      "source_sha256": "072eb29c7841c7d212609e2d41ba2e52b2ed5de90824db89d5cf6b6bae80050e",
+      "local_sha256": "072eb29c7841c7d212609e2d41ba2e52b2ed5de90824db89d5cf6b6bae80050e"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/gen_models.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/gen_models.py",
+      "source_sha256": "bb318e9e8d23127ca974e09737d374846fee33dd3859b4e2dcaf4bd3ceec387f",
+      "local_sha256": "bb318e9e8d23127ca974e09737d374846fee33dd3859b4e2dcaf4bd3ceec387f"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/grade.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/grade.py",
+      "source_sha256": "1b73711ade4500eb8dbaa2b1eb90f0c6593dee48657ecd910f103f9d78bf012b",
+      "local_sha256": "1b73711ade4500eb8dbaa2b1eb90f0c6593dee48657ecd910f103f9d78bf012b"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/hf_push.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/hf_push.py",
+      "source_sha256": "13bd89ce210e9ab7f33d5c069ad1b3bcbd66ddf18ba67af5b0ce4be6bace30cc",
+      "local_sha256": "13bd89ce210e9ab7f33d5c069ad1b3bcbd66ddf18ba67af5b0ce4be6bace30cc"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/judge.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/judge.py",
+      "source_sha256": "17fa7297c6787d38a462a26ae42b85731067e5fb6234ca942d3365e98e2d2eb5",
+      "local_sha256": "17fa7297c6787d38a462a26ae42b85731067e5fb6234ca942d3365e98e2d2eb5"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/metrics.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/metrics.py",
+      "source_sha256": "92866ef6479a865f5a2276eb38feb64ca71739b11e8cefb4430428af25b46c25",
+      "local_sha256": "92866ef6479a865f5a2276eb38feb64ca71739b11e8cefb4430428af25b46c25"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/ngram_filter.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/ngram_filter.py",
+      "source_sha256": "66dd0745ca9d79087ba5fc2f9a704d8cf9c5d20d1955232c0db362f4e89ddd23",
+      "local_sha256": "66dd0745ca9d79087ba5fc2f9a704d8cf9c5d20d1955232c0db362f4e89ddd23"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/notation_mask.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/notation_mask.py",
+      "source_sha256": "f06aa8098b930514f5d086a4198e1054493b41c752e8a947eb270fb86521497e",
+      "local_sha256": "f06aa8098b930514f5d086a4198e1054493b41c752e8a947eb270fb86521497e"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/ocr_corruption.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/ocr_corruption.py",
+      "source_sha256": "0a648307a5cdebeb26bc3a1dab76be9f1c7a69ec74746407e871a0dea6c01aef",
+      "local_sha256": "0a648307a5cdebeb26bc3a1dab76be9f1c7a69ec74746407e871a0dea6c01aef"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/prep_anach_input.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/prep_anach_input.py",
+      "source_sha256": "8a2b80a6336eb220fda54d38701ab59738d90c95e2eb0cec3b35383c2020d3ea",
+      "local_sha256": "8a2b80a6336eb220fda54d38701ab59738d90c95e2eb0cec3b35383c2020d3ea"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/questions.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/questions.py",
+      "source_sha256": "cc0e395cfa1b5db0c2168fd138ab5e5d891a960d16cad77391237f1a5c6b412c",
+      "local_sha256": "cc0e395cfa1b5db0c2168fd138ab5e5d891a960d16cad77391237f1a5c6b412c"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/register_encoder.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/register_encoder.py",
+      "source_sha256": "40e755e5370fc42e5c706e3843d6b22fd215e4e1b4bf825210299fecb7188ae1",
+      "local_sha256": "40e755e5370fc42e5c706e3843d6b22fd215e4e1b4bf825210299fecb7188ae1"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/README.md",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/README.md",
+      "source_sha256": "64caa82879646ea91471ac7b8ec3823cc4f26ca3554712083b63ad53ac3227c7",
+      "local_sha256": "64caa82879646ea91471ac7b8ec3823cc4f26ca3554712083b63ad53ac3227c7"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/__init__.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/__init__.py",
+      "source_sha256": "0569db673801fc0803dee636b16f389dde2f47e7808161fb3215aeebd3a9aad1",
+      "local_sha256": "0569db673801fc0803dee636b16f389dde2f47e7808161fb3215aeebd3a9aad1"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/build.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/build.py",
+      "source_sha256": "33cf98badae458f44bac39dce290dd2c022abaa407ae170cd60c2a2b37580fbf",
+      "local_sha256": "33cf98badae458f44bac39dce290dd2c022abaa407ae170cd60c2a2b37580fbf"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/conversation.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/conversation.py",
+      "source_sha256": "2c722c76a5bf7468c48da2f7920ad6bb2b7b822e9c7767e6c3e75dba603f7870",
+      "local_sha256": "2c722c76a5bf7468c48da2f7920ad6bb2b7b822e9c7767e6c3e75dba603f7870"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/deflection_pool.json",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/deflection_pool.json",
+      "source_sha256": "7e8e62ba6292fe8c7b24e0e2097078f32b2f1ccbef7dab64449f215066f6ed1c",
+      "local_sha256": "7e8e62ba6292fe8c7b24e0e2097078f32b2f1ccbef7dab64449f215066f6ed1c"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/era.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/era.py",
+      "source_sha256": "c03a3eccae91c34aed246e396e6e28dcebe78e85d33c02a3fd19db5a6b451812",
+      "local_sha256": "c03a3eccae91c34aed246e396e6e28dcebe78e85d33c02a3fd19db5a6b451812"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/fragment_pool.json",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/fragment_pool.json",
+      "source_sha256": "abbe0ee1965abca58cf75f9f5661ef475fb59fede285550b1628ca0eb7d872f7",
+      "local_sha256": "abbe0ee1965abca58cf75f9f5661ef475fb59fede285550b1628ca0eb7d872f7"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/mine.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/mine.py",
+      "source_sha256": "e3f75cc9db22293b3a6a9ad85abd963d7430db0c16fbc93170e10e2689bf1a5f",
+      "local_sha256": "e3f75cc9db22293b3a6a9ad85abd963d7430db0c16fbc93170e10e2689bf1a5f"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/multiturn.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/multiturn.py",
+      "source_sha256": "9e10434dbbf6f9dbd04a17736c08ad28324e3a2cb766d2cfc647adac4867d805",
+      "local_sha256": "9e10434dbbf6f9dbd04a17736c08ad28324e3a2cb766d2cfc647adac4867d805"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/typos.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/typos.py",
+      "source_sha256": "342a59fc5c0feb1f401040933265263400f66a1cfd2b9c0d2a88f4772d61e34d",
+      "local_sha256": "342a59fc5c0feb1f401040933265263400f66a1cfd2b9c0d2a88f4772d61e34d"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/unparseable.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/unparseable.py",
+      "source_sha256": "56dd7b382321b442bd2057fa71702d773edc080495ef1e52d99080681d54ae1c",
+      "local_sha256": "56dd7b382321b442bd2057fa71702d773edc080495ef1e52d99080681d54ae1c"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/robustness/utterance_pool.json",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/robustness/utterance_pool.json",
+      "source_sha256": "2aef89aee3643af0de217fc7095216a176c5d78e6e9ea029a4dc3e27edbb0c7b",
+      "local_sha256": "2aef89aee3643af0de217fc7095216a176c5d78e6e9ea029a4dc3e27edbb0c7b"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/__init__.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/__init__.py",
+      "source_sha256": "4d6380f48f2ef53c9b2f1907d877e5b65c8883a8f5b642187bcca9eb1c1cb955",
+      "local_sha256": "4d6380f48f2ef53c9b2f1907d877e5b65c8883a8f5b642187bcca9eb1c1cb955"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/calibration_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/calibration_qa.py",
+      "source_sha256": "ce11ddfa9247e821ddda6c01084cad5ef2ebc164072837c77c5eb3145ee0ad6f",
+      "local_sha256": "ce11ddfa9247e821ddda6c01084cad5ef2ebc164072837c77c5eb3145ee0ad6f"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/composition_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/composition_qa.py",
+      "source_sha256": "9268b30e2739e9d5080bdf6cbde5069c387fbd73436a7ceed8c4abe7f2141307",
+      "local_sha256": "9268b30e2739e9d5080bdf6cbde5069c387fbd73436a7ceed8c4abe7f2141307"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/how_to_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/how_to_qa.py",
+      "source_sha256": "a679ee3212e5dbc2a5fed98ace6157cab0e14bc8be1300269bb22674a6a5eecf",
+      "local_sha256": "a679ee3212e5dbc2a5fed98ace6157cab0e14bc8be1300269bb22674a6a5eecf"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/knowledge_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/knowledge_qa.py",
+      "source_sha256": "17f968641b74ec616d761ff5f69d1d3360ea3e25e180433c29698805ec5ed050",
+      "local_sha256": "17f968641b74ec616d761ff5f69d1d3360ea3e25e180433c29698805ec5ed050"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/multiturn_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/multiturn_qa.py",
+      "source_sha256": "312d4537c7f532a6f8f48370e6daa0a8a1e695f6ae9ae1b942d54fb503f4c5e1",
+      "local_sha256": "312d4537c7f532a6f8f48370e6daa0a8a1e695f6ae9ae1b942d54fb503f4c5e1"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/narrative_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/narrative_qa.py",
+      "source_sha256": "3a62241bce770a4310a32ab0f06a1481c1f4ab689253443bbd14657af596796a",
+      "local_sha256": "3a62241bce770a4310a32ab0f06a1481c1f4ab689253443bbd14657af596796a"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/opinion_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/opinion_qa.py",
+      "source_sha256": "71601b11fc06224ab0ce9c644f23ac63c05132a77462b70249f9ca9e67545695",
+      "local_sha256": "71601b11fc06224ab0ce9c644f23ac63c05132a77462b70249f9ca9e67545695"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/reasoning_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/reasoning_qa.py",
+      "source_sha256": "c77127bc81442eac53460b9df8f0b16de83f1691a9d81a99bdcbbcfe9a01e870",
+      "local_sha256": "c77127bc81442eac53460b9df8f0b16de83f1691a9d81a99bdcbbcfe9a01e870"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/stem_reasoning.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/stem_reasoning.py",
+      "source_sha256": "fc92a2e13412dcf7d6362835777a8bde8fec0e9e284c7073b374923498a1dbda",
+      "local_sha256": "fc92a2e13412dcf7d6362835777a8bde8fec0e9e284c7073b374923498a1dbda"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/routes/verse_qa.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/routes/verse_qa.py",
+      "source_sha256": "690cbd94abebc9f5a9177cfd55f9570deb4744cccc3e5dab4a1d9eb24fda19a4",
+      "local_sha256": "690cbd94abebc9f5a9177cfd55f9570deb4744cccc3e5dab4a1d9eb24fda19a4"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/text_normalize.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/text_normalize.py",
+      "source_sha256": "ee772e433c00319b029af339cebd961e53b69197ac227ecc97c3aa343906dc7d",
+      "local_sha256": "ee772e433c00319b029af339cebd961e53b69197ac227ecc97c3aa343906dc7d"
+    },
+    {
+      "path": "dev/sft/sft_extractor/synth/verify.py",
+      "source": "github:zachnorton14/sft-extractor",
+      "source_path": "synth/verify.py",
+      "source_sha256": "a7fe23b71e2cfe917d7f4bfca2b0917ca7f7172ef21bacfcf4d276e51e5811db",
+      "local_sha256": "a7fe23b71e2cfe917d7f4bfca2b0917ca7f7172ef21bacfcf4d276e51e5811db"
+    }
+  ]
+}

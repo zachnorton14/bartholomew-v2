@@ -69,8 +69,9 @@ Institutional Books 1.0
 | Document | Contents |
 |---|---|
 | [EXPERIMENTS.md](EXPERIMENTS.md) | **Start here.** The experiment harness: config contracts, lineage rules, artifact paths, branching |
-| [dev/dataset/DATASET_PIPELINE.md](dev/dataset/DATASET_PIPELINE.md) | How the pretraining corpus was assembled |
-| [dev/dataset/FILTER_AUDIT.md](dev/dataset/FILTER_AUDIT.md) | Filter-by-filter audit of what each stage removed |
+| [dev/README.md](dev/README.md) | Dataset preparation scripts, stage index, and imported source revisions |
+| [dev/pretraining/standard/DATASET_PIPELINE.md](dev/pretraining/standard/DATASET_PIPELINE.md) | How the pretraining corpus was assembled |
+| [dev/pretraining/standard/FILTER_AUDIT.md](dev/pretraining/standard/FILTER_AUDIT.md) | Filter-by-filter audit of what each stage removed |
 | [dev/hosting/hosting.md](dev/hosting/hosting.md) | Deployment overview |
 | [dev/hosting/beam/RUNBOOK.md](dev/hosting/beam/RUNBOOK.md) | Operational runbook for the hosted chat endpoint |
 | [dev/Think-Log.md](dev/Think-Log.md) · [dev/LOG.md](dev/LOG.md) | Running research logs |
@@ -119,12 +120,15 @@ project's own `authentic-pre1930.py`, `synth-pre1930.py`, and `customjson.py` lo
 
 | Subfolder | Contents |
 |---|---|
-| *(root)* | Research logs, the leaderboard, Colab notebooks for experiments/chat/tokenizer, scaling analysis, synthetic data generation |
-| `dataset/` | Corpus pipeline documentation and the Institutional Books repackaging script |
+| *(root)* | Research logs, the leaderboard, Colab notebooks for experiments/chat/tokenizer, scaling analysis |
+| `pretraining/standard/` | Institutional Books to v1, v1 to v2 cleaning, v2 to v3 filtering, notebook sources, and pipeline documentation |
+| `pretraining/midtraining/` | STEM extraction, Internet Archive harvest, OCR filtering, cleaning, mixture construction, and anneal notebooks |
+| `sft/` | Authentic, synthetic, and robustness dataset builders; the original identity-data generation example |
+| `evaluation/` | Vintage-CORE benchmark builders and evaluation/reference-model notebooks |
 | `figures/` | Figures for the write-up — token waterfall, docs-vs-tokens, removal composition, bpb curves |
 | `hosting/` | Beam deployment: app, bf16 export, fast loading, chat UI, and an `ops/` toolkit for deploy, redeploy, cleanup, and GPU watching |
 | `providers/` | Vast.ai container — Dockerfile and image build script |
-| `archive/`, `vintage_core_colab/` | Superseded pipeline notebook; Vintage-CORE reference-model notebook |
+| `archive/` | Superseded full training pipeline notebook |
 
 ### Root files
 

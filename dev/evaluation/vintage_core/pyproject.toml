@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vintage-core"
+version = "1.0.0"
+description = "A period-aligned CORE benchmark for language models with a 1930 knowledge cutoff"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Jonathan Duran-Ortiz" },
+]
+dependencies = [
+  "jinja2>=3.1",
+  "python-dotenv>=1.0",
+  "PyYAML>=6.0",
+  "requests>=2.31",
+]
+
+[project.optional-dependencies]
+eval = [
+  "huggingface-hub>=0.28",
+  "jinja2>=3.1",
+  "rustbpe",
+  "tiktoken",
+  "torch>=2.6",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+vintage-core-validate = "vintage_core.bundle_validation:main"
+vintage-core-eval = "vintage_core.evaluate:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+vintage_core = ["*.json", "interactive_example_pool.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

@@ -1,0 +1,35 @@
+# =============================================================================
+# Anneal-ablation config -- 0% midtrain mixture (pure old-corpus) off the d24
+# base run. Control arm: continues training with NO midtrain data.
+#
+# Resumes sclean1930s-d24-r12-ctx4096-sssl-fulltok-v1 @ step 5500 and runs 250
+# more steps on the 0% midtrain mix, with linear LR decay to 0 (the default).
+# Only the final checkpoint is saved. Params that must match the parent
+# (architecture, tokenizer, vocab, batch sizes, weight decay) are auto-derived
+# from the seed checkpoint -- see configs/anneal_ablation_sample.yaml for the
+# full schema.
+# =============================================================================
+
+# --- Identity -----------------------------------------------------------------
+tag: clean1930s-d24-r12-ctx4096-sssl-fulltok-v1-anneal-ratio0-v1
+
+# --- Parent (what we resume from) --------------------------------------------
+parent:
+  tag: clean1930s-d24-r12-ctx4096-sssl-fulltok-v1   # base-train experiment tag on HF
+  step: 5500                                         # exact checkpoint step to resume from
+
+# --- Ablation horizon ---------------------------------------------------------
+# Absolute horizon handed to the trainer = parent.step + num_steps = 5750.
+num_steps: 250
+
+# --- Midtrain mixture ---------------------------------------------------------
+# 0% midtrain / 100% old-corpus -> DATASET_HF_REPO/mixed/ratio_0/data
+ratio_pct: 0
+
+# --- Checkpointing ------------------------------------------------------------
+# Final checkpoint only (no intermediate checkpoints for this ablation).
+checkpoint_every: -1
+
+# --- Learning rate ------------------------------------------------------------
+# Default (no block): each parent per-group LR decays LINEARLY to 0 across the
+# 250 anneal steps. No override needed.

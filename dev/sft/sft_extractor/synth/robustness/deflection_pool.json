@@ -1,0 +1,110 @@
+{
+  "deflection": {
+    "i beg your pardon": 310,
+    "i don't understand": 70,
+    "i do not understand": 68,
+    "i do not understand you": 42,
+    "i don't understand you": 29,
+    "i don't know what you mean": 28,
+    "i cannot comprehend": 6,
+    "i cannot understand you": 5,
+    "i do not know what you mean": 4,
+    "there is no such word": 3,
+    "i can't make you out": 3,
+    "that is beyond me": 3,
+    "i am at a loss": 3,
+    "i don't follow you": 3,
+    "i do not quite understand you": 3,
+    "i cannot make it out": 2,
+    "i can't make it out": 2,
+    "i can't understand you": 2,
+    "i fail to understand": 2,
+    "i can't comprehend": 2,
+    "i did not hear you": 2,
+    "i do not quite follow you": 1,
+    "i do not comprehend you": 1,
+    "i don't quite understand you": 1,
+    "i do not catch your meaning": 1,
+    "i don't quite follow you": 1,
+    "i don't comprehend you": 1,
+    "i could not understand you": 1,
+    "i cannot comprehend you": 1,
+    "i can't follow you": 1,
+    "i can't make that out": 1
+  },
+  "invitation": {
+    "what do you mean": 482,
+    "how do you mean": 50,
+    "say it again": 23,
+    "speak more plainly": 13,
+    "say that again": 13,
+    "put it another way": 7,
+    "tell me plainly": 5,
+    "try me again": 1
+  },
+  "greeting": {
+    "good morning": 279,
+    "good day": 185,
+    "how do you do": 169,
+    "good evening": 120,
+    "well met": 45,
+    "good afternoon": 25,
+    "good day, my friend": 2,
+    "how do you do, my friend": 1
+  },
+  "wellbeing": {
+    "well enough": 356,
+    "pretty well": 218,
+    "tolerably well": 75,
+    "never better": 13,
+    "very well, thank you": 12,
+    "i am quite well": 12,
+    "i am very well": 10,
+    "quite well, thank you": 2
+  },
+  "farewell": {
+    "farewell": 2054,
+    "good night": 653,
+    "good-bye": 559,
+    "good bye": 94,
+    "good day to you": 8,
+    "farewell, my friend": 4
+  },
+  "thanks_reply": {
+    "not at all": 753,
+    "with pleasure": 479,
+    "by all means": 259,
+    "you are welcome": 52,
+    "don't mention it": 28,
+    "you are very welcome": 4,
+    "do not mention it": 2
+  },
+  "acknowledge": {
+    "indeed": 21612,
+    "no doubt": 3660,
+    "to be sure": 1412,
+    "i see": 1207,
+    "very true": 309,
+    "so it is": 215,
+    "just so": 184,
+    "quite so": 99
+  },
+  "pleased": {
+    "glad to see you": 135,
+    "i am glad to see you": 40,
+    "delighted to see you": 27,
+    "i am happy to see you": 4,
+    "it is good to see you": 1
+  },
+  "invite_on": {
+    "go on": 1274,
+    "say on": 56,
+    "take a chair": 14,
+    "pray be seated": 12,
+    "pray sit down": 8,
+    "do sit down": 7,
+    "pray go on": 6,
+    "pray come in": 6,
+    "pray continue": 1
+  }
+}

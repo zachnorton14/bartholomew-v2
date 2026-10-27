@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "bundles": {
+    "original": {
+      "display_name": "Original CORE",
+      "type": "zip",
+      "url": "https://karpathy-public.s3.us-west-2.amazonaws.com/eval_bundle.zip",
+      "directory": "eval_bundle",
+      "expected_tasks": 22
+    },
+    "filtered": {
+      "display_name": "Filtered CORE",
+      "type": "local",
+      "path": "data/filtered",
+      "expected_tasks": 20,
+      "expected_rows": 47092
+    },
+    "restyled": {
+      "display_name": "Restyled CORE",
+      "type": "local",
+      "path": "data/restyled",
+      "expected_tasks": 20,
+      "expected_rows": 47092
+    }
+  }
+}
