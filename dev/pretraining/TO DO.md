@@ -51,8 +51,8 @@ Provisional stage names:
 This item owns the script structure and stage wiring. Changes to quality thresholds,
 log-prior policy, or banned terms belong to their dedicated tasks below.
 
-Existing implementation guides: [standard](standard/README.md) and
-[midtraining](midtraining/README.md).
+Existing implementation guides: [standard](standard/old/README.md) and
+[midtraining](midtraining/old/README.md).
 
 ### 3. Investigate log-prior filtering: keep, change, or remove?
 
@@ -64,8 +64,8 @@ Existing implementation guides: [standard](standard/README.md) and
 - [ ] Record an evidence-based decision: keep the stage, change its method/thresholds, or remove it. State whether the measured benefit justifies its cost and complexity.
 
 Related GitHub issue: [#7 — PT - Reevaluate our midtraining filtering](https://github.com/zachnorton14/bartholomew-v2/issues/7).
-Current implementations: [standard prior cell](standard/cells/cell5_prior.py) and
-[midtraining stage 4-5 notebook](midtraining/midtraining_stage4_cleaning.ipynb).
+Current implementations: [standard prior cell](standard/old/cells/cell5_prior.py) and
+[midtraining stage 4-5 notebook](midtraining/old/midtraining_stage4_cleaning.ipynb).
 This item owns the log-prior investigation mentioned in PT #7; record its results
 here and use that decision when recommending the overall midtraining quality bar.
 
@@ -95,8 +95,8 @@ minimum-score gates above 85 and alphanumeric threshold of 65.
 Scope: OCR and alphanumeric quality criteria. Log-prior experiments are owned by
 new to-do 3, banned-word policy by PT #9, and collecting additional documents by PT #8.
 
-Relevant files: [extraction notebook](midtraining/midtraining_extraction.ipynb),
-[OCRoscope filtering notebook](midtraining/midtraining_ocroscope_filtering.ipynb),
+Relevant files: [extraction notebook](midtraining/old/midtraining_extraction.ipynb),
+[OCRoscope filtering notebook](midtraining/old/midtraining_ocroscope_filtering.ipynb),
 and [original corpus filtering rules](https://huggingface.co/datasets/jbduran/bartholomew-dataset-v1#filters).
 
 ### PT #8 — Find more midtraining documents
@@ -117,7 +117,7 @@ material from those sources or alternatives is useful before scaling collection.
 Scope: finding, collecting, and assessing additional documents. Filter design stays
 with PT #7/PT #9 and new to-do 3; extraction should consume those decisions.
 
-Relevant links: [extraction notebook](midtraining/midtraining_extraction.ipynb),
+Relevant links: [extraction notebook](midtraining/old/midtraining_extraction.ipynb),
 [Internet Archive texts](https://archive.org/details/texts),
 [Project Gutenberg](https://www.gutenberg.org/),
 [original corpus](https://huggingface.co/datasets/jbduran/bartholomew-dataset-v1),
@@ -141,8 +141,8 @@ terms such as "compiler," "drone," and "twitter."
 Scope: anachronism terms, tier rules, and rejection policy. General header/footer
 trimming is grouped under `refine` in new to-do 2; OCR quality belongs to PT #7.
 
-Relevant files: [banned-list construction](midtraining/scripts/build_list.py),
-[term matching and rejection rules](midtraining/scripts/filter_lib.py), and
+Relevant files: [banned-list construction](midtraining/old/scripts/build_list.py),
+[term matching and rejection rules](midtraining/old/scripts/filter_lib.py), and
 [the existing v3 tiered filter](https://huggingface.co/datasets/jbduran/bartholomew-dataset-v3#the-tiered-anachronism-filter).
 
 ---
@@ -159,8 +159,8 @@ Every item remains pending.
 
 - [ ] Add an explicit output-path option and distinct default filenames for the inline v3 notebook and the modular runner. Print which implementation was generated so regenerating one does not silently replace the other.
 
-Current behavior: [build_nb_1930s.py](standard/build_nb_1930s.py) and
-[build_nb_runner.py](standard/build_nb_runner.py) both write
+Current behavior: [build_nb_1930s.py](standard/old/build_nb_1930s.py) and
+[build_nb_runner.py](standard/old/build_nb_runner.py) both write
 `think_dataset_clean_1930s.ipynb`, despite building different implementations.
 Scope: generated notebook filenames and usability; stage regrouping stays in
 high-priority change 2.
@@ -169,8 +169,8 @@ high-priority change 2.
 
 - [ ] Label `DRY_RUN_LIMIT` as a shard limit in messages/documentation, since it still uploads. Add a small no-upload preview mode that processes a bounded sample and writes its report locally without creating or changing a Hugging Face repo.
 
-Current behavior: [run_filter.py](standard/scripts/run_filter.py) and
-[strip_footers.py](standard/scripts/strip_footers.py) create the destination and flush
+Current behavior: [run_filter.py](standard/old/scripts/run_filter.py) and
+[strip_footers.py](standard/old/scripts/strip_footers.py) create the destination and flush
 commits even when `DRY_RUN_LIMIT=1`. This is an operator convenience, separate from
 the full-pipeline orchestration work in high-priority change 2.
 
@@ -178,18 +178,18 @@ the full-pipeline orchestration work in high-priority change 2.
 
 - [ ] Report invalid numeric environment settings with the variable name and expected range instead of silently falling back to a default. Distinguish an actually empty shard list from a failed Hugging Face listing, and return a clear error/nonzero exit status for the failure case.
 
-Current behavior: `_env_int()` in [config.py](standard/scripts/config.py) silently
+Current behavior: `_env_int()` in [config.py](standard/old/scripts/config.py) silently
 defaults on invalid integers, and `list_repo_files_safe()` in
-[common.py](standard/scripts/common.py) returns an empty list after an exception.
+[common.py](standard/old/scripts/common.py) returns an empty list after an exception.
 Scope: configuration/network diagnostics, not the metadata-schema fix in change 1.
 
 ### QOL 4. Keep local cache and upload staging disk usage visible
 
 - [ ] Show free disk space and the sizes of source-cache/output staging directories at startup and between upload batches. Offer opt-in cleanup of local shard files only after their batch is confirmed committed; retain files referenced by pending uploads and keep durable state/audit artifacts.
 
-The standard [filter](standard/scripts/run_filter.py) and
-[footer-strip](standard/scripts/strip_footers.py) drivers retain local source and
-output shards. [BatchCommitter](standard/scripts/common.py) already distinguishes
+The standard [filter](standard/old/scripts/run_filter.py) and
+[footer-strip](standard/old/scripts/strip_footers.py) drivers retain local source and
+output shards. [BatchCommitter](standard/old/scripts/common.py) already distinguishes
 pending and committed batches, providing a place to attach a small cleanup hook.
 Scope: local storage management; resume/lineage semantics remain owned by change 2.
 
@@ -197,10 +197,10 @@ Scope: local storage management; resume/lineage semantics remain owned by change
 
 - [ ] Add a small local inspection helper for existing hit logs and footer-removal samples, with filters for shard, rejection reason, or term and a seeded sample limit. Make the footer sample cap exact and sample beyond just the earliest matching documents in a shard.
 
-Current behavior: [strip_footers.py](standard/scripts/strip_footers.py) fills a sample
+Current behavior: [strip_footers.py](standard/old/scripts/strip_footers.py) fills a sample
 list from the first qualifying documents and checks its cap before appending up to
 20 more lines, so it can exceed the nominal cap. Filter hit records are produced by
-[run_filter.py](standard/scripts/run_filter.py). The helper should read existing
+[run_filter.py](standard/old/scripts/run_filter.py). The helper should read existing
 artifacts and print a compact review; it does not need a dashboard or new evaluation
 framework. PT #7 and PT #9 own the conclusions drawn from these samples.
 
@@ -208,10 +208,10 @@ framework. PT #7 and PT #9 own the conclusions drawn from these samples.
 
 - [ ] Try one commit containing a shard and its associated stats/hit/sample files instead of separate uploads for each file in the stage 4-5 notebook. Reuse the existing batching approach where practical and compare wall time and commit count on the same small shard set before adopting it.
 
-Current behavior: [midtraining_stage4_cleaning.ipynb](midtraining/midtraining_stage4_cleaning.ipynb)
+Current behavior: [midtraining_stage4_cleaning.ipynb](midtraining/old/midtraining_stage4_cleaning.ipynb)
 uses several `api.upload_file()` calls per shard. The standard pipeline's
-[BatchCommitter](standard/scripts/common.py) and the mixture-repair notebook's
-`robust_commit()` in [midtraining_mix_repair.ipynb](midtraining/midtraining_mix_repair.ipynb)
+[BatchCommitter](standard/old/scripts/common.py) and the mixture-repair notebook's
+`robust_commit()` in [midtraining_mix_repair.ipynb](midtraining/old/midtraining_mix_repair.ipynb)
 provide existing patterns. Keep paths, file contents, and completed-shard behavior
 unchanged; extending batching across multiple shards is optional.
 
@@ -219,8 +219,8 @@ unchanged; extending batching across multiple shards is optional.
 
 - [ ] Prototype incremental Parquet writing by row group rather than collecting an entire output shard in memory. Compare peak RAM and throughput on representative shards, and adopt only if output rows, order, text, schema, validation assignment, and filter counts stay equivalent.
 
-Current behavior: [run_filter.py](standard/scripts/run_filter.py) accumulates
-`kept_texts`, and [strip_footers.py](standard/scripts/strip_footers.py) accumulates
+Current behavior: [run_filter.py](standard/old/scripts/run_filter.py) accumulates
+`kept_texts`, and [strip_footers.py](standard/old/scripts/strip_footers.py) accumulates
 `out_texts`, before constructing the final Arrow table. Keep this experiment local
 to output writing; it does not change filters, corpus selection, or the broader
 pipeline architecture.

@@ -4,6 +4,12 @@ Status: proposed architecture, recorded on 2026-10-27. This document does not
 implement the worker, config schema, or stages shown below. Example settings are
 illustrative and must be reviewed before implementation.
 
+The [shared scaffold](../README.md) now lays out these responsibilities as Markdown
+plans. Previous standard and midtraining implementations live in their respective
+`old/` folders. This structure-only milestone stops for user review before any
+fresh executable implementation is added. All implementation edits stay inside
+`dev/`, primarily `dev/pretraining/`, unless the user explicitly changes that scope.
+
 ## Goal
 
 Build a configuration-driven gathering and filtering harness with the adaptability
@@ -241,7 +247,7 @@ Intermediate records should retain stable `doc_id`, text, source identity, metad
 and provenance. Preserve source identity across text edits and track text hashes
 separately. Join audit records by IDs, not by assuming row positions stay aligned.
 
-`pack` exports the existing [text-only shard contract](DATASET_PIPELINE.md) and a
+`pack` exports the existing [text-only shard contract](old/DATASET_PIPELINE.md) and a
 separate mapping from document IDs to exported shard/row positions. Keep metadata
 and training-shard discovery separate.
 

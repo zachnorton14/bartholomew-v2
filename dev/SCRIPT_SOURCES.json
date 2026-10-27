@@ -104,7 +104,8 @@
     "Notebook code and configuration are preserved; saved outputs and execution counts are cleared.",
     "Missing HF-hosted pipelines are recovered from the sources linked by this project or dataset cards.",
     "Standard scripts/build_list.py and scripts/filter_lib.py differ between the checked GitHub and HF revisions; the versions published with dataset v3 are retained here.",
-    "The midtraining repository's cleaning info/ Python and notebook sources exactly match the standard GitHub pipeline and are not duplicated."
+    "The midtraining repository's cleaning info/ Python and notebook sources exactly match the standard GitHub pipeline and are not duplicated.",
+    "On 2026-10-27, previous standard and midtraining sources were moved into their respective old/ directories for a documentation-only fresh scaffold. Executable source bytes are preserved; local documentation references were relocated where needed."
   ],
   "files": [
     {
@@ -442,49 +443,49 @@
       "local_sha256": "2ab65bc9aed8dbbd09414339736592bb598bc75fe8e272abb80974568f16adc3"
     },
     {
-      "path": "dev/pretraining/midtraining/LICENSE",
+      "path": "dev/pretraining/midtraining/old/LICENSE",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "LICENSE",
       "source_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9",
       "local_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9"
     },
     {
-      "path": "dev/pretraining/midtraining/UPSTREAM_README.md",
+      "path": "dev/pretraining/midtraining/old/UPSTREAM_README.md",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "README.md",
       "source_sha256": "73b6ee6f136157d554ecae863aef59c2287538666c50933efc8b9e1a64064943",
       "local_sha256": "73b6ee6f136157d554ecae863aef59c2287538666c50933efc8b9e1a64064943"
     },
     {
-      "path": "dev/pretraining/midtraining/configs/anneal_ablation_sample.yaml",
+      "path": "dev/pretraining/midtraining/old/configs/anneal_ablation_sample.yaml",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "configs/anneal_ablation_sample.yaml",
       "source_sha256": "d15fb34abd6a22af5371115afb91988e6548aeec87d41224b64cd0b4ed766194",
       "local_sha256": "d15fb34abd6a22af5371115afb91988e6548aeec87d41224b64cd0b4ed766194"
     },
     {
-      "path": "dev/pretraining/midtraining/configs/anneal_d24_ratio0.yaml",
+      "path": "dev/pretraining/midtraining/old/configs/anneal_d24_ratio0.yaml",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "configs/anneal_d24_ratio0.yaml",
       "source_sha256": "4719136136bba67ce9b6c44b7ec08721be68d6ca280a843824040704724edccf",
       "local_sha256": "4719136136bba67ce9b6c44b7ec08721be68d6ca280a843824040704724edccf"
     },
     {
-      "path": "dev/pretraining/midtraining/configs/anneal_d24_ratio60.yaml",
+      "path": "dev/pretraining/midtraining/old/configs/anneal_d24_ratio60.yaml",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "configs/anneal_d24_ratio60.yaml",
       "source_sha256": "9d083ece668451a55bc67534af85911175106d40aa974e10041092a700c4c9d2",
       "local_sha256": "9d083ece668451a55bc67534af85911175106d40aa974e10041092a700c4c9d2"
     },
     {
-      "path": "dev/pretraining/midtraining/d32-branch-sample-config.json",
+      "path": "dev/pretraining/midtraining/old/d32-branch-sample-config.json",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "d32-branch-sample-config.json",
       "source_sha256": "1d5fc1a6b164c3ce48ff1a8b255a03e1c1f730df11cca038bf385c795df3a73b",
       "local_sha256": "1d5fc1a6b164c3ce48ff1a8b255a03e1c1f730df11cca038bf385c795df3a73b"
     },
     {
-      "path": "dev/pretraining/midtraining/midtraining_anneal_ablation.ipynb",
+      "path": "dev/pretraining/midtraining/old/midtraining_anneal_ablation.ipynb",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "midtraining_anneal_ablation.ipynb",
       "source_sha256": "11d782ddb72499b4d9b18b383deebad5cbe649ea15192009b2d201249e5b75fd",
@@ -494,7 +495,7 @@
       ]
     },
     {
-      "path": "dev/pretraining/midtraining/midtraining_extraction.ipynb",
+      "path": "dev/pretraining/midtraining/old/midtraining_extraction.ipynb",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "midtraining_extraction.ipynb",
       "source_sha256": "857cf74508a5cb1b26ed5a1ff0db0744eb545bec8448aa1c9584ee89fb01472c",
@@ -504,7 +505,7 @@
       ]
     },
     {
-      "path": "dev/pretraining/midtraining/midtraining_mix_ratios.ipynb",
+      "path": "dev/pretraining/midtraining/old/midtraining_mix_ratios.ipynb",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "midtraining_mix_ratios.ipynb",
       "source_sha256": "ee2a131c2d72dd812038108f1e0440431c75bee0cddc1a6babc681b93d11214a",
@@ -514,7 +515,7 @@
       ]
     },
     {
-      "path": "dev/pretraining/midtraining/midtraining_mix_repair.ipynb",
+      "path": "dev/pretraining/midtraining/old/midtraining_mix_repair.ipynb",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "midtraining_mix_repair.ipynb",
       "source_sha256": "eded394635853497c4dc8620a76b642528f10a6ed26134fe458b59e76ef595eb",
@@ -524,7 +525,7 @@
       ]
     },
     {
-      "path": "dev/pretraining/midtraining/midtraining_ocroscope_filtering.ipynb",
+      "path": "dev/pretraining/midtraining/old/midtraining_ocroscope_filtering.ipynb",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "midtraining_ocroscope_filtering.ipynb",
       "source_sha256": "a2190cac58b3d8139914c78ce83d900ccccb04f139a380873fe9fbf49a61c6ba",
@@ -534,7 +535,7 @@
       ]
     },
     {
-      "path": "dev/pretraining/midtraining/midtraining_stage4_cleaning.ipynb",
+      "path": "dev/pretraining/midtraining/old/midtraining_stage4_cleaning.ipynb",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "midtraining_stage4_cleaning.ipynb",
       "source_sha256": "ffc2b5d0c0dbead7f5fb5349d9531a014ba53fe60bb06bdf904e18701c07f8e4",
@@ -544,301 +545,301 @@
       ]
     },
     {
-      "path": "dev/pretraining/midtraining/scripts/build_list.py",
+      "path": "dev/pretraining/midtraining/old/scripts/build_list.py",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "scripts/build_list.py",
       "source_sha256": "33d5dc096e24bad7ea989da5dcf8e7b15d7f7464ced04a68eaa946880a0c580b",
       "local_sha256": "33d5dc096e24bad7ea989da5dcf8e7b15d7f7464ced04a68eaa946880a0c580b"
     },
     {
-      "path": "dev/pretraining/midtraining/scripts/filter_lib.py",
+      "path": "dev/pretraining/midtraining/old/scripts/filter_lib.py",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "scripts/filter_lib.py",
       "source_sha256": "461ae69defbbe2c8b65ff3d14b5337e258e18d68e8889edcdcf1c6ede00bf4be",
       "local_sha256": "461ae69defbbe2c8b65ff3d14b5337e258e18d68e8889edcdcf1c6ede00bf4be"
     },
     {
-      "path": "dev/pretraining/midtraining/scripts/footer_lib.py",
+      "path": "dev/pretraining/midtraining/old/scripts/footer_lib.py",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "scripts/footer_lib.py",
       "source_sha256": "dceacf3ca4123176af6852a0b91af9554a0e45f2ee2d217c4891f97add766877",
       "local_sha256": "dceacf3ca4123176af6852a0b91af9554a0e45f2ee2d217c4891f97add766877"
     },
     {
-      "path": "dev/pretraining/midtraining/scripts/structural_clean.py",
+      "path": "dev/pretraining/midtraining/old/scripts/structural_clean.py",
       "source": "github:OwenVoorhees/bart-midtrain-scripts",
       "source_path": "scripts/structural_clean.py",
       "source_sha256": "1aa52275c5245c72162f73094c51d44254e4d3d6f9783bac755c85f6c9783ce6",
       "local_sha256": "1aa52275c5245c72162f73094c51d44254e4d3d6f9783bac755c85f6c9783ce6"
     },
     {
-      "path": "dev/pretraining/standard/LICENSE",
+      "path": "dev/pretraining/standard/old/LICENSE",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "LICENSE",
       "source_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9",
       "local_sha256": "e86979a9afba972768f795b7193cad168a35fbd43c91dd3fd908b3b5bcd5fce9"
     },
     {
-      "path": "dev/pretraining/standard/UPSTREAM_README.md",
+      "path": "dev/pretraining/standard/old/UPSTREAM_README.md",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "README.md",
       "source_sha256": "d079f7d96eb872b455dbf4cff7a7b605b6d79a35f5ee9a815d1d2b5a2705ee9a",
       "local_sha256": "d079f7d96eb872b455dbf4cff7a7b605b6d79a35f5ee9a815d1d2b5a2705ee9a"
     },
     {
-      "path": "dev/pretraining/standard/build_nb.py",
+      "path": "dev/pretraining/standard/old/build_nb.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "build_nb.py",
       "source_sha256": "51aa930b1f9bd8f77f44cc84b0a2eb5a3aaf003fb130f5f859cfda56c5a83e22",
       "local_sha256": "51aa930b1f9bd8f77f44cc84b0a2eb5a3aaf003fb130f5f859cfda56c5a83e22"
     },
     {
-      "path": "dev/pretraining/standard/build_nb_1930s.py",
+      "path": "dev/pretraining/standard/old/build_nb_1930s.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "build_nb_1930s.py",
       "source_sha256": "c870d9211c479daeadc60af13437a2e7d71ad8d62f4910c22930d2d223583a18",
       "local_sha256": "c870d9211c479daeadc60af13437a2e7d71ad8d62f4910c22930d2d223583a18"
     },
     {
-      "path": "dev/pretraining/standard/build_nb_runner.py",
+      "path": "dev/pretraining/standard/old/build_nb_runner.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "build_nb_runner.py",
       "source_sha256": "fcd578383ac12fc19cf6148a78f4b43e2a5a6b2ab53e7c5ac25a2ff805b4d556",
       "local_sha256": "fcd578383ac12fc19cf6148a78f4b43e2a5a6b2ab53e7c5ac25a2ff805b4d556"
     },
     {
-      "path": "dev/pretraining/standard/cells/cell1_install.py",
+      "path": "dev/pretraining/standard/old/cells/cell1_install.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells/cell1_install.py",
       "source_sha256": "7c2bbc9ff487aa1a98c06bcc4c59777f271bec343dad714ba743cb34f2e6b55f",
       "local_sha256": "7c2bbc9ff487aa1a98c06bcc4c59777f271bec343dad714ba743cb34f2e6b55f"
     },
     {
-      "path": "dev/pretraining/standard/cells/cell2_config.py",
+      "path": "dev/pretraining/standard/old/cells/cell2_config.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells/cell2_config.py",
       "source_sha256": "fd4d4884b8c6a1ee7c3c6b84c114acc366bfcf777b098a3d968b04d0c0284331",
       "local_sha256": "fd4d4884b8c6a1ee7c3c6b84c114acc366bfcf777b098a3d968b04d0c0284331"
     },
     {
-      "path": "dev/pretraining/standard/cells/cell3_wipe.py",
+      "path": "dev/pretraining/standard/old/cells/cell3_wipe.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells/cell3_wipe.py",
       "source_sha256": "33ca2956e2cc6448c5fa76fa2c27efa177c61a84092a2880f3f78bad8454b874",
       "local_sha256": "33ca2956e2cc6448c5fa76fa2c27efa177c61a84092a2880f3f78bad8454b874"
     },
     {
-      "path": "dev/pretraining/standard/cells/cell4_cleanlib.py",
+      "path": "dev/pretraining/standard/old/cells/cell4_cleanlib.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells/cell4_cleanlib.py",
       "source_sha256": "5ca52beef6acdc4ba7b2bac5453ca94da2842686b0d20d0bda385bf62b77b0f1",
       "local_sha256": "5ca52beef6acdc4ba7b2bac5453ca94da2842686b0d20d0bda385bf62b77b0f1"
     },
     {
-      "path": "dev/pretraining/standard/cells/cell5_prior.py",
+      "path": "dev/pretraining/standard/old/cells/cell5_prior.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells/cell5_prior.py",
       "source_sha256": "ecebacd8552f2d3bfa2334af614b646b6a5754523ba733216a59946eb4a7269a",
       "local_sha256": "ecebacd8552f2d3bfa2334af614b646b6a5754523ba733216a59946eb4a7269a"
     },
     {
-      "path": "dev/pretraining/standard/cells/cell6_main.py",
+      "path": "dev/pretraining/standard/old/cells/cell6_main.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells/cell6_main.py",
       "source_sha256": "c37c7c9bc2c60869c0178a35fc9caeef2970b326a27f9b005114e54ffa2c1b60",
       "local_sha256": "c37c7c9bc2c60869c0178a35fc9caeef2970b326a27f9b005114e54ffa2c1b60"
     },
     {
-      "path": "dev/pretraining/standard/cells/cell7_report.py",
+      "path": "dev/pretraining/standard/old/cells/cell7_report.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells/cell7_report.py",
       "source_sha256": "82496d5496fc55264b730a28df98c2a1f7c56b1b152df18bbf7a9ec8c9157c32",
       "local_sha256": "82496d5496fc55264b730a28df98c2a1f7c56b1b152df18bbf7a9ec8c9157c32"
     },
     {
-      "path": "dev/pretraining/standard/cells_1930s/cell1_install.py",
+      "path": "dev/pretraining/standard/old/cells_1930s/cell1_install.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_1930s/cell1_install.py",
       "source_sha256": "bc38bfd1d7a1f9974ca039611f04808905846b221ceed4b02cd0fb8f44290f88",
       "local_sha256": "bc38bfd1d7a1f9974ca039611f04808905846b221ceed4b02cd0fb8f44290f88"
     },
     {
-      "path": "dev/pretraining/standard/cells_1930s/cell2_config.py",
+      "path": "dev/pretraining/standard/old/cells_1930s/cell2_config.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_1930s/cell2_config.py",
       "source_sha256": "3c452dd11f02711f48e7ac624619c74763dd32f3580dcf1770a73b950bc32da5",
       "local_sha256": "3c452dd11f02711f48e7ac624619c74763dd32f3580dcf1770a73b950bc32da5"
     },
     {
-      "path": "dev/pretraining/standard/cells_1930s/cell3_wipe.py",
+      "path": "dev/pretraining/standard/old/cells_1930s/cell3_wipe.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_1930s/cell3_wipe.py",
       "source_sha256": "c60133617ac84bb2ae105b418b9dca761bd68f31b7135cfd505de23dffaa4a91",
       "local_sha256": "c60133617ac84bb2ae105b418b9dca761bd68f31b7135cfd505de23dffaa4a91"
     },
     {
-      "path": "dev/pretraining/standard/cells_1930s/cell_build_list.py",
+      "path": "dev/pretraining/standard/old/cells_1930s/cell_build_list.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_1930s/cell_build_list.py",
       "source_sha256": "1a39c5fc84270e4e054d037767284878d869269d584fbacae54d36b4deeb33a5",
       "local_sha256": "1a39c5fc84270e4e054d037767284878d869269d584fbacae54d36b4deeb33a5"
     },
     {
-      "path": "dev/pretraining/standard/cells_1930s/cell_filter.py",
+      "path": "dev/pretraining/standard/old/cells_1930s/cell_filter.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_1930s/cell_filter.py",
       "source_sha256": "78c01434b4e4932c8afd45bbecf1b7c749ec210b91ea21f982d2e28d316dbbbf",
       "local_sha256": "78c01434b4e4932c8afd45bbecf1b7c749ec210b91ea21f982d2e28d316dbbbf"
     },
     {
-      "path": "dev/pretraining/standard/cells_1930s/cell_main.py",
+      "path": "dev/pretraining/standard/old/cells_1930s/cell_main.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_1930s/cell_main.py",
       "source_sha256": "cfb06fd030b3539cb45f41365b84f9c0ad0857d1abd5bd881ac026b01634e05d",
       "local_sha256": "cfb06fd030b3539cb45f41365b84f9c0ad0857d1abd5bd881ac026b01634e05d"
     },
     {
-      "path": "dev/pretraining/standard/cells_1930s/cell_report.py",
+      "path": "dev/pretraining/standard/old/cells_1930s/cell_report.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_1930s/cell_report.py",
       "source_sha256": "b576d054160ffa17ff315743ad3fec3f8fa90666fd7a65cbbfbcd94c909c0f3e",
       "local_sha256": "b576d054160ffa17ff315743ad3fec3f8fa90666fd7a65cbbfbcd94c909c0f3e"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell1_bootstrap.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell1_bootstrap.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell1_bootstrap.py",
       "source_sha256": "76d56213975784663afdd75342d10da5b917645f79847bdaabeafdb572d61e44",
       "local_sha256": "76d56213975784663afdd75342d10da5b917645f79847bdaabeafdb572d61e44"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell2_push_scripts.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell2_push_scripts.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell2_push_scripts.py",
       "source_sha256": "41f0b9e9f6f9f521264fd7aba94b92d2c3d84854b1bbf533ff84c7d9d7836cf4",
       "local_sha256": "41f0b9e9f6f9f521264fd7aba94b92d2c3d84854b1bbf533ff84c7d9d7836cf4"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell3_wipe.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell3_wipe.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell3_wipe.py",
       "source_sha256": "203b30457bda57d3f9458df51460800a507fd11111ec63dd5c7ce43c54f34e21",
       "local_sha256": "203b30457bda57d3f9458df51460800a507fd11111ec63dd5c7ce43c54f34e21"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell4_build_list.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell4_build_list.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell4_build_list.py",
       "source_sha256": "baff8a6dde24d07ea5538ac582612387db51988495316161a559a2637b442195",
       "local_sha256": "baff8a6dde24d07ea5538ac582612387db51988495316161a559a2637b442195"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell4b_strip_footers.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell4b_strip_footers.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell4b_strip_footers.py",
       "source_sha256": "a0c149438efd824f0a79981dd5b4e2b7012e613113d0483b22584df8ffd13248",
       "local_sha256": "a0c149438efd824f0a79981dd5b4e2b7012e613113d0483b22584df8ffd13248"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell4c_strip_all.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell4c_strip_all.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell4c_strip_all.py",
       "source_sha256": "1b723cfc11c2cac78ef4e17dc3ad8841de883c34068a7aabf4b5f3b2892b196c",
       "local_sha256": "1b723cfc11c2cac78ef4e17dc3ad8841de883c34068a7aabf4b5f3b2892b196c"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell5_run_filter.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell5_run_filter.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell5_run_filter.py",
       "source_sha256": "2031167598e9c43c331790bfa78f2408ffdc7e523fe0cffd79d30dc187b144e8",
       "local_sha256": "2031167598e9c43c331790bfa78f2408ffdc7e523fe0cffd79d30dc187b144e8"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell6_run_all.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell6_run_all.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell6_run_all.py",
       "source_sha256": "0e8a65d0c166bd6db0df57021f4b00395ce3d7ec9a49fd130a211d4fcbd2ed4c",
       "local_sha256": "0e8a65d0c166bd6db0df57021f4b00395ce3d7ec9a49fd130a211d4fcbd2ed4c"
     },
     {
-      "path": "dev/pretraining/standard/cells_runner/cell7_report.py",
+      "path": "dev/pretraining/standard/old/cells_runner/cell7_report.py",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "cells_runner/cell7_report.py",
       "source_sha256": "031e54d45697c5508a3261f51613cca6e145720b0bea6de9d8c4494fe1b0ade5",
       "local_sha256": "031e54d45697c5508a3261f51613cca6e145720b0bea6de9d8c4494fe1b0ade5"
     },
     {
-      "path": "dev/pretraining/standard/clean_dataset_prompt.txt",
+      "path": "dev/pretraining/standard/old/clean_dataset_prompt.txt",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "clean_dataset_prompt.txt",
       "source_sha256": "32d0393f25859fd518ff2175691b166229c588bc852d7cfc5c63afa10283f8a4",
       "local_sha256": "32d0393f25859fd518ff2175691b166229c588bc852d7cfc5c63afa10283f8a4"
     },
     {
-      "path": "dev/pretraining/standard/scripts/build_list.py",
+      "path": "dev/pretraining/standard/old/scripts/build_list.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/build_list.py",
       "source_sha256": "8afc4c5a8059adede9093711fd7a9ee1e92ddba8b4da0e5d345f7c4da062765a",
       "local_sha256": "8afc4c5a8059adede9093711fd7a9ee1e92ddba8b4da0e5d345f7c4da062765a"
     },
     {
-      "path": "dev/pretraining/standard/scripts/common.py",
+      "path": "dev/pretraining/standard/old/scripts/common.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/common.py",
       "source_sha256": "fe331ffc92649d7b4ff216033b917c3be8f5605446dc054de4d6d8302e4e8f5c",
       "local_sha256": "fe331ffc92649d7b4ff216033b917c3be8f5605446dc054de4d6d8302e4e8f5c"
     },
     {
-      "path": "dev/pretraining/standard/scripts/config.py",
+      "path": "dev/pretraining/standard/old/scripts/config.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/config.py",
       "source_sha256": "8f3ccb06557b41ff66c68aa015cc5da9d60eac1a2c2ca2a040c2387146dd658a",
       "local_sha256": "8f3ccb06557b41ff66c68aa015cc5da9d60eac1a2c2ca2a040c2387146dd658a"
     },
     {
-      "path": "dev/pretraining/standard/scripts/filter_lib.py",
+      "path": "dev/pretraining/standard/old/scripts/filter_lib.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/filter_lib.py",
       "source_sha256": "f6d2ad51dd753c735b4820d4d7e219cfd76fcf76b9dd1467d3ce5fb958a7d1fd",
       "local_sha256": "f6d2ad51dd753c735b4820d4d7e219cfd76fcf76b9dd1467d3ce5fb958a7d1fd"
     },
     {
-      "path": "dev/pretraining/standard/scripts/footer_lib.py",
+      "path": "dev/pretraining/standard/old/scripts/footer_lib.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/footer_lib.py",
       "source_sha256": "94ce21154fd8cd1df76fa25d5d3aa7d989dba13dcf1772b28d08bb08cd7b8ca2",
       "local_sha256": "94ce21154fd8cd1df76fa25d5d3aa7d989dba13dcf1772b28d08bb08cd7b8ca2"
     },
     {
-      "path": "dev/pretraining/standard/scripts/report.py",
+      "path": "dev/pretraining/standard/old/scripts/report.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/report.py",
       "source_sha256": "42a0b376af83f25d949677cd27ac46d6cba0452b32d03f504925fac0b96550ff",
       "local_sha256": "42a0b376af83f25d949677cd27ac46d6cba0452b32d03f504925fac0b96550ff"
     },
     {
-      "path": "dev/pretraining/standard/scripts/run_filter.py",
+      "path": "dev/pretraining/standard/old/scripts/run_filter.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/run_filter.py",
       "source_sha256": "818906a3908e09d106dd59aa8080ec1ff9050e441fca5cfe07ea9b3040f70a98",
       "local_sha256": "818906a3908e09d106dd59aa8080ec1ff9050e441fca5cfe07ea9b3040f70a98"
     },
     {
-      "path": "dev/pretraining/standard/scripts/strip_footers.py",
+      "path": "dev/pretraining/standard/old/scripts/strip_footers.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/strip_footers.py",
       "source_sha256": "abab37cf450f886b0d162d4c1fbe9ca6ca997fe469b699ff403840ddc28334e9",
       "local_sha256": "abab37cf450f886b0d162d4c1fbe9ca6ca997fe469b699ff403840ddc28334e9"
     },
     {
-      "path": "dev/pretraining/standard/scripts/wipe.py",
+      "path": "dev/pretraining/standard/old/scripts/wipe.py",
       "source": "huggingface:jbduran/bartholomew-dataset-v3",
       "source_path": "scripts/wipe.py",
       "source_sha256": "8560bab28a9272d9e733bcc0be50b7e89d5fe9008d67194ca8a13c65b5bfbd39",
       "local_sha256": "8560bab28a9272d9e733bcc0be50b7e89d5fe9008d67194ca8a13c65b5bfbd39"
     },
     {
-      "path": "dev/pretraining/standard/think_dataset_clean.ipynb",
+      "path": "dev/pretraining/standard/old/think_dataset_clean.ipynb",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "think_dataset_clean.ipynb",
       "source_sha256": "69fb142b65db01a0611f6f96feead17c419136a9123e07f0052bc28a0d3fffa2",
@@ -848,7 +849,7 @@
       ]
     },
     {
-      "path": "dev/pretraining/standard/think_dataset_clean_1930s.ipynb",
+      "path": "dev/pretraining/standard/old/think_dataset_clean_1930s.ipynb",
       "source": "github:OwenVoorhees/bart-dataset-scripts",
       "source_path": "think_dataset_clean_1930s.ipynb",
       "source_sha256": "76775ecc5057f16e4cf813486646c52b6032a87db6de48ecc4a82e834af85ba9",

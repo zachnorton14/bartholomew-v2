@@ -4,8 +4,9 @@ Dataset preparation is grouped by the stage that consumes its output.
 
 | Folder | Contents |
 |---|---|
-| [pretraining/standard](pretraining/standard/README.md) | Institutional Books -> dataset v1 -> v2 -> v3 |
-| [pretraining/midtraining](pretraining/midtraining/README.md) | STEM extraction and harvest, OCR filtering, cleaning, and training mixtures |
+| [pretraining](pretraining/README.md) | Fresh config-driven pipeline scaffold: text plans only, awaiting review |
+| [pretraining/standard](pretraining/standard/README.md) | Standard recipe plans; previous v1/v2/v3 implementation in `old/` |
+| [pretraining/midtraining](pretraining/midtraining/README.md) | STEM recipe plans; previous extraction, cleaning, mixture, and anneal implementation in `old/` |
 | [sft](sft/README.md) | Authentic Q&A extraction, synthetic routes, robustness rows, and register-filter support |
 | [evaluation](evaluation/README.md) | Vintage-CORE dataset construction and evaluation notebooks |
 | `hosting/`, `providers/` | Deployment and training-machine setup |
@@ -20,6 +21,9 @@ this directory. Training entrypoints remain in the repository's top-level `scrip
 repository revision, upstream checksum, and local checksum, plus the Hugging Face
 repositories checked. Files were retrieved on 2026-10-27. Saved outputs and execution
 counts were cleared from imported notebooks; their code and configuration are preserved.
+The previous standard/midtraining sources are now archived under their `old/`
+folders; source-manifest paths track those moves. Fresh pipeline layers currently
+contain planning documents only.
 
 The standard v3 modules come directly from
 [jbduran/bartholomew-dataset-v3](https://huggingface.co/datasets/jbduran/bartholomew-dataset-v3/tree/main/scripts).
@@ -30,8 +34,8 @@ project or linked by the dataset cards:
 
 | Source | Local home |
 |---|---|
-| [OwenVoorhees/bart-dataset-scripts](https://github.com/OwenVoorhees/bart-dataset-scripts) | `pretraining/standard/` |
-| [OwenVoorhees/bart-midtrain-scripts](https://github.com/OwenVoorhees/bart-midtrain-scripts) | `pretraining/midtraining/`; CORE notebooks in `evaluation/colab/` |
+| [OwenVoorhees/bart-dataset-scripts](https://github.com/OwenVoorhees/bart-dataset-scripts) | `pretraining/standard/old/` |
+| [OwenVoorhees/bart-midtrain-scripts](https://github.com/OwenVoorhees/bart-midtrain-scripts) | `pretraining/midtraining/old/`; CORE notebooks in `evaluation/colab/` |
 | [zachnorton14/sft-extractor](https://github.com/zachnorton14/sft-extractor) | `sft/sft_extractor/` |
 | [johnny0595/vintage-core](https://github.com/johnny0595/vintage-core) | `evaluation/vintage_core/` |
 
