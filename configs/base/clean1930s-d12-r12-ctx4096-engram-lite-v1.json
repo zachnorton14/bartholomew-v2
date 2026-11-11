@@ -43,7 +43,7 @@
     "bigram_lambda_init": 0.05
   },
   "artifacts": {
-    "repo": "jbduran/bart-experiments",
+    "repo": "jbduran/bartholomew-experiments",
     "keep_local_checkpoints": 1
   },
   "wandb": {

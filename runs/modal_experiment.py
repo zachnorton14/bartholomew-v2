@@ -178,9 +178,30 @@ def cache_ready(directory):
     )
 
 
-shared.mkdir(parents=True, exist_ok=True)
+shared.parent.mkdir(parents=True, exist_ok=True)
+local = experiment.pretok_dir
 
-if allow_build and not cache_ready(shared) and hosted_repo:
+
+def local_is_own_cache():
+    return not local.is_symlink() and cache_ready(local)
+
+
+def link_local_to_shared():
+    """Point this experiment's pretok/ at the shared cache, as the shell launchers do."""
+    if local.is_symlink():
+        if local.resolve() != shared.resolve():
+            raise RuntimeError(f"{local} points to {local.resolve()}, not {shared}")
+        return
+    if local.exists():
+        shutil.rmtree(local)
+    try:
+        local.symlink_to(shared, target_is_directory=True)
+    except OSError as exc:
+        print(f"Symlink failed ({exc}); copying the shared cache instead", flush=True)
+        shutil.copytree(shared, local)
+
+
+if allow_build and hosted_repo and not cache_ready(shared) and not local_is_own_cache():
     from huggingface_hub import snapshot_download
     from huggingface_hub.errors import HfHubHTTPError
     try:
@@ -190,42 +211,36 @@ if allow_build and not cache_ready(shared) and hosted_repo:
         )
         print(f"Restored hosted token cache {hosted_repo}", flush=True)
     except HfHubHTTPError as exc:
+        cause = exc.__cause__ or exc
+        reason = " ".join(str(cause).split())[:300]
         print(
-            f"Hosted token cache {hosted_repo} is not readable with this token "
-            f"({type(exc).__name__}); building the cache from the dataset instead.",
+            f"Hosted token cache {hosted_repo} could not be downloaded "
+            f"({type(cause).__name__}: {reason}). Building the cache from the dataset instead.",
             flush=True,
         )
 
-# Point this experiment's pretok/ at the shared cache, as the shell launchers do.
-local = experiment.pretok_dir
-if local.is_symlink():
-    if local.resolve() != shared.resolve():
-        raise RuntimeError(f"{local} points to {local.resolve()}, not {shared}")
-elif any(local.iterdir()):
+if local_is_own_cache():
     print(f"Keeping the existing experiment-local token cache at {local}", flush=True)
     shared = local
+elif cache_ready(shared):
+    link_local_to_shared()
+elif not allow_build:
+    raise RuntimeError(
+        f"No usable token cache at {shared}. Start runs through "
+        "`runs/modal_experiment.py launch`, which prepares it first."
+    )
 else:
-    local.rmdir()
-    try:
-        local.symlink_to(shared, target_is_directory=True)
-    except OSError as exc:
-        # No symlinks on this filesystem: fall back to a private copy (built below
-        # in place if the shared cache is empty).
-        print(f"Symlink failed ({exc}); using a copy of the shared cache", flush=True)
-        if cache_ready(shared):
-            shutil.copytree(shared, local)
-        else:
-            local.mkdir()
-        shared = local
-
-if not cache_ready(shared):
-    if not allow_build:
-        raise RuntimeError(
-            f"No usable token cache at {shared}. Start runs through "
-            "`runs/modal_experiment.py launch`, which prepares it first."
-        )
     # The notebook's "Prepare Base Inputs" path: download parquet, then tokenize.
+    # pretok_think deletes and recreates its output directory, so build in a real
+    # directory and publish it to the shared location afterwards.
+    if local.is_symlink():
+        local.unlink()
+    local.mkdir(exist_ok=True)
     experiment.prepare_dataset()
+    experiment.prepare_pretokenized()
+    shutil.rmtree(shared, ignore_errors=True)
+    shutil.move(str(local), str(shared))
+    link_local_to_shared()
 
 # Reuses a ready cache without rereading it, then runs the harness's own
 # no-wrap and provenance validation.
@@ -297,7 +312,10 @@ def train(config_path: str, git_sha: str, eval_mode: str = "none") -> str:
     volumes={VOLUME_MOUNT: volume},
     secrets=secrets,
 )
-def launch(config_paths: list[str], git_sha: str, eval_mode: str, hosted_pretok_repo: str) -> list[str]:
+def launch(
+    config_paths: list[str], git_sha: str, eval_mode: str, hosted_pretok_repo: str,
+    start_training: bool = True,
+) -> list[str]:
     """Prepare each distinct token cache once on CPU, then start one GPU run per config."""
     prepared = set()
     for config_path in config_paths:
@@ -311,6 +329,9 @@ def launch(config_paths: list[str], git_sha: str, eval_mode: str, hosted_pretok_
     volume.commit()
 
     call_ids = []
+    if not start_training:
+        print("Prepare only: no GPU runs started.", flush=True)
+        return call_ids
     for config_path in config_paths:
         call = train.spawn(config_path, git_sha, eval_mode)
         call_ids.append(call.object_id)
@@ -424,8 +445,15 @@ def _cmd_launch(args: argparse.Namespace) -> None:
     hosted = "" if args.no_hosted_pretok else HOSTED_PRETOK_REPO
     with modal.enable_output():
         app.deploy()
-    call = modal.Function.from_name(APP_NAME, "launch").spawn(configs, sha, args.eval, hosted)
+    call = modal.Function.from_name(APP_NAME, "launch").spawn(
+        configs, sha, args.eval, hosted, not args.prepare_only
+    )
     print(f"\nStarted. Preparation call: {call.object_id}")
+    if args.prepare_only:
+        print("Waiting for preparation to finish (CPU only, no GPU runs will start)...")
+        call.get()
+        print(f"Preparation finished. Details: modal app logs {APP_NAME}")
+        return
     print(f"Logs:  modal app logs {APP_NAME}")
     print(f"Stop:  modal app stop {APP_NAME}")
     print("The GPU runs start once the token cache is ready. This terminal can be closed.")
@@ -453,6 +481,7 @@ def main() -> None:
         help="run `scripts.experiment eval` after training (default: none; training already logs val bpb)",
     )
     launch_parser.add_argument("--no-hosted-pretok", action="store_true", help="always build the token cache from the dataset")
+    launch_parser.add_argument("--prepare-only", action="store_true", help="prepare the token cache on CPU and stop; start no GPU runs")
     launch_parser.add_argument("--allow-dirty", action="store_true", help="launch with uncommitted changes")
     launch_parser.add_argument("--dry-run", action="store_true", help="print what would run and exit")
     launch_parser.set_defaults(func=_cmd_launch)

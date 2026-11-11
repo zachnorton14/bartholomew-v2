@@ -41,7 +41,7 @@
     "sample_every": -1
   },
   "artifacts": {
-    "repo": "jbduran/bart-experiments",
+    "repo": "jbduran/bartholomew-experiments",
     "keep_local_checkpoints": 1
   },
   "wandb": {

@@ -156,7 +156,8 @@ A summary of the changes by file, the test output, the runbook section appended 
   - Context-aware gating (notes section 8.2): not tested. The `values` gate reads the first 12 residual channels of the current position; it never compares the retrieved vector with the hidden state, which is what the paper's gate does. Karpathy reported the paper's layer as "ok but not great" at d12 ([discussion 472](https://github.com/karpathy/nanochat/discussions/472), from the notes' resource list). A paper-style gate is the obvious extra wave 2 arm if `values` helps.
   - Table size (notes section 5): a collision-free bigram table at this vocabulary would be about 1.07B rows; the arms use 8M to 128M rows shared by bigrams and trigrams, so collisions are the normal case.
   - The notes' last section, "Engrams in nanochat?", is empty. This document is a candidate for it.
-- The hosted pretokenised cache (`jbduran/clean1930s-d24-r12-ctx4096-fulltok-v1-pretok`) is not visible to Tyler's Hugging Face account. The Modal launcher falls back to building the cache from the public dataset, as the Colab notebook does.
+- The hosted pretokenised cache (`jbduran/clean1930s-d24-r12-ctx4096-fulltok-v1-pretok`) cannot be downloaded by anyone as of 2026-11-11: Hugging Face returns 403 "Private repository storage limit reached for jbduran". The Modal launcher falls back to building the cache from the public dataset, as the Colab notebook does. That cache (1,360,841,933 train tokens) is built and sits on the Modal Volume under `nanochat/shared_pretok/`.
+- The artifact repo is `jbduran/bartholomew-experiments`. Every older config still says `jbduran/bart-experiments`. On 2026-11-11 the harness's `create_repo(..., exist_ok=True)` call, run with jbduran's token, created a new and nearly empty repo at that old name, so the old name no longer reaches the real experiments. The nine configs for this work use the new name; the older configs and `DEFAULT_MODEL_REPO` in `scripts/experiment.py` are untouched and will not find tokenizers or checkpoints until the accidental repo is removed or they are repointed. This needs jbduran.
 
 ## Runbook (added with the implementation)
 
@@ -187,7 +188,7 @@ What it does on `launch`:
 
 One-time setup (handles credentials, so do it yourself): two Modal secrets, `huggingface-secret` holding `HF_TOKEN` and `wandb-secret` holding `WANDB_API_KEY`. These are the names the Modal dashboard's Hugging Face and Weights & Biases templates create. Both exist in the `tilesos` workspace as of 2026-11-11.
 
-The HF token must be able to write to `jbduran/bart-experiments` and the W&B key must belong to the `jbduran-thinkingmachinesncsu` team. If either is missing the run stops at its first upload.
+The HF token must be able to write to `jbduran/bartholomew-experiments` and the W&B key must belong to the `jbduran-thinkingmachinesncsu` team. If either is missing the run stops at its first upload.
 
 Commit before launching: the launcher refuses a dirty tree unless `--allow-dirty` is passed, and records the commit in W&B.
 
@@ -281,7 +282,7 @@ Every arm should log `Calculated number of iterations from target data:param rat
 | `values-32m-bigram` | 31,999,939 x 128 | 8.19 GB | 0.51 GB | 83 (2 slots) | every 500 steps |
 | `values-128m` (stretch) | 127,999,981 x 128 | 32.77 GB | 2.05 GB | 41 | final only (`save_every=-1`) |
 
-Each `values` checkpoint is the baseline checkpoint plus table plus accumulator, and the harness uploads every saved step to `jbduran/bart-experiments`. For `values-32m` that is six checkpoints of about 8.7 GB each, about 52 GB uploaded; for `values-128m` one of about 35 GB. Local disk keeps one checkpoint (`keep_local_checkpoints: 1`). The run script asks for 80 GiB free, 150 GiB for `values-128m`.
+Each `values` checkpoint is the baseline checkpoint plus table plus accumulator, and the harness uploads every saved step to `jbduran/bartholomew-experiments`. For `values-32m` that is six checkpoints of about 8.7 GB each, about 52 GB uploaded; for `values-128m` one of about 35 GB. Local disk keeps one checkpoint (`keep_local_checkpoints: 1`). The run script asks for 80 GiB free, 150 GiB for `values-128m`.
 
 VRAM: the table and accumulator sit on the GPU on top of the baseline's footprint, so `values-128m` adds about 35 GB. If it runs out of memory, lowering `device_batch_size` needs a new experiment id, because ids are immutable.
 

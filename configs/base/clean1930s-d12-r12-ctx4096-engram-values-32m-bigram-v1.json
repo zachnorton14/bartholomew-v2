@@ -50,7 +50,7 @@
     "engram_accum_beta": 0.99
   },
   "artifacts": {
-    "repo": "jbduran/bart-experiments",
+    "repo": "jbduran/bartholomew-experiments",
     "keep_local_checkpoints": 1
   },
   "wandb": {
