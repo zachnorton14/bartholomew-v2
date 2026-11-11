@@ -60,6 +60,19 @@ parser.add_argument("--aspect-ratio", type=int, default=64, help="model_dim = de
 parser.add_argument("--head-dim", type=int, default=128, help="target head dimension for attention")
 parser.add_argument("--max-seq-len", type=int, default=2048, help="max context length")
 parser.add_argument("--window-pattern", type=str, default="SSSL", help="sliding window pattern tiled across layers: L=full, S=half context (e.g. 'SSL')")
+# Engram lite: hashed bigram embedding residual (karpathy/nanochat PR 747; 0 = disabled)
+parser.add_argument("--bigram-embed-factor", type=int, default=0, help="if >0, add a hashed bigram embedding residual with vocab_size*factor rows")
+parser.add_argument("--bigram-lambda-init", type=float, default=0.05, help="init of the per-layer bigram residual scale")
+# Engram values: hashed n-gram table injected into attention values (karpathy/nanochat PR 854; 0 = disabled)
+parser.add_argument("--engram-table-size", type=int, default=0, help="rows in the engram table (0 = disabled)")
+parser.add_argument("--engram-layers", type=str, default="", help="layers that read the table, e.g. 1,3,5,7")
+parser.add_argument("--engram-rank", type=int, default=0, help="engram embedding width per layer, split across the hash slots")
+parser.add_argument("--engram-orders", type=str, default="", help="n-gram orders to combine, e.g. 2,3")
+parser.add_argument("--engram-order-weights", type=str, default="", help="hash slots per order, e.g. 2,2 (default one each)")
+parser.add_argument("--engram-gate-channels", type=int, default=12, help="leading residual-stream channels the engram gate reads")
+parser.add_argument("--engram-lr", type=float, default=0.1, help="row-wise LR for the engram table (scaled by the LR schedule)")
+parser.add_argument("--engram-decay", type=float, default=0.0, help="decay applied to a row each time it is written (0 = never forget)")
+parser.add_argument("--engram-accum-beta", type=float, default=0.0, help="EMA coefficient of the row optimizer's second-moment accumulator, e.g. 0.99")
 # Training horizon (only one used, in order of precedence)
 parser.add_argument("--num-iterations", type=int, default=-1, help="explicit number of optimization steps (-1 = disable)")
 parser.add_argument("--target-flops", type=float, default=-1.0, help="calculate num_iterations to reach target_flops (-1 = disable)")
@@ -107,6 +120,10 @@ parser.add_argument("--model-tag", type=str, default=None, help="override model 
 args = parser.parse_args()
 if args.muon_momentum is not None and not 0 <= args.muon_momentum < 1:
     parser.error("--muon-momentum must be in [0, 1)")
+if args.bigram_embed_factor < 0:
+    parser.error("--bigram-embed-factor must be non-negative")
+if args.engram_table_size < 0:
+    parser.error("--engram-table-size must be non-negative")
 user_config = vars(args).copy()  # for logging
 if args.experiment_config:
     with open(args.experiment_config, "r", encoding="utf-8") as f:
@@ -131,6 +148,10 @@ if args.init_from_step != -1:
 device_type = autodetect_device_type() if args.device_type == "" else args.device_type
 ddp, ddp_rank, ddp_local_rank, ddp_world_size, device = compute_init(device_type, seed=args.seed)
 master_process = ddp_rank == 0 # this process will do logging, checkpointing etc.
+engram_enabled = args.engram_table_size > 0
+# The engram table is updated outside the optimizer with no cross-rank reduction (PR 854 shared one
+# host table between ranks instead; that machinery is not ported), so per-rank tables would diverge.
+assert not engram_enabled or ddp_world_size == 1, "--engram-table-size > 0 is single-GPU only"
 synchronize = torch.cuda.synchronize if device_type == "cuda" else lambda: None
 get_max_memory = torch.cuda.max_memory_allocated if device_type == "cuda" else lambda: 0
 if device_type == "cuda":
@@ -206,8 +227,9 @@ print0(f"Vocab size: {vocab_size:,}")
 # -----------------------------------------------------------------------------
 # Initialize the Model
 
-def build_model_meta(depth):
-    """Build a model on meta device for a given depth (shapes/dtypes only, no data)."""
+def build_model_meta(depth, engram=True):
+    """Build a model on meta device for a given depth (shapes/dtypes only, no data).
+    engram=False builds the plain architecture (used for the d12 scaling-law reference)."""
     # Model dim is nudged up to nearest multiple of head_dim for clean division
     # (FA3 requires head_dim divisible by 8, and this guarantees head_dim == args.head_dim exactly)
     base_dim = depth * args.aspect_ratio
@@ -217,6 +239,13 @@ def build_model_meta(depth):
         sequence_len=args.max_seq_len, vocab_size=vocab_size,
         n_layer=depth, n_head=num_heads, n_kv_head=num_heads, n_embd=model_dim,
         window_pattern=args.window_pattern,
+        bigram_embed_factor=args.bigram_embed_factor if engram else 0,
+        bigram_lambda_init=args.bigram_lambda_init,
+        engram_table_size=args.engram_table_size if engram else 0,
+        engram_layers=args.engram_layers, engram_rank=args.engram_rank,
+        engram_orders=args.engram_orders, engram_order_weights=args.engram_order_weights,
+        engram_gate_channels=args.engram_gate_channels,
+        engram_decay=args.engram_decay, engram_accum_beta=args.engram_accum_beta,
     )
     with torch.device("meta"):
         model_meta = GPT(config)
@@ -282,6 +311,10 @@ if args.fp8:
     # Filter: dims must be divisible by 16 (FP8 hardware requirement) large enough
     def fp8_module_filter(mod: nn.Module, fqn: str) -> bool:
         if not isinstance(mod, nn.Linear):
+            return False
+        # Engram layers call F.linear on their weights directly (as in PR 854), so a
+        # Float8Linear there would be bypassed anyway; keep them out by name.
+        if fqn.startswith("engrams."):
             return False
         if mod.in_features % 16 != 0 or mod.out_features % 16 != 0:
             return False
@@ -374,7 +407,7 @@ num_scaling_params = get_scaling_params(model)
 target_tokens = int(args.target_param_data_ratio * num_scaling_params) # optimal tokens for the model we are about to train
 
 # Our reference model is d12, this is where a lot of hyperparameters are tuned and then transfered to higher depths (muP style)
-d12_ref = build_model_meta(12) # creates the model on meta device
+d12_ref = build_model_meta(12, engram=False) # creates the model on meta device (never with Engram)
 D_REF = args.target_param_data_ratio * get_scaling_params(d12_ref) # compute-optimal d12 training horizon in tokens (measured empirically)
 B_REF = 2**19 # optimal batch size at d12 ~= 524,288 tokens (measured empirically)
 
@@ -418,7 +451,18 @@ optimizer = model.setup_optimizer(
     # Muon hyperparameters
     matrix_lr=args.matrix_lr * batch_lr_scale,
     weight_decay=weight_decay_scaled,
+    # Engram lite (PR 747 values; ignored when disabled)
+    bigram_lambda_lr=0.004 * batch_lr_scale,
 )
+engram_table_bytes = 0
+if args.bigram_embed_factor > 0:
+    w = orig_model.bigram_embed.weight
+    print0(f"Engram lite enabled: bigram table {w.shape[0]:,} x {w.shape[1]} ({w.numel() * w.element_size() / 1e9:.3f} GB)")
+if engram_enabled:
+    assert COMPUTE_DTYPE != torch.float16, "engram rows are outside the optimizer, so the fp16 GradScaler would not unscale them"
+    engram_table_bytes = orig_model.engram_bank.table_bytes()
+    print0(f"Engram values enabled: {orig_model.engram_table_rows:,} rows x {orig_model.engram_bank.weight.shape[1]} "
+           f"({engram_table_bytes / 1e9:.2f} GB table + accumulator on {device}), row lr={args.engram_lr}")
 
 if resuming:
     optimizer.load_state_dict(optimizer_data)
@@ -855,6 +899,8 @@ while True:
         if group['kind'] == 'muon':
             group["momentum"] = muon_momentum
             group["weight_decay"] = muon_weight_decay
+    if engram_enabled:
+        orig_model.engram_bank.step(args.engram_lr * lrm) # sparse row update, outside the optimizer
     if scaler is not None:
         scaler.unscale_(optimizer)
         # In distributed training, all ranks must agree on whether to skip the step.
@@ -960,6 +1006,8 @@ if not use_dummy_wandb:
     wandb_run.summary["training_time_seconds"] = total_training_time
     wandb_run.summary["final_mfu"] = mfu
     wandb_run.summary["final_tok_per_sec"] = tok_per_sec
+    if engram_enabled:
+        wandb_run.summary["engram_table_bytes"] = engram_table_bytes
 
 # Log to report
 from nanochat.report import get_report

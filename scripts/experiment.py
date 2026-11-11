@@ -204,6 +204,22 @@ def run_streaming(cmd, env=None):
         raise subprocess.CalledProcessError(code, cmd)
 
 
+# Engram training keys forwarded to scripts.base_train (see nanochat/engram.py).
+ENGRAM_TRAINING_ARGS = {
+    "bigram_embed_factor": "bigram-embed-factor",
+    "bigram_lambda_init": "bigram-lambda-init",
+    "engram_table_size": "engram-table-size",
+    "engram_layers": "engram-layers",
+    "engram_rank": "engram-rank",
+    "engram_orders": "engram-orders",
+    "engram_order_weights": "engram-order-weights",
+    "engram_gate_channels": "engram-gate-channels",
+    "engram_lr": "engram-lr",
+    "engram_decay": "engram-decay",
+    "engram_accum_beta": "engram-accum-beta",
+}
+
+
 def _torchrun_command(cmd, module, nproc_per_node):
     """Wrap a direct ``python -m`` command in a local torchrun launch."""
     if nproc_per_node == 1:
@@ -537,6 +553,14 @@ class Experiment:
                         "tokenizer.mode='reuse' requires a different "
                         "tokenizer.source_experiment_id"
                     )
+            # Engram keys that base_train does not know would otherwise be silently dropped
+            # by _base_train_command and the run would train the baseline.
+            unknown_engram = sorted(
+                key for key in self.config["training"]
+                if key.startswith(("engram_", "bigram_")) and key not in ENGRAM_TRAINING_ARGS
+            )
+            if unknown_engram:
+                raise ValueError(f"Unknown Engram training keys: {unknown_engram}")
             muon_momentum = self.config["training"].get("muon_momentum")
             if muon_momentum is not None and (
                 isinstance(muon_momentum, bool)
@@ -1900,6 +1924,7 @@ class Experiment:
             "warmdown_ratio": "warmdown-ratio",
             "final_lr_frac": "final-lr-frac",
             "core_metric_max_per_task": "core-metric-max-per-task",
+            **ENGRAM_TRAINING_ARGS,
         }
         for config_key, cli_name in optional_args.items():
             if config_key in training:
