@@ -79,9 +79,10 @@ def evaluate(argv: list[str]) -> dict[str, str]:
 
 @app.local_entrypoint()
 def main(variants: str = "all", probes: str = "", samples: int = 4, max_tokens: int = 256,
-         checkpoint_dir: str = "/img-model", tag: str = "modal", priming: str = "default"):
-    """`--priming none` drops the hidden opening exchange the deployment prepends."""
-    argv = ["--checkpoint-dir", checkpoint_dir, "--variants", variants,
+         checkpoint_dir: str = "/img-model", tag: str = "modal", priming: str = "default", suite: str = "v1"):
+    """`--priming none` drops the hidden opening exchange the deployment prepends;
+    `--suite adherence` scores each rule of the prompt instead of the original 24 probes."""
+    argv = ["--suite", suite, "--checkpoint-dir", checkpoint_dir, "--variants", variants,
             "--samples", str(samples), "--max-tokens", str(max_tokens),
             f"--priming-turns={'' if priming == 'none' else priming}"]
     if probes:
