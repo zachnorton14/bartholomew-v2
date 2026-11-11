@@ -151,8 +151,12 @@ A summary of the changes by file, the test output, the runbook section appended 
 
 ## Open items for Tyler
 
-- "Zach's engram notes" from the issue were not found in the repo or in Drive. If they exist, they may change the arms.
-- Whether the hosted pretokenised cache passes the harness's validation for a ratio-12 d12 run is unverified.
+- Zach's engram notes (supplied 2026-11-11) are a walkthrough of the DeepSeek paper. They do not change the arms. How they map onto what is built:
+  - Multiple hash heads (notes section 8.1): `values` does this with two salted hashes per n-gram order, each 32 wide, concatenated. They share one table instead of using one table per head. `lite` uses a single hash.
+  - Context-aware gating (notes section 8.2): not tested. The `values` gate reads the first 12 residual channels of the current position; it never compares the retrieved vector with the hidden state, which is what the paper's gate does. Karpathy reported the paper's layer as "ok but not great" at d12 ([discussion 472](https://github.com/karpathy/nanochat/discussions/472), from the notes' resource list). A paper-style gate is the obvious extra wave 2 arm if `values` helps.
+  - Table size (notes section 5): a collision-free bigram table at this vocabulary would be about 1.07B rows; the arms use 8M to 128M rows shared by bigrams and trigrams, so collisions are the normal case.
+  - The notes' last section, "Engrams in nanochat?", is empty. This document is a candidate for it.
+- The hosted pretokenised cache (`jbduran/clean1930s-d24-r12-ctx4096-fulltok-v1-pretok`) is not visible to Tyler's Hugging Face account. The Modal launcher falls back to building the cache from the public dataset, as the Colab notebook does.
 
 ## Runbook (added with the implementation)
 
@@ -171,7 +175,59 @@ A summary of the changes by file, the test output, the runbook section appended 
 
 `values-32m-bigram` drops the trigram slots and halves `engram_rank` to 64. Its two bigram slots then hash to exactly the same buckets as in `values-32m`, the per-slot width stays 32, and the table bytes are identical, so the arm isolates the trigram contribution.
 
-### Before launching
+### Running on Modal (added 2026-11-11)
+
+`runs/modal_experiment.py` is the Modal counterpart of `dev/colab_nanochat_experiment.ipynb`: it runs the notebook's base path (prepare, validate, train, optional eval) through `scripts.experiment`. Use it instead of the shell script below when there is no rented box.
+
+What it does on `launch`:
+
+1. Uploads the local working tree as the run's code and deploys the app `bartholomew-experiments`. Runs continue after the terminal is closed.
+2. Prepares the token cache once on a CPU container and stores it on the Volume `bartholomew-nanochat`. All arms read that one cache.
+3. Starts one container with one pinned H100 (`H100!`, never upgraded to an H200) per arm. Each runs `scripts.gpu_preflight`, then `scripts.experiment train`.
+
+One-time setup (handles credentials, so run it yourself):
+
+```bash
+modal secret create bartholomew-train HF_TOKEN=... WANDB_API_KEY=...
+```
+
+The HF token must be able to write to `jbduran/bart-experiments` and the W&B key must belong to the `jbduran-thinkingmachinesncsu` team. If either is missing the run stops at its first upload.
+
+Commit before launching: the launcher refuses a dirty tree unless `--allow-dirty` is passed, and records the commit in W&B.
+
+Order of runs:
+
+```bash
+python3 runs/modal_experiment.py check
+```
+
+```bash
+python3 runs/modal_experiment.py launch --arm smoke,smoke-values
+```
+
+```bash
+python3 runs/modal_experiment.py launch --arm baseline,baseline-s43,lite,values-32m
+```
+
+`check` needs no credentials and no GPU. The two smoke arms are 20-step runs of the plain model and of the Engram `values` path with a 1M-row table; they exercise FP8, `torch.compile`, checkpoint upload and W&B before the full arms are paid for, and they build the token cache the full arms reuse.
+
+Watching and stopping:
+
+```bash
+modal app logs bartholomew-experiments
+```
+
+```bash
+modal app stop bartholomew-experiments
+```
+
+Things that differ from the shell path:
+
+- The image runs Python 3.12, not 3.10, because Modal's image builder no longer offers 3.10. Dependencies still come from `uv.lock`.
+- Modal can preempt a GPU container. It restarts the run on the same input and the harness resumes from its last checkpoint (every 500 steps). A resumed run's wall-clock number is less clean, so note any arm that was preempted.
+- `--eval bpb` or `--eval full` adds the notebook's eval cell after training. The default is none, because training already logs val bpb at every eval step.
+
+### Before launching (rented box)
 
 1. Commit and push `engram-ablations` (nothing is committed yet), then check that branch out on the H100 box.
 2. Put `HF_TOKEN` and `WANDB_API_KEY` in `.env`. The run script needs both.

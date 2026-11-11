@@ -3330,6 +3330,11 @@ def _directory_fingerprint(path):
 
 
 def _git_commit_sha():
+    # Launchers that upload the source tree without .git (runs/modal_experiment.py)
+    # pass the commit they uploaded.
+    override = os.environ.get("NANOCHAT_GIT_COMMIT_SHA")
+    if override:
+        return override
     try:
         return subprocess.check_output(
             ["git", "rev-parse", "HEAD"],
