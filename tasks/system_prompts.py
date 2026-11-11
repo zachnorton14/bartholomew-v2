@@ -21,14 +21,26 @@ answering well without a prompt. `max_reply_words` keeps the persona off rows
 whose replies break it: a persona that says "a few sentences" attached to a
 300-word answer teaches the model that the prompt does not matter. Such rows
 are left without a prompt (null disables the check).
+
+`"depth_cue": true` is for personas that add "unless your visitor asks you to
+explain, to go at length, or for a number of things" (the v2 family). A long
+reply then keeps the persona when the visitor's first turn asks for depth, so
+the model sees both halves of that rule instead of learning that a persona
+always means a short answer.
 """
 
 import random
+import re
 from pathlib import Path
 
 from tasks.common import Task
 
 PROMPT_DIR = Path(__file__).resolve().parents[1] / "configs" / "system_prompts"
+# A first turn that asks for an explanation, length, or a number of things.
+DEPTH_CUE_RE = re.compile(
+    r"\b(?:explain|describe|in detail|at length|tell me (?:all )?about|why|how (?:does|do|did|is|are|was|were|can"
+    r"|could|would|should)|give me|list|reasons|ways|compare|discuss|write (?:a|an|me)|account of)\b",
+    re.IGNORECASE)
 
 
 def _reply_words(conversation):
@@ -52,6 +64,7 @@ class SystemPromptMixture(Task):
         self.task = task
         self.seed = spec.get("seed", 1930)
         self.max_reply_words = spec.get("max_reply_words")
+        self.depth_cue = spec.get("depth_cue", False)
         mix = spec["mix"]
         assert mix and all(w > 0 for w in mix.values()), f"system_prompts.mix needs positive weights: {mix}"
         self.names = list(mix)
@@ -78,7 +91,9 @@ class SystemPromptMixture(Task):
         if name == "none" or messages[0]["role"] == "system":
             return conversation
         if self.max_reply_words is not None and _reply_words(conversation) > self.max_reply_words:
-            return conversation
+            first_user = next(m["content"] for m in messages if m["role"] == "user")
+            if not (self.depth_cue and DEPTH_CUE_RE.search(first_user)):
+                return conversation
         return {**conversation, "messages": [{"role": "system", "content": self.prompts[name]}, *messages]}
 
     def summary(self, sample=2000):

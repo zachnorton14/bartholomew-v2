@@ -370,6 +370,14 @@ elif args.recipe == "curriculum":
         from tasks.system_prompts import SystemPromptMixture
         train_dataset = SystemPromptMixture(train_dataset, system_prompt_spec)
         print0(f"System prompts on train rows: {json.dumps(train_dataset.summary())}")
+    # Optional: date, notice-then-speculate and contrast rows for the v2 persona (tasks/era_v2.py),
+    # spread through the curriculum without reordering its stages.
+    era_spec = resolved.get("data", {}).get("era_v2") if isinstance(resolved, dict) else None
+    if era_spec:
+        from tasks.era_v2 import EraTask, InterleavedTask
+        era_task = EraTask(era_spec)
+        train_dataset = InterleavedTask(train_dataset, era_task)
+        print0(f"Era rows interleaved: {json.dumps(era_task.summary())}")
 else:
     identity_conversations_filepath = os.path.join(base_dir, "identity_conversations.jsonl")
     smoltalk_task = SmolTalk(split="train")
