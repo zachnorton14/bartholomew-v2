@@ -24,9 +24,11 @@ How a launch works:
 
 One-time setup, run by a human because it handles credentials:
 
-    modal secret create bartholomew-train HF_TOKEN=... WANDB_API_KEY=...
+    modal secret create huggingface-secret HF_TOKEN=...
+    modal secret create wandb-secret WANDB_API_KEY=...
 
-The HF token needs write access to the config's `artifacts.repo`, and the W&B key
+These are the names Modal's dashboard gives its Hugging Face and Weights & Biases
+secret templates. The HF token needs write access to the config's `artifacts.repo`, and the W&B key
 needs access to the config's `wandb.entity`.
 
 Follow a run with `modal app logs bartholomew-experiments`, the Modal dashboard,
@@ -47,7 +49,8 @@ from pathlib import Path
 import modal
 
 APP_NAME = "bartholomew-experiments"
-SECRET_NAME = "bartholomew-train"
+# Secret name -> the key it must hold. The names are Modal's dashboard templates.
+SECRETS = {"huggingface-secret": "HF_TOKEN", "wandb-secret": "WANDB_API_KEY"}
 VOLUME_NAME = "bartholomew-nanochat"
 
 REMOTE_REPO = "/root/bartholomew"
@@ -92,7 +95,7 @@ image = (
 )
 
 volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True, version=2)
-secret = modal.Secret.from_name(SECRET_NAME, required_keys=["HF_TOKEN", "WANDB_API_KEY"])
+secrets = [modal.Secret.from_name(name, required_keys=[key]) for name, key in SECRETS.items()]
 
 app = modal.App(APP_NAME)
 # A second, ephemeral app so `check` can run before the secret exists.
@@ -255,7 +258,7 @@ def _prepare(config_path: str, hosted_pretok_repo: str, allow_build: bool) -> No
     # transient failure without replaying a real bug many times on a GPU.
     retries=modal.Retries(max_retries=1, backoff_coefficient=1.0, initial_delay=30.0),
     volumes={VOLUME_MOUNT: volume},
-    secrets=[secret],
+    secrets=secrets,
 )
 def train(config_path: str, git_sha: str, eval_mode: str = "none") -> str:
     config = _load_config(config_path)
@@ -292,7 +295,7 @@ def train(config_path: str, git_sha: str, eval_mode: str = "none") -> str:
     memory=32 * 1024,
     timeout=6 * 60 * 60,
     volumes={VOLUME_MOUNT: volume},
-    secrets=[secret],
+    secrets=secrets,
 )
 def launch(config_paths: list[str], git_sha: str, eval_mode: str, hosted_pretok_repo: str) -> list[str]:
     """Prepare each distinct token cache once on CPU, then start one GPU run per config."""

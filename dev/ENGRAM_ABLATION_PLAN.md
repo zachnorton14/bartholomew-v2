@@ -185,11 +185,7 @@ What it does on `launch`:
 2. Prepares the token cache once on a CPU container and stores it on the Volume `bartholomew-nanochat`. All arms read that one cache.
 3. Starts one container with one pinned H100 (`H100!`, never upgraded to an H200) per arm. Each runs `scripts.gpu_preflight`, then `scripts.experiment train`.
 
-One-time setup (handles credentials, so run it yourself):
-
-```bash
-modal secret create bartholomew-train HF_TOKEN=... WANDB_API_KEY=...
-```
+One-time setup (handles credentials, so do it yourself): two Modal secrets, `huggingface-secret` holding `HF_TOKEN` and `wandb-secret` holding `WANDB_API_KEY`. These are the names the Modal dashboard's Hugging Face and Weights & Biases templates create. Both exist in the `tilesos` workspace as of 2026-11-11.
 
 The HF token must be able to write to `jbduran/bart-experiments` and the W&B key must belong to the `jbduran-thinkingmachinesncsu` team. If either is missing the run stops at its first upload.
 
