@@ -314,10 +314,13 @@ class RustBPETokenizer:
                 add_tokens(user_end, 0)
             elif message["role"] == "assistant":
                 add_tokens(assistant_start, 0)
+                # "loss": False keeps an assistant turn as context only, e.g. a wrong
+                # answer the next turn corrects, which the model must see but not learn.
+                turn_mask = 0 if message.get("loss") is False else 1
                 if isinstance(content, str):
                     # simple string => simply add the tokens
                     value_ids = self.encode(content)
-                    add_tokens(value_ids, 1)
+                    add_tokens(value_ids, turn_mask)
                 elif isinstance(content, list):
                     for part in content:
                         if part["type"] == "text":
@@ -337,7 +340,7 @@ class RustBPETokenizer:
                             raise ValueError(f"Unsupported part type {part['type']!r}")
                 else:
                     raise ValueError(f"Unknown content type: {type(content)}")
-                add_tokens(assistant_end, 1)
+                add_tokens(assistant_end, turn_mask)
 
         # truncate to max_tokens tokens MAX (helps prevent OOMs)
         ids = ids[:max_tokens]

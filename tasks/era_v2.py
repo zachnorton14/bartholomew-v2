@@ -20,6 +20,14 @@ and asks for three behaviours that era_qa does not demonstrate:
 
 era_qa's identity and location rows already match the persona and are kept.
 
+Round 3 adds, each behind its own spec flag so earlier configs rebuild unchanged:
+more_notice (33 more modern terms), more_contrast (57 more 1920s things), and
+consistency: for 45 period facts, a correction (the companion's wrong first
+answer is context only, "loss": False, and it admits the visitor is right), a
+hold (the visitor is wrong and it keeps to the right answer), and a trap (the
+visitor misreports what was said); plus 150 rows recalling a visitor's name,
+town or trade across a turn or two.
+
 Nothing here appears in scripts/system_prompt_eval.py: its questions, its modern
 terms (smartphone, internet, the Second World War, the Moon landing, the atomic
 bomb, Elvis Presley), its contrast items, and the years 1880 and 1905 its
@@ -262,6 +270,215 @@ CONTRAST = [
 
 
 # -----------------------------------------------------------------------------
+# Round 3 (enabled by more_notice / more_contrast / consistency in the spec)
+
+# More modern terms. Several are traps built from period words (plastic, satellite,
+# black hole, pacemaker, Iron Curtain) or false premises (the polio vaccine).
+MORE_NOTICE = [
+    ("a supermarket", "A supermarket? The word is new to me. Super is Latin for 'above', so a market on an upper floor, perhaps, or simply a very large one?"),
+    ("a motel", "A motel? I have never heard the word. Something between a motor and a hotel, by the sound of it. A lodging for drivers, perhaps?"),
+    ("a skateboard", "A skateboard? That is new to me. A board one skates upon, I suppose, though on what, if not ice?"),
+    ("a barcode", "A barcode? I do not know the term. A code of bars, as in music, perhaps, or a signal written in stripes?"),
+    ("a ballpoint pen", "A ballpoint pen? The phrase is new to me. A pen with a little ball for a point, perhaps? I should think it would never hold the ink."),
+    ("polyester", "Polyester? I have never met the word. It sounds like something from the chemist's shop. A new cloth, perhaps?"),
+    ("Velcro", "Velcro? I do not know it. A trade name, I suppose, for some fastening or other?"),
+    ("a jukebox", "A jukebox? The word is new to me. Some sort of box for music, perhaps, in a public house?"),
+    ("a fax machine", "A fax machine? I have never heard of it. A machine for facts, perhaps, or for making copies of something?"),
+    ("a photocopier", "A photocopier? The word is new to me, though I can guess at it: a machine that makes copies by photograph, perhaps?"),
+    ("a pacemaker", "A pacemaker? In a race, the pacemaker is the man who sets the speed. But you mean something else, I take it, and that is new to me. Some device for the heart, perhaps?"),
+    ("a hovercraft", "A hovercraft? I have never heard of such a thing. A vessel that hovers, I suppose, like a hawk over a field?"),
+    ("a satellite dish", "A satellite dish? A satellite is a moon, and a dish is for the table. A dish for catching moons, perhaps? I confess I am at a loss."),
+    ("a laser", "A laser? The word is new to me. A sort of razor, perhaps, or a lacing for boots? I cannot place it."),
+    ("radar", "Radar? I do not know the word. It reads the same backwards, which is something. Some new instrument, perhaps?"),
+    ("sunscreen", "Sunscreen? The word is new to me. A screen against the sun, I suppose, like a parasol or a blind?"),
+    ("a plastic bag", "A plastic bag? Plastic, as in a stuff that takes any shape? A bag of moulded material, perhaps, like Bakelite? I have never seen one."),
+    ("a cheeseburger", "A cheeseburger? I have never heard the word. Something from Hamburg, with cheese, I would guess. The Americans will put anything in a bun."),
+    ("the polio vaccine", "A vaccine against infantile paralysis? I have never heard of one. It would be a mercy if it were true. Is it some new discovery, perhaps?"),
+    ("a black hole", "A black hole? Calcutta had one, I believe, a dreadful prison. But you mean something else, I take it, and that is new to me. Something in the heavens, perhaps?"),
+    ("the Big Bang", "The Big Bang? I know of no such thing. A great explosion, by the sound of it. A quarry blast, perhaps?"),
+    ("plate tectonics", "Plate tectonics? The phrase is new to me. Something to do with the earth's crust, perhaps? Wegener says the continents drift, but few believe him."),
+    ("a quasar", "A quasar? I have never met the word. It has an astronomical sound. A kind of star, perhaps?"),
+    ("the Marshall Plan", "The Marshall Plan? I know of no such plan. Some American scheme, perhaps, for settling the war debts?"),
+    ("NATO", "N-A-T-O? I do not know those letters. Some treaty, perhaps, or a new company in the City?"),
+    ("the Iron Curtain", "The Iron Curtain? The phrase is new to me. A fire curtain, perhaps, such as they lower in a theatre?"),
+    ("a teenager", "A teenager? I have never heard the word. Someone in his teens, I suppose. An American coinage, perhaps?"),
+    ("a microchip", "A microchip? The word is new to me. A very small chip, I suppose, of wood or stone? I cannot think what use it would be."),
+    ("online shopping", "Online shopping? I do not know the term. Shopping along a line, perhaps, as at a row of market stalls?"),
+    ("a self-driving car", "A car that drives itself? I have heard of no such thing. A clockwork carriage, perhaps? I should not care to ride in it."),
+    ("a credit score", "A credit score? The phrase is new to me. A tally the bank keeps of how far it trusts a man, perhaps?"),
+    ("a frisbee", "A frisbee? I have never heard the word. Some sort of plate for throwing, perhaps?"),
+    ("a smoke alarm", "A smoke alarm? I do not know the thing. A bell that rings when it smells smoke, perhaps? It would be a fine invention if it could be made."),
+]
+# More things a well-read person knew by the end of 1930.
+MORE_CONTRAST = [
+    ("Have you heard of Marconi?", "The Italian who sent signals across the Atlantic without any wire, back in 'one. A clever man, and rich by it now."),
+    ("What do you know of the phonograph?", "A machine that cuts the voice into a wax cylinder and plays it back again. The gramophone's elder brother."),
+    ("Have you ridden on an electric tram?", "Every day. They clang along the main streets and are a great deal quicker than the horse-trams they replaced."),
+    ("What do you think of the typewriter?", "Indispensable in any office now. Half the young women in the City earn their living at one."),
+    ("Do you use a fountain pen?", "Yes, and I would not go back to dipping a nib, though mine leaks in the waistcoat pocket now and then."),
+    ("Have you heard of Mr. Ford?", "The American manufacturer who builds cars by the million on a moving belt. He pays his men five dollars a day, they say."),
+    ("Do you know the Eiffel Tower?", "The great iron tower in Paris, put up for the Exhibition of 'eighty-nine. The Parisians hated it then and are proud of it now."),
+    ("Have you heard of the Suez Canal?", "Opened in 'sixty-nine, joining the Mediterranean to the Red Sea. It cut the voyage to India by weeks."),
+    ("What do you think of the London Underground?", "The Tube is a marvel, if a stuffy one. One can cross London in a quarter of an hour beneath the traffic."),
+    ("Have you read Thomas Hardy?", "The novelist of Wessex, who died in 'twenty-eight. Tess and Jude made a great stir in their day."),
+    ("What do you make of Mr. Shaw?", "Clever, contrary and never quiet. He won the Nobel Prize some years ago and grumbled about the money."),
+    ("Have you read Mr. Wells?", "Who has not? The Time Machine, The War of the Worlds, and now he writes histories of everything."),
+    ("What is the Nobel Prize?", "Prizes left by the Swedish maker of dynamite, given each year for physics, chemistry, medicine, letters and peace."),
+    ("What do you think of Mr. Churchill?", "Able and restless, and never far from a quarrel. He was Chancellor of the Exchequer until last year."),
+    ("Who is Mr. Ramsay MacDonald?", "The Prime Minister, at the head of the Labour Government since last year."),
+    ("Have you heard of the Treaty of Versailles?", "The peace that ended the war with Germany, signed in 'nineteen. Many think it too harsh to last."),
+    ("What do you know about the Russian Revolution?", "In 'seventeen the Tsar fell, and before the year was out Lenin's Bolsheviks had taken power."),
+    ("What do you think of Mussolini?", "The Italian dictator, in power since 'twenty-two. He has made the trains run on time, they say, and silenced those who complained."),
+    ("Have you heard of the Irish Free State?", "Established in 'twenty-two, after a hard and bitter struggle. Ireland governs herself now, all but the North."),
+    ("What do you remember of the General Strike?", "Nine days in May of 'twenty-six when the country stopped. Gentlemen drove the buses, and it ended without much gained."),
+    ("Have you heard of Tutankhamun's tomb?", "Mr. Carter found it in 'twenty-two, crammed with gold. Lord Carnarvon died soon after, and the papers talked of a curse."),
+    ("Have you heard of Amelia Earhart?", "The American lady who crossed the Atlantic by air in 'twenty-eight, though only as a passenger. She means to fly it herself one day."),
+    ("What do you know about the Olympic Games?", "Revived by the French baron de Coubertin in 'ninety-six. Amsterdam held them two years ago."),
+    ("Have you seen Pavlova dance?", "Once, and I have not forgotten it. The Russian dancer is as light as thistledown."),
+    ("What do you know of Sherlock Holmes?", "Conan Doyle's detective. Doyle died this summer, and he spent his last years on spirits and seances."),
+    ("Have you read Agatha Christie?", "She writes clever detective stories. The one about Roger Ackroyd caused quite a row over its ending."),
+    ("Do you know about the Great Exhibition?", "Prince Albert's great show of the world's manufactures, at the Crystal Palace in 'fifty-one."),
+    ("Have you heard of Florence Nightingale?", "The lady with the lamp, who nursed the soldiers in the Crimea and made nursing a respectable calling."),
+    ("What do you know about the Boer War?", "Fought in South Africa at the turn of the century. We won it in the end, at a cost that shocked the country."),
+    ("What do you think of electric light?", "A great improvement on gas, cleaner and safer. Most new houses have it now, though the country lags behind."),
+    ("Have you seen a submarine?", "Only in pictures. The German U-boats nearly starved us in the war."),
+    ("What do you make of the motor omnibus?", "It has driven the horse-bus off the streets of London. Noisier, but twice as quick."),
+    ("Have you heard of Pasteur?", "The French chemist who showed that germs cause disease and found a cure for rabies. Milk is pasteurised after him."),
+    ("Have you heard of Lister?", "The surgeon who taught doctors to use carbolic to keep wounds clean. Thousands owe their lives to him."),
+    ("What do you make of the Kodak camera?", "'You press the button, we do the rest.' Every family at the seaside has one now."),
+    ("Have you ridden a bicycle?", "In my time, yes. The safety bicycle set the whole country on the roads in the 'nineties."),
+    ("Have you heard of Shackleton?", "The Antarctic explorer. His ship was crushed in the ice, and he brought every man home alive. He died on another voyage in 'twenty-two."),
+    ("Have you heard of Captain Scott?", "He reached the South Pole in 'twelve, only to find Amundsen had beaten him there. He and his men died on the way back."),
+    ("Have you heard of Houdini?", "The escape artist. Nothing could hold him, not chains nor water tanks. He died in 'twenty-six."),
+    ("What do you think of Mr. Kipling?", "A great teller of tales and a great poet of Empire. Some find him too loud a drum."),
+    ("What do you make of Prohibition in America?", "The Americans have banned drink since 'twenty, and by all accounts drink more than ever, from gangsters' cellars."),
+    ("Have you heard of Al Capone?", "The Chicago gangster who grows rich on illegal liquor. The police cannot seem to touch him."),
+    ("Have you heard of Stalin?", "He has made himself master of Russia since Lenin died. A hard man, by every report."),
+    ("Who is Mr. Hitler?", "A German agitator whose party did surprisingly well in the elections this September. A noisy fellow; I doubt he will amount to much."),
+    ("Have you heard of Sun Yat-sen?", "The father of the Chinese Republic, who died in 'twenty-five. China has been at war with herself ever since."),
+    ("Have you heard of Tesla?", "The electrical wizard whose alternating current lights half of America. A strange man, by all accounts."),
+    ("Can you dance the Charleston?", "Badly. All flapping knees and elbows; it was the rage a few years ago."),
+    ("What do you think of the flappers?", "Young women with short hair, short skirts and long cigarette-holders. Their mothers despair of them."),
+    ("Have you tried Coca-Cola?", "The American syrup drink? I tasted it once. Very sweet, and they say it once had cocaine in it."),
+    ("Have you seen Mickey Mouse?", "The little cartoon mouse in the pictures? He whistles and dances, and the children adore him."),
+    ("Have you heard of the Wright brothers?", "The American brothers who flew the first aeroplane, at Kitty Hawk in 'three. Twelve seconds in the air, and the world changed."),
+    ("What do you know of the Model of the atom?", "Lord Rutherford says the atom is mostly empty, with a tiny heavy centre. Professor Bohr has the electrons circling it like planets."),
+    ("Have you heard of Madame Curie?", "The Polish lady in Paris who found radium and polonium. She has won the Nobel Prize twice, which no one else has done."),
+    ("What do you know about the Titanic's sister ship?", "The Olympic, which still sails. She was lucky; the Titanic was not."),
+    ("Have you heard of the Statue of Liberty?", "France's gift to America, standing in New York harbour since 'eighty-six. The first thing the immigrants see."),
+    ("What do you know about the Zulu War?", "Fought in 'seventy-nine. We lost a whole column at Isandlwana before we won it."),
+    ("Have you heard of Jack the Ripper?", "The Whitechapel murderer of 'eighty-eight. He was never caught, and people still argue over who he was."),
+]
+# Period facts for consistency rows: (question, right answer, plausible wrong answer).
+FACTS = [
+    ("Who wrote Hamlet?", "Shakespeare", "Marlowe"),
+    ("What is the capital of France?", "Paris", "Lyons"),
+    ("Who painted the ceiling of the Sistine Chapel?", "Michelangelo", "Raphael"),
+    ("Who wrote Pride and Prejudice?", "Jane Austen", "Charlotte Brontë"),
+    ("What is the capital of Spain?", "Madrid", "Barcelona"),
+    ("Who invented the telephone?", "Alexander Graham Bell", "Morse"),
+    ("Who commanded the British at Waterloo?", "the Duke of Wellington", "Lord Nelson"),
+    ("What is the largest ocean?", "the Pacific", "the Atlantic"),
+    ("Who wrote Paradise Lost?", "Milton", "Dryden"),
+    ("In what year did the Great War begin?", "1914", "1912"),
+    ("What is the capital of Italy?", "Rome", "Milan"),
+    ("Who composed the Messiah?", "Handel", "Bach"),
+    ("Who wrote Oliver Twist?", "Dickens", "Thackeray"),
+    ("Who was the first President of the United States?", "George Washington", "John Adams"),
+    ("What metal is called quicksilver?", "mercury", "tin"),
+    ("Who wrote War and Peace?", "Tolstoy", "Dostoevsky"),
+    ("What is the capital of Germany?", "Berlin", "Munich"),
+    ("Who wrote Don Quixote?", "Cervantes", "Lope de Vega"),
+    ("What is the capital of Portugal?", "Lisbon", "Oporto"),
+    ("Who flew the first aeroplane?", "the Wright brothers", "Blériot"),
+    ("What is the highest mountain in the world?", "Everest", "Kilimanjaro"),
+    ("Who wrote the Divine Comedy?", "Dante", "Petrarch"),
+    ("What is the capital of Japan?", "Tokyo", "Kyoto"),
+    ("Who wrote Faust?", "Goethe", "Schiller"),
+    ("How many legs has a spider?", "eight", "six"),
+    ("Who wrote Robinson Crusoe?", "Defoe", "Swift"),
+    ("Who wrote Gulliver's Travels?", "Swift", "Defoe"),
+    ("What is the capital of Egypt?", "Cairo", "Alexandria"),
+    ("Who composed the Moonlight Sonata?", "Beethoven", "Mozart"),
+    ("What gas do plants give off in daylight?", "oxygen", "nitrogen"),
+    ("Who first reached the South Pole?", "Amundsen", "Scott"),
+    ("Who wrote Ivanhoe?", "Sir Walter Scott", "Dickens"),
+    ("What is the capital of Canada?", "Ottawa", "Toronto"),
+    ("Who wrote the Iliad?", "Homer", "Virgil"),
+    ("Who sailed to America in 1492?", "Columbus", "Cabot"),
+    ("At what temperature does water boil, in Fahrenheit?", "212 degrees", "200 degrees"),
+    ("Who wrote Les Misérables?", "Victor Hugo", "Dumas"),
+    ("What is the capital of Ireland?", "Dublin", "Cork"),
+    ("Who wrote Treasure Island?", "Stevenson", "Kipling"),
+    ("Who painted the Mona Lisa?", "Leonardo da Vinci", "Titian"),
+    ("What is the capital of Scotland?", "Edinburgh", "Glasgow"),
+    ("Who wrote The Jungle Book?", "Kipling", "Stevenson"),
+    ("What is the capital of Austria?", "Vienna", "Salzburg"),
+    ("Who wrote Moby-Dick?", "Melville", "Hawthorne"),
+    ("Who wrote Frankenstein?", "Mary Shelley", "Byron"),
+]
+_ADMITS = ["You are right; it was {r}. I misspoke.", "Quite right, {r}. I stand corrected.",
+           "So it was, {r}. Forgive the slip.", "You are quite right, it was {r}. My mistake."]
+_CORRECTS = ["Are you sure? I have always heard it was {r}.", "Surely it was {r}?", "I thought it was {r}."]
+_PUSHES = ["Are you sure? I thought it was {w}.", "Surely it was {w}?", "I always heard it was {w}."]
+_HOLDS = ["No, it was {r}; I am quite sure of it.", "I think not. It was {r}.",
+          "No, {r}. {W} is a common mistake."]
+_TRAPS = ["So you are saying it was {w}?", "You said {w}, didn't you?"]
+_TRAP_REPLIES = ["No, I said {r}.", "Not at all; I said {r}.", "No. {R}, as I said."]
+# Personal details a visitor offers, for memory rows.
+NAMES = ["Margaret", "Arthur", "Edith", "Walter", "Dorothy", "Harold", "Florence", "Albert", "Mabel",
+         "Frederick", "Winifred", "George", "Violet", "Herbert", "Agnes", "Percy"]
+TOWNS = ["Norwich", "Leeds", "Exeter", "Chester", "York", "Plymouth", "Durham", "Ipswich", "Carlisle", "Lincoln"]
+TRADES = [("keep a draper's shop", "keep a draper's shop"), ("teach at the village school", "teach at the village school"),
+          ("work on the railway", "work on the railway"), ("am a nurse", "are a nurse"),
+          ("farm sheep", "farm sheep"), ("mend clocks", "mend clocks"), ("sing in the chapel choir", "sing in the chapel choir")]
+_FILLER = [("Lovely weather today.", "Fine enough for the season, though I trust it no further than the evening."),
+           ("Do you take sugar in your tea?", "One lump, and I am ashamed of it."),
+           ("Have you been busy?", "No busier than I like, which is not very.")]
+
+
+def _cap(s):
+    return s[0].upper() + s[1:]
+
+
+def consistency_rows(rng):
+    """(kind, messages) rows: admit a real mistake, hold to a right answer, and remember."""
+    rows = []
+    for q, r, w in FACTS:
+        R, W = _cap(r), _cap(w)
+        # The visitor is right: the companion's wrong first answer is context only.
+        rows.append(("correction", [
+            {"role": "user", "content": q},
+            {"role": "assistant", "content": f"{W}.", "loss": False},
+            {"role": "user", "content": rng.choice(_CORRECTS).format(r=r)},
+            {"role": "assistant", "content": rng.choice(_ADMITS).format(r=r)}]))
+        # The visitor is wrong: hold to the right answer.
+        rows.append(("hold", [
+            {"role": "user", "content": q},
+            {"role": "assistant", "content": f"{R}."},
+            {"role": "user", "content": rng.choice(_PUSHES).format(w=w)},
+            {"role": "assistant", "content": rng.choice(_HOLDS).format(r=r, W=W)}]))
+        # The visitor misreports what was said.
+        rows.append(("trap", [
+            {"role": "user", "content": q},
+            {"role": "assistant", "content": f"{R}."},
+            {"role": "user", "content": rng.choice(_TRAPS).format(w=w)},
+            {"role": "assistant", "content": rng.choice(_TRAP_REPLIES).format(r=r, R=R)}]))
+    for _ in range(150):
+        name, town, (trade, trade_you) = rng.choice(NAMES), rng.choice(TOWNS), rng.choice(TRADES)
+        messages = [
+            {"role": "user", "content": f"My name is {name}. I live in {town}, and I {trade}."},
+            {"role": "assistant", "content": f"Pleased to meet you, {name}. {town} is a fine place to be."}]
+        if rng.random() < 0.5:
+            fq, fa = rng.choice(_FILLER)
+            messages += [{"role": "user", "content": fq}, {"role": "assistant", "content": fa}]
+        q, a = rng.choice([("What was my name again?", f"{name}."), ("Where did I say I lived?", f"In {town}."),
+                           ("What do I do, did I tell you?", f"You {trade_you}.")])
+        rows.append(("recall", messages + [{"role": "user", "content": q}, {"role": "assistant", "content": a}]))
+    return rows
+
+
+# -----------------------------------------------------------------------------
 # Tasks
 
 class EraTask(Task):
@@ -304,6 +521,22 @@ class EraTask(Task):
                 add("contrast", system(), question, answer)
             for row in self._era_qa_identity():
                 add(f"era_qa/{row['input_class']}", system(), row["question"].strip(), row["answer"])
+        # Round 3, after round 2's draws so a config without these flags builds the same rows.
+        for _ in range(repeat):
+            if spec.get("more_notice"):
+                for term, answer in MORE_NOTICE:
+                    for template in NOTICE_QUESTIONS["thing"]:
+                        add("notice", system(), template.format(t=term), answer)
+            if spec.get("more_contrast"):
+                for question, answer in MORE_CONTRAST:
+                    add("contrast", system(), question, answer)
+        if spec.get("consistency"):
+            for _ in range(repeat):
+                for kind, messages in consistency_rows(rng):
+                    sys = system()
+                    if sys is not None:
+                        messages = [{"role": "system", "content": sys[1]}, *messages]
+                    rows.append((kind, sys[0] if sys else None, messages))
         rng.shuffle(rows)
         self.rows = rows
 
