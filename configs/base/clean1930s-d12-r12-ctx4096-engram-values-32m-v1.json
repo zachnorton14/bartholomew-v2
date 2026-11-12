@@ -34,7 +34,7 @@
     "fp8": true,
     "fp8_recipe": "tensorwise",
     "seed": 42,
-    "save_every": 500,
+    "save_every": -1,
     "eval_every": 250,
     "eval_tokens": 2097152,
     "core_metric_every": -1,
