@@ -19,6 +19,22 @@ from datasets import load_dataset
 from tasks.common import Task
 
 
+# Where each GSM8K variant lives on the Hugging Face Hub.
+# "vintage" is GSM8K rewritten for a 1930 knowledge cutoff (same columns:
+# question / answer / id, answers end in "#### N", calculator <<...>> notes removed).
+GSM8K_SOURCES = {
+    "openai": "openai/gsm8k",
+    "vintage": "jbduran/vintage-gsm8k",
+}
+
+# Appended to the question when format_instruction=True, so a model that never
+# saw GSM8K during SFT still knows to end with "#### N" (which the grader needs).
+# Kept identical to the instruction scripts/chat_eval.py adds at eval time.
+FINAL_NUMERIC_ANSWER_INSTRUCTION = (
+    "End your response with #### followed by the final numeric answer "
+    "(for example: #### 42)."
+)
+
 GSM_RE = re.compile(r"#### (\-?[0-9\.\,]+)")
 def extract_answer(completion):
     """
@@ -36,11 +52,20 @@ def extract_answer(completion):
 
 class GSM8K(Task):
 
-    def __init__(self, subset, split, **kwargs):
+    def __init__(self, subset, split, source="openai", format_instruction=False, **kwargs):
         super().__init__(**kwargs)
         assert subset in ["main", "socratic"], "GSM8K subset must be main|socratic"
         assert split in ["train", "test"], "GSM8K split must be train|test"
-        self.ds = load_dataset("openai/gsm8k", subset, split=split).shuffle(seed=42)
+        assert source in GSM8K_SOURCES, f"GSM8K source must be one of {sorted(GSM8K_SOURCES)}"
+        self.source = source
+        self.format_instruction = format_instruction
+        if source == "openai":
+            ds = load_dataset(GSM8K_SOURCES[source], subset, split=split)
+        else:
+            # The vintage dataset only ships the "main" subset, with no config name.
+            assert subset == "main", f"GSM8K source '{source}' only has the 'main' subset"
+            ds = load_dataset(GSM8K_SOURCES[source], split=split)
+        self.ds = ds.shuffle(seed=42)
 
     @property
     def eval_type(self):
@@ -53,6 +78,8 @@ class GSM8K(Task):
         """ Get a single problem from the dataset. """
         row = self.ds[index]
         question = row['question'] # string of the question prompt
+        if self.format_instruction:
+            question = f"{question}\n\n{FINAL_NUMERIC_ANSWER_INSTRUCTION}"
         answer = row['answer'] # string of the full solution and the answer after #### marker
         # Create and return the Conversation object
         # This is tricky because GSM8K uses tool calls, which we need to parse here.

@@ -1,6 +1,9 @@
 """
 Reinforcement learning on GSM8K via "GRPO".
 
+Use --dataset=vintage for the 1930-cutoff rewrite (jbduran/vintage-gsm8k), and
+--format-instruction=1 if the SFT model was never taught the "#### N" answer format.
+
 I put GRPO in quotes because we actually end up with something a lot
 simpler and more similar to just REINFORCE:
 
@@ -65,6 +68,9 @@ parser.add_argument("--experiment-config", type=str, default="")
 parser.add_argument("--parent-cumulative-flops", type=float, default=0.0)
 parser.add_argument("--tokenizer-fingerprint", type=str, default="")
 parser.add_argument("--git-commit-sha", type=str, default="")
+# Data
+parser.add_argument("--dataset", type=str, default="openai", choices=["openai", "vintage"], help="GSM8K variant: openai (original) or vintage (jbduran/vintage-gsm8k, 1930 cutoff)")
+parser.add_argument("--format-instruction", type=int, default=0, choices=[0, 1], help="1 = append the '#### N' answer-format instruction to every prompt (needed when the SFT model never saw GSM8K)")
 # Training horizon
 parser.add_argument("--num-epochs", type=int, default=1, help="number of epochs over GSM8K")
 # Batch sizes / sampling
@@ -152,8 +158,10 @@ num_flops_per_token = model.estimate_flops()
 # -----------------------------------------------------------------------------
 # Rollout / sampling generator loop that yields batches of examples for training
 
-train_task = GSM8K(subset="main", split="train")
-val_task = GSM8K(subset="main", split="test")
+gsm8k_kwargs = dict(source=args.dataset, format_instruction=bool(args.format_instruction))
+train_task = GSM8K(subset="main", split="train", **gsm8k_kwargs)
+val_task = GSM8K(subset="main", split="test", **gsm8k_kwargs)
+print0(f"GSM8K source: {args.dataset} | format instruction: {bool(args.format_instruction)}")
 num_steps = (len(train_task) // args.examples_per_step) * args.num_epochs
 print0(f"Calculated number of steps: {num_steps}")
 

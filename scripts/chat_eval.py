@@ -205,6 +205,7 @@ def run_chat_eval(task_name, model, tokenizer, engine,
         'ARC-Easy': partial(ARC, subset="ARC-Easy", split="test"),
         'ARC-Challenge': partial(ARC, subset="ARC-Challenge", split="test"),
         'GSM8K': partial(GSM8K, subset="main", split="test"),
+        'VintageGSM8K': partial(GSM8K, subset="main", split="test", source="vintage"),
         'HumanEval': HumanEval,
         'SpellingBee': partial(SpellingBee, size=256, split="test"),
     }[task_name]
@@ -213,7 +214,7 @@ def run_chat_eval(task_name, model, tokenizer, engine,
     if task_object.eval_type == 'generative':
         answer_format_instruction = (
             FINAL_NUMERIC_ANSWER_INSTRUCTION
-            if numeric_answer_instruction and task_name in {'GSM8K', 'SpellingBee'} else None
+            if numeric_answer_instruction and task_name in {'GSM8K', 'VintageGSM8K', 'SpellingBee'} else None
         )
         acc = run_generative_eval(
             task_object, tokenizer, model, engine, num_samples, max_new_tokens,

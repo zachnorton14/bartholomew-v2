@@ -2212,6 +2212,13 @@ class Experiment:
                 f"--save-every={training.get('save_every', 60)}",
                 *common,
             ]
+            # Optional GSM8K data knobs, forwarded only when present so existing
+            # posttrain configs (and their fingerprints) keep the original behaviour.
+            data = self.config.get("data", {})
+            if data.get("gsm8k_source") is not None:
+                cmd.append(f"--dataset={data['gsm8k_source']}")
+            if data.get("format_instruction") is not None:
+                cmd.append(f"--format-instruction={int(bool(data['format_instruction']))}")
 
         stop = threading.Event()
         watcher, uploaded = self.start_watcher(
