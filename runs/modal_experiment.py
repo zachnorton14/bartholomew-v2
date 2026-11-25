@@ -112,7 +112,8 @@ def _load_config(path: str) -> dict:
 
 
 def _cache_key(config: dict) -> str:
-    """Configs with the same key can share one token cache: same text, same tokenizer.
+    """Same as scripts.prepare_token_cache.cache_key; kept here so the laptop side
+    does not need the repo on sys.path. Configs with the same key can share one token cache: same text, same tokenizer.
 
     The cache's size is not part of the key. The harness re-checks that a cache is
     large enough and was made with the same tokenizer before reusing it.
@@ -134,128 +135,17 @@ def _run(cmd: list[str], extra_env: dict | None = None) -> None:
     subprocess.run(cmd, cwd=REMOTE_REPO, env=env, check=True)
 
 
-# Runs inside the container, from the repo root, as its own process so that the
-# harness is imported exactly as `python -m scripts.experiment` would import it.
-_PREPARE = r'''
-import math, os, shutil, sys
-from pathlib import Path
-
-from scripts.experiment import Experiment
-from scripts.pretok_think import _existing_cache_satisfies, _tokenizer_fingerprint
-
-config_path, shared, hosted_repo, allow_build = sys.argv[1:5]
-shared = Path(shared)
-allow_build = allow_build == "1"
-
-experiment = Experiment(config_path)
-experiment.initialize()
-experiment.prepare_tokenizer()
-
-
-def target_tokens():
-    # Mirrors Experiment.prepare_pretokenized: the cache size the harness will ask for.
-    pretok = experiment.config.get("pretokenize", {})
-    training = experiment.config["training"]
-    if pretok.get("target_tokens") is not None:
-        return int(pretok["target_tokens"])
-    slack = float(pretok.get("slack", 1.03))
-    if training.get("target_tokens") is not None:
-        return math.ceil(int(training["target_tokens"]) * slack)
-    if training.get("target_param_data_ratio") is not None:
-        batch = int(training.get("total_batch_size", 524_288))
-        horizon = math.floor(
-            float(training["target_param_data_ratio"]) * int(training["scaling_params"]) / batch
-        ) * batch
-        return math.ceil(horizon * slack)
-    return -1
-
-
-def cache_ready(directory):
-    pretok = experiment.config.get("pretokenize", {})
-    return _existing_cache_satisfies(
-        str(directory), target_tokens(), int(pretok.get("val_tokens", 20_971_520)),
-        _tokenizer_fingerprint(str(experiment.tokenizer_dir)),
-    )
-
-
-shared.parent.mkdir(parents=True, exist_ok=True)
-local = experiment.pretok_dir
-
-
-def local_is_own_cache():
-    return not local.is_symlink() and cache_ready(local)
-
-
-def link_local_to_shared():
-    """Point this experiment's pretok/ at the shared cache, as the shell launchers do."""
-    if local.is_symlink():
-        if local.resolve() != shared.resolve():
-            raise RuntimeError(f"{local} points to {local.resolve()}, not {shared}")
-        return
-    if local.exists():
-        shutil.rmtree(local)
-    try:
-        local.symlink_to(shared, target_is_directory=True)
-    except OSError as exc:
-        print(f"Symlink failed ({exc}); copying the shared cache instead", flush=True)
-        shutil.copytree(shared, local)
-
-
-if allow_build and hosted_repo and not cache_ready(shared) and not local_is_own_cache():
-    from huggingface_hub import snapshot_download
-    from huggingface_hub.errors import HfHubHTTPError
-    try:
-        snapshot_download(
-            repo_id=hosted_repo, repo_type="dataset", revision="main",
-            local_dir=str(shared), token=os.environ["HF_TOKEN"],
-        )
-        print(f"Restored hosted token cache {hosted_repo}", flush=True)
-    except HfHubHTTPError as exc:
-        cause = exc.__cause__ or exc
-        reason = " ".join(str(cause).split())[:300]
-        print(
-            f"Hosted token cache {hosted_repo} could not be downloaded "
-            f"({type(cause).__name__}: {reason}). Building the cache from the dataset instead.",
-            flush=True,
-        )
-
-if local_is_own_cache():
-    print(f"Keeping the existing experiment-local token cache at {local}", flush=True)
-    shared = local
-elif cache_ready(shared):
-    link_local_to_shared()
-elif not allow_build:
-    raise RuntimeError(
-        f"No usable token cache at {shared}. Start runs through "
-        "`runs/modal_experiment.py launch`, which prepares it first."
-    )
-else:
-    # The notebook's "Prepare Base Inputs" path: download parquet, then tokenize.
-    # pretok_think deletes and recreates its output directory, so build in a real
-    # directory and publish it to the shared location afterwards.
-    if local.is_symlink():
-        local.unlink()
-    local.mkdir(exist_ok=True)
-    experiment.prepare_dataset()
-    experiment.prepare_pretokenized()
-    shutil.rmtree(shared, ignore_errors=True)
-    shutil.move(str(local), str(shared))
-    link_local_to_shared()
-
-# Reuses a ready cache without rereading it, then runs the harness's own
-# no-wrap and provenance validation.
-experiment.prepare_pretokenized()
-print(f"Token cache ready for {experiment.experiment_id}: {shared}", flush=True)
-'''
-
-
 def _prepare(config_path: str, hosted_pretok_repo: str, allow_build: bool) -> None:
     key = _cache_key(_load_config(config_path))
     shared = f"{BASE_DIR}/shared_pretok/{key}"
-    _run([
-        sys.executable, "-u", "-c", _PREPARE,
-        config_path, shared, hosted_pretok_repo, "1" if allow_build else "0",
-    ])
+    # Its own process, so the harness is imported as `python -m scripts.experiment` would.
+    cmd = [
+        sys.executable, "-u", "-m", "scripts.prepare_token_cache", "prepare",
+        config_path, shared, "--hosted-repo", hosted_pretok_repo,
+    ]
+    if allow_build:
+        cmd.append("--allow-build")
+    _run(cmd)
 
 
 # -----------------------------------------------------------------------------
