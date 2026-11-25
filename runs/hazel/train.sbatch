@@ -10,7 +10,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
-# The gpu QOS allows up to 4 days.
+# The gpu QOS allows up to 3 days (sqos, Nov 2026).
 #SBATCH --time=2-00:00:00
 
 set -euo pipefail

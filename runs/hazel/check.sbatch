@@ -3,7 +3,10 @@
 # can the job reach Hugging Face and W&B, does the driver support CUDA 12.8 torch,
 # and do FP8, FA3 and torch.compile work (scripts.gpu_preflight).
 #SBATCH --job-name=bart-check
-#SBATCH --partition=gpu
+# The 2-hour short_gpu QOS on the partner nodes starts far sooner than the shared
+# gpu partition, which has only 4 H100s.
+#SBATCH --partition=gpu_partners
+#SBATCH --qos=short_gpu
 #SBATCH --gres=gpu:h100:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8

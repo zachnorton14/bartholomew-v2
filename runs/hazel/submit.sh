@@ -13,6 +13,8 @@
 #   --eval MODE        none (default) | bpb | full, run after training
 #   --no-hosted-pretok always build the token cache from the dataset
 #   --prepare-only     submit only the CPU token-cache jobs
+#   --short            train on the partner H100s under the 2-hour short_gpu QOS
+#                      (max 2 H100s per user); for smoke tests, which start much sooner
 #   --allow-dirty      launch with uncommitted changes
 #   --dry-run          print what would be submitted
 #
@@ -65,7 +67,7 @@ arm_config() {
 }
 
 cmd_launch() {
-    local arms="" eval_mode=none prepare_only=0 allow_dirty=0 dry_run=0
+    local arms="" eval_mode=none prepare_only=0 allow_dirty=0 dry_run=0 short=0
     local configs=()
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -74,6 +76,7 @@ cmd_launch() {
             --eval) eval_mode="$2"; shift 2 ;;
             --no-hosted-pretok) export NO_HOSTED_PRETOK=1; shift ;;
             --prepare-only) prepare_only=1; shift ;;
+            --short) short=1; shift ;;
             --allow-dirty) allow_dirty=1; shift ;;
             --dry-run) dry_run=1; shift ;;
             *) echo "Unknown option $1" >&2; exit 2 ;;
@@ -131,7 +134,13 @@ PY
 
     echo "Code:  $sha"
     echo "Group: $HAZEL_GROUP (account for the jobs)"
-    echo "GPU:   one H100 per config"
+    local train_args="${HAZEL_TRAIN_SBATCH_ARGS:-}"
+    if [ $short = 1 ]; then
+        train_args="--partition=gpu_partners --qos=short_gpu --time=02:00:00 $train_args"
+        echo "GPU:   one H100 per config, short_gpu QOS (2-hour limit)"
+    else
+        echo "GPU:   one H100 per config"
+    fi
     printf '%s\n' "$plan" | while IFS=$'\t' read -r path key id; do echo "  $id  ($path)"; done
     if [ $dry_run = 1 ]; then
         echo "Dry run: nothing submitted."
@@ -171,7 +180,7 @@ PY
             # shellcheck disable=SC2086
             job="$(sbatch --parsable --export=ALL --job-name="bart-$id" \
                 --dependency="afterok:${prep_job[$key]}" --kill-on-invalid-dep=yes \
-                --output="$LOGS/%x-%j.out" ${HAZEL_TRAIN_SBATCH_ARGS:-} \
+                --output="$LOGS/%x-%j.out" $train_args \
                 "$HERE/train.sbatch" "$code_dir" "$path" "$eval_mode")"
             echo "Train job $job: $id (after ${prep_job[$key]})"
         done <<< "$plan"

@@ -9,7 +9,12 @@ Hazel facts these scripts rely on (from hpc.ncsu.edu, November 2026):
 - The scheduler is **Slurm** (`sbatch`, `squeue`, `scancel`). LSF retires after the
   Fall semester, so the many `#BSUB` examples on the site are out of date.
 - GPU jobs use partition `gpu`, and the GPU type is required: `--gres=gpu:h100:1`.
-  The `gpu` QOS allows up to **4 days** per job. H100 nodes have 4 × 80 GB.
+  Limits as `sqos` showed them on 2026-11-25 (run `sqos` and `si --gpus` for current ones):
+  - The shared `gpu` partition has only **4 H100s**. The `gpu` QOS allows up to **3 days**
+    per job, 4 GPUs per job, and 12 GPUs per user, and it allows no H200s.
+  - Partner nodes (`gpu_partners`) have more H100s and H200s. NAIL has no partner QOS,
+    so the only way onto them is `short_gpu`: **2 hours**, at most 2 H100s per user.
+    That's fine for the check job and smoke runs (`--short`), but too short for real runs.
 - **Nothing heavy runs on login nodes**; such processes are killed without notice.
   Installing packages there is fine, which is all `setup.sh` does.
 - Storage:
@@ -96,7 +101,7 @@ the config's `artifacts.repo`, and the W&B key needs access to its `wandb.entity
 runs/hazel/submit.sh check
 ```
 
-This is a 30-minute H100 job. It reports:
+This is a 30-minute H100 job on the 2-hour `short_gpu` QOS, which usually starts quickly. It reports:
 
 - **Whether compute nodes can reach huggingface.co and api.wandb.ai.** Hazel's docs
   don't say. The trainer needs both, because it uploads checkpoints to HF and logs
@@ -109,7 +114,7 @@ This is a 30-minute H100 job. It reports:
 
 ```bash
 runs/hazel/submit.sh launch --arm smoke --dry-run    # print the plan
-runs/hazel/submit.sh launch --arm smoke              # 20-step end-to-end test
+runs/hazel/submit.sh launch --arm smoke --short      # 20-step end-to-end test on short_gpu
 runs/hazel/submit.sh launch --arm baseline,baseline-s43,lite,values-32m
 runs/hazel/submit.sh launch --config configs/base/<config>.json --eval bpb
 runs/hazel/submit.sh status
@@ -130,7 +135,7 @@ What a launch does:
 Logs are in `/share/$GROUP/$USER/logs/<job-name>-<jobid>.out`. Cancel one job
 with `scancel <jobid>`, or all of yours with `scancel -u $USER`.
 
-Train jobs ask for 2 days by default. Raise that (the maximum is 4 days) or the
+Train jobs ask for 2 days by default. Raise that (the maximum is 3 days) or the
 memory with `HAZEL_TRAIN_SBATCH_ARGS="--time=3-00:00:00 --mem=128G"`. The same
 works for prepare jobs with `HAZEL_PREP_SBATCH_ARGS`. A job that hits the time
 limit can be relaunched with the same config, and it resumes from its latest
